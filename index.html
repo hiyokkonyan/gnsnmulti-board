@@ -229,6 +229,10 @@
             opacity: 0.6; /* 全体的に薄くする */
             position: relative;
             pointer-events: none; /* クリックイベント無効化 */
+            user-select: none; /* ← 追加: テキスト選択を無効化 */
+            -webkit-user-select: none; /* Safari, Chrome */
+            -moz-user-select: none;    /* Firefox */
+            -ms-user-select: none;     /* IE/Edge */
         }
 
         .ended::before {
@@ -260,7 +264,7 @@
         .ended .content,
         .ended .uid,
         .ended .end-button {
-            filter: blur(5px); /* ぼかしを調整 */
+            filter: blur(2.5px); /* ぼかしを調整（ご自身で調整された値に仮定） */
         }
 
         .modal-bg {
@@ -496,6 +500,8 @@
                 const el = createPostElement(post);
                 container.appendChild(el);
             });
+            // 投稿を表示後、コピーイベントリスナーをセット
+            addCopyBlockers(); // ← 新しい関数を呼び出し
         }
 
         // 投稿ボタン押下時
@@ -600,7 +606,7 @@
                 posts[actualIndex].isEnded = true;
                 savePosts(posts);
                 // 画面を再描画して、募集終了の状態を反映
-                displayPosts();
+                displayPosts(); // 再表示時にaddCopyBlockersが呼ばれる
             }
 
             closeModal();
@@ -621,6 +627,26 @@
         document.getElementById('modalBg').addEventListener('click', (e) => {
             if (e.target === e.currentTarget) closeModal();
         });
+
+        // コピーイベントをブロックする関数
+        function blockCopy(event) {
+            // イベントのデフォルト動作（コピー）を阻止する
+            event.preventDefault();
+        }
+
+        // 全ての.endedクラスを持つ要素にコピーブロックのイベントリスナーを追加
+        function addCopyBlockers() {
+            const endedPosts = document.querySelectorAll('.post.ended');
+            endedPosts.forEach(post => {
+                // copyイベントリスナーを一度だけ追加する
+                // cloneNodeで要素が再生成されるたびに新しいリスナーが必要
+                if (!post.dataset.copyBlocked) { // フラグで重複追加を防ぐ
+                    post.addEventListener('copy', blockCopy);
+                    post.dataset.copyBlocked = 'true'; // フラグを設定
+                }
+            });
+        }
+
 
         // 初期表示とフォームのデフォルト選択
         window.addEventListener("load", () => {
