@@ -260,7 +260,7 @@
         .ended .content,
         .ended .uid,
         .ended .end-button {
-            filter: blur(5px); /* ぼかしを強くする */
+            filter: blur(3px); /* ぼかしを調整 */
         }
 
         .modal-bg {
@@ -341,7 +341,8 @@
             <label for="nameAnyone">名前（任意）</label>
             <input type="text" id="nameAnyone" placeholder="名無し">
 
-            <label for="uidAnyone">あなたのUID</label> <input type="text" id="uidAnyone" placeholder="123456789" maxlength="15">
+            <label for="uidAnyone">あなたのUID</label>
+            <input type="text" id="uidAnyone" placeholder="123456789" maxlength="15">
             <span style="font-size: 0.8em; color: #666;">（募集投稿に直接表示されます）</span>
 
             <label for="contentAnyone">募集内容</label>
@@ -355,7 +356,8 @@
             <input type="text" id="nameApplication" placeholder="名無し">
 
             <label for="uidApplication">あなたのUID</label>
-            <input type="text" id="uidApplication" placeholder="123456789" maxlength="15"> <span style="font-size: 0.8em; color: #666;">（申請を承認するまで、あなたのUIDは公開されません）</span>
+            <input type="text" id="uidApplication" placeholder="123456789" maxlength="15">
+            <span style="font-size: 0.8em; color: #666;">（申請を承認するまで、あなたのUIDは公開されません）</span>
 
             <label for="contentApplication">募集内容</label>
             <textarea id="contentApplication" rows="4" placeholder="募集内容を具体的に入力してください。例：〇〇の周回、エンジョイ勢募集など"></textarea>
