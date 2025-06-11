@@ -1,314 +1,632 @@
 ﻿<!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8" />
-  <title>マルチ募集掲示板</title>
+    <meta charset="UTF-8" />
+    <title>マルチ募集掲示板</title>
 
-  <!-- Google Fonts：丸いフォント -->
-  <link href="https://fonts.googleapis.com/css2?family=Rounded+Mplus+1c&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Rounded+Mplus+1c&display=swap" rel="stylesheet" />
 
-  <style>
-    body {
-      font-family: 'Rounded Mplus 1c', 'Hiragino Maru Gothic Pro', 'Arial Rounded MT Bold', sans-serif;
-      background: #f9f9f9;
-      padding: 20px;
-    }
+    <style>
+        body {
+            font-family: 'Rounded Mplus 1c', 'Hiragino Maru Gothic Pro', 'Arial Rounded MT Bold', sans-serif;
+            background: #f9f9f9;
+            padding: 20px;
+            color: #333;
+        }
 
-    .post {
-      border: 1px solid #aaa;
-      padding: 10px;
-      margin: 10px auto;
-      border-radius: 8px;
-      background-color: #fdfdfd;
-      max-width: 500px;
-      position: relative;
-    }
+        h1 {
+            font-size: 1.6em;
+            margin-bottom: 0.8em;
+            text-align: center;
+            color: #5A8EA8;
+        }
 
-    .header {
-      display: flex;
-      justify-content: space-between;
-      font-size: 0.9em;
-    }
+        .type-switcher {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+            gap: 10px;
+        }
 
-    .uid {
-      margin-top: 5px;
-      color: #333;
-    }
+        .type-button {
+            padding: 10px 20px;
+            border: 2px solid #5A8EA8;
+            border-radius: 20px;
+            background-color: white;
+            color: #5A8EA8;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+            user-select: none;
+        }
 
-    .ended {
-      opacity: 0.5;
-      position: relative;
-    }
+        .type-button.active {
+            background-color: #5A8EA8;
+            color: white;
+        }
 
-    .ended::before {
-      content: "";
-      position: absolute;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background-color: rgba(128, 128, 128, 0.2);
-      border-radius: 8px;
-      z-index: 1;
-      pointer-events: none;
-    }
+        .type-button:hover:not(.active) {
+            background-color: #e0f2f7;
+        }
 
-    .ended::after {
-      content: '募集は終了しました';
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%) translateX(-1em);
-      color: #5A8EA8;
-      font-weight: bold;
-      background-color: white;
-      padding: 2px 6px;
-      border-radius: 4px;
-      z-index: 2;
-    }
+        .form-container {
+            background: #fff;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 20px;
+            max-width: 500px;
+            margin: 0 auto 30px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
 
-    .end-button {
-      margin-top: 10px;
-      cursor: pointer;
-      background-color: #5A8EA8;
-      border: none;
-      color: white;
-      padding: 8px 12px;
-      border-radius: 6px;
-      font-weight: bold;
-      transition: background-color 0.3s;
-    }
-    .end-button:hover {
-      background-color: #4a7390;
-    }
+        .form-section {
+            display: none; /* デフォルトで非表示 */
+        }
 
-    .uid-toggle {
-      cursor: pointer;
-      font-size: 1rem;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.2em;
-      user-select: none;
-    }
+        .form-section.active {
+            display: block; /* アクティブなフォームだけ表示 */
+        }
 
-    .uid-label {
-      margin-left: 0.3em;
-    }
+        .form-container label {
+            display: block;
+            margin-top: 15px;
+            margin-bottom: 5px;
+            font-weight: bold;
+            font-size: 0.95em;
+        }
 
-    .content {
-      margin: 16px 0;
-    }
+        .form-container input[type="text"],
+        .form-container textarea,
+        .form-container select {
+            width: calc(100% - 16px);
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-family: inherit;
+            font-size: 1em;
+            box-sizing: border-box;
+        }
 
-    .eye {
-      position: relative;
-      display: inline-block;
-      width: 22px;
-      height: 14px;
-      background: #fff;
-      border: 2px solid #555;
-      border-radius: 50% / 50%;
-      clip-path: polygon(
-        15% 0%, 85% 0%, 
-        100% 50%, 85% 100%, 
-        15% 100%, 0% 50%
-      );
-      box-sizing: border-box;
-      overflow: visible;
-    }
+        .form-container textarea {
+            resize: vertical;
+        }
 
-    .pupil {
-      position: absolute;
-      top: 1px;
-      left: 5px;
-      width: 8px;
-      height: 8px;
-      background: #000;
-      border-radius: 50%;
-      box-shadow: 
-        0 0 0 1px #000,
-        0 0 3px 0 #000;
-      filter: contrast(140%) saturate(150%);
-      image-rendering: pixelated;
-    }
+        .form-container input::placeholder,
+        .form-container textarea::placeholder {
+            color: #aaa;
+        }
 
-    .ended .header,
-    .ended .content,
-    .ended .uid,
-    .ended .end-button {
-      filter: blur(2px);
-      opacity: 0.4;
-    }
+        .form-container button {
+            margin-top: 25px;
+            padding: 12px 24px;
+            background-color: #5A8EA8;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 1.1em;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s;
+        }
 
-    .modal-bg {
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background-color: rgba(0,0,0,0.4);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 1000;
-      display: none;
-    }
+        .form-container button:hover {
+            background-color: #4a7390;
+        }
 
-    .modal {
-      background-color: white;
-      padding: 20px 30px;
-      border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-      max-width: 320px;
-      width: 90%;
-      text-align: center;
-      font-weight: bold;
-      color: #333;
-    }
+        .post {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin: 15px auto;
+            border-radius: 8px;
+            background-color: #fdfdfd;
+            max-width: 500px;
+            position: relative;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+        }
 
-    .modal-buttons {
-      margin-top: 20px;
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-    }
+        .post .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.85em;
+            color: #666;
+            margin-bottom: 10px;
+        }
 
-    .modal-button {
-      padding: 8px 18px;
-      border: none;
-      border-radius: 6px;
-      font-weight: bold;
-      cursor: pointer;
-      user-select: none;
-      transition: background-color 0.3s;
-      min-width: 80px;
-    }
+        .post .name {
+            font-weight: bold;
+            color: #555;
+        }
 
-    .modal-button.yes {
-      background-color: #5A8EA8;
-      color: white;
-    }
-    .modal-button.yes:hover {
-      background-color: #4a7390;
-    }
+        .uid-toggle {
+            cursor: pointer;
+            font-size: 0.95em;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3em;
+            user-select: none;
+            color: #5A8EA8;
+        }
 
-    .modal-button.no {
-      background-color: #ccc;
-      color: #333;
-    }
-    .modal-button.no:hover {
-      background-color: #aaa;
-    }
-  </style>
+        .uid-toggle:hover {
+            opacity: 0.8;
+        }
+
+        .uid-label {
+            margin-left: 0.3em;
+        }
+
+        .content {
+            margin: 10px 0 15px;
+            line-height: 1.6;
+            font-size: 1.05em;
+            white-space: pre-wrap; /* 改行を反映 */
+            word-wrap: break-word; /* 長い単語の折り返し */
+        }
+
+        .uid {
+            margin-top: 10px;
+            font-size: 0.9em;
+            color: #444;
+            background-color: #eef;
+            padding: 6px 10px;
+            border-radius: 4px;
+            display: none; /* 初期は非表示 */
+        }
+
+        .end-button {
+            margin-top: 15px;
+            cursor: pointer;
+            background-color: #5A8EA8;
+            border: none;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 6px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+            font-size: 0.9em;
+        }
+        .end-button:hover {
+            background-color: #4a7390;
+        }
+
+        /* UID表示・非表示の目アイコン */
+        .eye {
+            position: relative;
+            display: inline-block;
+            width: 22px;
+            height: 14px;
+            background: #fff;
+            border: 2px solid #555;
+            border-radius: 50% / 50%;
+            clip-path: polygon(
+                15% 0%, 85% 0%,
+                100% 50%, 85% 100%,
+                15% 100%, 0% 50%
+            );
+            box-sizing: border-box;
+            overflow: visible;
+        }
+
+        .pupil {
+            position: absolute;
+            top: 1px;
+            left: 5px;
+            width: 8px;
+            height: 8px;
+            background: #000;
+            border-radius: 50%;
+            box-shadow:
+                0 0 0 1px #000,
+                0 0 3px 0 #000;
+            filter: contrast(140%) saturate(150%);
+            image-rendering: pixelated;
+        }
+
+        /* 募集終了時のスタイル */
+        .ended {
+            opacity: 0.6; /* 全体的に薄くする */
+            position: relative;
+            pointer-events: none; /* クリックイベント無効化 */
+        }
+
+        .ended::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: rgba(128, 128, 128, 0.1); /* オーバーレイ */
+            border-radius: 8px;
+            z-index: 1;
+        }
+
+        .ended::after {
+            content: '募集は終了しました';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #5A8EA8;
+            font-weight: bold;
+            background-color: rgba(255, 255, 255, 0.9); /* 白背景で見やすく */
+            padding: 4px 10px;
+            border-radius: 6px;
+            z-index: 2;
+            font-size: 1.1em;
+            white-space: nowrap;
+        }
+
+        .ended .header,
+        .ended .content,
+        .ended .uid,
+        .ended .end-button {
+            filter: blur(1px); /* テキストを少しぼかす */
+        }
+
+        .modal-bg {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: rgba(0,0,0,0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            display: none; /* 初期は非表示 */
+        }
+
+        .modal {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            max-width: 350px;
+            width: 90%;
+            text-align: center;
+            font-weight: bold;
+            color: #333;
+            font-size: 1.1em;
+        }
+
+        .modal-buttons {
+            margin-top: 30px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .modal-button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            user-select: none;
+            transition: background-color 0.3s;
+            min-width: 90px;
+            font-size: 1em;
+        }
+
+        .modal-button.yes {
+            background-color: #5A8EA8;
+            color: white;
+        }
+        .modal-button.yes:hover {
+            background-color: #4a7390;
+        }
+
+        .modal-button.no {
+            background-color: #ddd;
+            color: #555;
+        }
+        .modal-button.no:hover {
+            background-color: #bbb;
+        }
+
+        .posts-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+    </style>
 </head>
 <body>
+    <h1>マルチ募集掲示板</h1>
 
-  <div class="post" id="post1">
-    <div class="header">
-      <span class="name">名無し</span>
-      <span class="uid-toggle" onclick="toggleUID(this)">
-        <span class="eye">
-          <span class="pupil"></span>
-        </span>
-        <span class="uid-label">UIDを表示</span>
-      </span>
-      <!-- 投稿時間を data-time 属性に入れておく -->
-      <span class="time" data-time="14:23">14:23 投稿</span>
+    <div class="type-switcher">
+        <button class="type-button active" id="typeButtonAnyone" data-form-type="anyone">誰でも</button>
+        <button class="type-button" id="typeButtonApplication" data-form-type="application">申請型</button>
     </div>
-    <div class="content">
-      一緒にのんびりマルチしませんか？
+
+    <div class="form-container">
+        <div id="formAnyone" class="form-section active">
+            <label for="nameAnyone">名前（任意）</label>
+            <input type="text" id="nameAnyone" placeholder="名無し">
+
+            <label for="uidAnyone">UID</label>
+            <input type="text" id="uidAnyone" placeholder="123456789" maxlength="15">
+            <span style="font-size: 0.8em; color: #666;">（募集投稿に直接表示されます）</span>
+
+            <label for="contentAnyone">募集内容</label>
+            <textarea id="contentAnyone" rows="4" placeholder="一緒にのんびりマルチしませんか？"></textarea>
+
+            <button onclick="submitPost('anyone')">投稿する</button>
+        </div>
+
+        <div id="formApplication" class="form-section">
+            <label for="nameApplication">名前（任意）</label>
+            <input type="text" id="nameApplication" placeholder="名無し">
+
+            <label for="uidApplication">あなたのUID</label>
+            <input type="text" id="uidApplication" placeholder="申請を承認すると開示されます" maxlength="15">
+            <span style="font-size: 0.8em; color: #666;">（申請を承認するまで、あなたのUIDは公開されません）</span>
+
+            <label for="contentApplication">募集内容</label>
+            <textarea id="contentApplication" rows="4" placeholder="募集内容を具体的に入力してください。例：〇〇の周回、エンジョイ勢募集など"></textarea>
+
+            <button onclick="submitPost('application')">投稿する</button>
+        </div>
     </div>
-    <div class="uid" style="display: none;">
-      UID: 123456789
+
+    <div class="posts-container" id="postsContainer">
+        </div>
+
+    <div class="modal-bg" id="modalBg">
+        <div class="modal">
+            募集を終了してよろしいですか？
+            <div class="modal-buttons">
+                <button class="modal-button yes" id="confirmYes">はい</button>
+                <button class="modal-button no" id="confirmNo">いいえ</button>
+            </div>
+        </div>
     </div>
-    <button class="end-button" onclick="openConfirm(this)">募集を終了する</button>
-  </div>
 
-  <div class="modal-bg" id="modalBg">
-    <div class="modal">
-      募集を終了してよろしいですか？
-      <div class="modal-buttons">
-        <button class="modal-button yes" id="confirmYes">はい</button>
-        <button class="modal-button no" id="confirmNo">いいえ</button>
-      </div>
-    </div>
-  </div>
+    <script>
+        // 投稿タイプを切り替える関数
+        function switchForm(type) {
+            // 全てのフォームとボタンのアクティブ状態を解除
+            document.getElementById('formAnyone').classList.remove('active');
+            document.getElementById('formApplication').classList.remove('active');
+            document.getElementById('typeButtonAnyone').classList.remove('active');
+            document.getElementById('typeButtonApplication').classList.remove('active');
 
-  <script>
-    let currentButton = null;
-
-    function toggleUID(button) {
-      const uidDiv = button.parentElement.parentElement.querySelector('.uid');
-      const label = button.querySelector('.uid-label');
-      const isHidden = uidDiv.style.display === 'none';
-      uidDiv.style.display = isHidden ? 'block' : 'none';
-      label.textContent = isHidden ? 'UIDを非表示' : 'UIDを表示';
-    }
-
-    function openConfirm(button) {
-      currentButton = button;
-      document.getElementById('modalBg').style.display = 'flex';
-    }
-
-    document.getElementById('confirmYes').addEventListener('click', () => {
-      if (!currentButton) return;
-      const post = currentButton.parentElement;
-      post.classList.add('ended');
-      post.querySelector('.uid-toggle').style.pointerEvents = 'none';
-      const label = post.querySelector('.uid-label');
-      label.textContent = '募集終了';
-      post.querySelector('.uid').style.display = 'none';
-      currentButton.style.display = 'none';
-
-      closeModal();
-    });
-
-    document.getElementById('confirmNo').addEventListener('click', () => {
-      closeModal();
-    });
-
-    function closeModal() {
-      document.getElementById('modalBg').style.display = 'none';
-      currentButton = null;
-    }
-
-    document.getElementById('modalBg').addEventListener('click', (e) => {
-      if (e.target === e.currentTarget) closeModal();
-    });
-
-    // ページロード時に「○分前」表示を更新する
-    window.addEventListener('load', () => {
-      document.querySelectorAll('.time').forEach(el => {
-        const timeStr = el.getAttribute('data-time');  // 例: "14:23"
-        if (!timeStr) return;
-
-        const now = new Date();
-
-        // 投稿時間を今日の日付の14:23として作成
-        const [h, m] = timeStr.split(':').map(Number);
-        let postDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), h, m);
-
-        // 現在時刻より投稿時間が未来なら（深夜跨ぎ想定）1日前にする
-        if (postDate > now) {
-          postDate.setDate(postDate.getDate() - 1);
+            // 選択されたフォームとボタンをアクティブにする
+            if (type === 'anyone') {
+                document.getElementById('formAnyone').classList.add('active');
+                document.getElementById('typeButtonAnyone').classList.add('active');
+            } else if (type === 'application') {
+                document.getElementById('formApplication').classList.add('active');
+                document.getElementById('typeButtonApplication').classList.add('active');
+            }
         }
 
-        const diffMs = now - postDate;
-        const diffMin = Math.floor(diffMs / (1000 * 60));
+        // ボタンクリックでフォーム切り替え
+        document.getElementById('typeButtonAnyone').addEventListener('click', () => switchForm('anyone'));
+        document.getElementById('typeButtonApplication').addEventListener('click', () => switchForm('application'));
 
-        let beforeStr = '';
-        if (diffMin < 1) {
-          beforeStr = 'たった今';
-        } else if (diffMin < 60) {
-          beforeStr = diffMin + '分前';
-        } else {
-          const diffHour = Math.floor(diffMin / 60);
-          if (diffHour < 24) {
-            beforeStr = diffHour + '時間前';
-          } else {
-            const diffDay = Math.floor(diffHour / 24);
-            beforeStr = diffDay + '日前';
-          }
+
+        // 投稿データをlocalStorageに保存
+        function savePosts(posts) {
+            localStorage.setItem("multiPosts", JSON.stringify(posts));
         }
 
-        // 表示形式を変更 (例: (5分前) 14:23 投稿)
-        el.textContent = `(${beforeStr}) ${timeStr} 投稿`;
-      });
-    });
-  </script>
+        // 投稿データをlocalStorageから読み込み
+        function loadPosts() {
+            const data = localStorage.getItem("multiPosts");
+            if (!data) return [];
+            try {
+                const parsed = JSON.parse(data);
+                const now = Date.now();
+                // 24時間経った投稿は除外（自動削除）
+                return parsed.filter(post => now - post.timestamp < 86400000);
+            } catch {
+                return [];
+            }
+        }
 
+        // 日時を「(x分前) HH:mm 投稿」形式に変換
+        function formatTime(timestamp) {
+            const now = Date.now();
+            const diffMinutes = Math.floor((now - timestamp) / 60000); // 分
+            const date = new Date(timestamp);
+            const hh = date.getHours().toString().padStart(2, '0');
+            const mm = date.getMinutes().toString().padStart(2, '0');
+
+            if (diffMinutes < 1) {
+                return `(たった今) ${hh}:${mm} 投稿`;
+            } else if (diffMinutes < 60) {
+                return `(${diffMinutes}分前) ${hh}:${mm} 投稿`;
+            } else if (diffMinutes < 1440) { // 24時間以内
+                const diffHours = Math.floor(diffMinutes / 60);
+                return `(${diffHours}時間前) ${hh}:${mm} 投稿`;
+            } else {
+                // 24時間を超える投稿は既にフィルタリングされているはずだが念のため
+                return `${date.getMonth() + 1}/${date.getDate()} ${hh}:${mm} 投稿`;
+            }
+        }
+
+        // 投稿をHTMLとして生成
+        function createPostElement(post) {
+            const div = document.createElement('div');
+            div.className = `post ${post.isEnded ? 'ended' : ''}`; // 募集終了の状態をクラスに反映
+            div.dataset.type = post.type; // 投稿タイプをdata属性に保存
+
+            let uidHtml = '';
+            let uidToggleLabel = 'UIDを表示';
+            let uidTogglePointerEvents = 'auto'; // デフォルトは有効
+
+            if (post.type === 'anyone') {
+                uidHtml = `<div class="uid" style="display: none;">UID: ${post.uid}</div>`;
+            } else if (post.type === 'application') {
+                // 申請型の場合、UIDは初期状態では表示せず、募集終了時はさらに非表示に
+                uidHtml = `<div class="uid" style="display: none;">（承認後にUID開示）</div>`; // 実際のUIDは承認ロジックで制御
+                uidToggleLabel = '申請詳細'; // 申請型では「申請詳細」などのラベルにする
+                if (post.isEnded) {
+                    uidToggleLabel = '募集終了';
+                }
+            }
+
+            if (post.isEnded) {
+                uidTogglePointerEvents = 'none'; // 募集終了時はUIDトグルも無効化
+            }
+
+            div.innerHTML = `
+                <div class="header">
+                    <span class="name">${post.name || '名無し'}</span>
+                    <span class="uid-toggle" onclick="toggleUID(this)" style="pointer-events: ${uidTogglePointerEvents};">
+                        <span class="eye">
+                            <span class="pupil"></span>
+                        </span>
+                        <span class="uid-label">${uidToggleLabel}</span>
+                    </span>
+                    <span class="time">${formatTime(post.timestamp)}</span>
+                </div>
+                <div class="content">${post.content}</div>
+                ${uidHtml}
+                <button class="end-button" onclick="openConfirm(this)" style="display: ${post.isEnded ? 'none' : 'block'};">募集を終了する</button>
+            `;
+            return div;
+        }
+
+        // 投稿を画面に表示
+        function displayPosts() {
+            const container = document.getElementById("postsContainer");
+            container.innerHTML = "";
+            const posts = loadPosts();
+            // 新しい投稿が上に来るように逆順で表示
+            posts.reverse().forEach(post => {
+                const el = createPostElement(post);
+                container.appendChild(el);
+            });
+        }
+
+        // 投稿ボタン押下時
+        function submitPost(type) {
+            let name, uid, content;
+
+            if (type === 'anyone') {
+                name = document.getElementById("nameAnyone").value.trim();
+                uid = document.getElementById("uidAnyone").value.trim();
+                content = document.getElementById("contentAnyone").value.trim();
+            } else if (type === 'application') {
+                name = document.getElementById("nameApplication").value.trim();
+                uid = document.getElementById("uidApplication").value.trim();
+                content = document.getElementById("contentApplication").value.trim();
+            }
+
+            if (!uid || !content) {
+                alert("UIDと募集内容は必須です。");
+                return;
+            }
+
+            const newPost = {
+                name: name || '名無し',
+                uid: uid,
+                content: content,
+                timestamp: Date.now(),
+                type: type, // 'anyone' or 'application'
+                isEnded: false // 募集が終了しているかどうかのフラグ
+            };
+
+            const posts = loadPosts();
+            posts.push(newPost);
+            savePosts(posts);
+            displayPosts(); // 再表示
+            clearForm(type); // フォームをクリア
+        }
+
+        // フォームをクリア
+        function clearForm(type) {
+            if (type === 'anyone') {
+                document.getElementById("nameAnyone").value = "";
+                document.getElementById("uidAnyone").value = "";
+                document.getElementById("contentAnyone").value = "";
+            } else if (type === 'application') {
+                document.getElementById("nameApplication").value = "";
+                document.getElementById("uidApplication").value = "";
+                document.getElementById("contentApplication").value = "";
+            }
+        }
+
+
+        // UID表示・非表示のトグル
+        function toggleUID(button) {
+            const postElement = button.closest('.post'); // 親の.post要素を取得
+            const uidDiv = postElement.querySelector('.uid');
+            const label = button.querySelector('.uid-label');
+            const postType = postElement.dataset.type; // 投稿タイプを取得
+
+            if (postElement.classList.contains('ended')) {
+                // 募集終了の場合は何もしない
+                return;
+            }
+
+            if (postType === 'anyone') {
+                // 誰でも型の場合のUID表示/非表示
+                if (uidDiv.style.display === 'none') {
+                    uidDiv.style.display = 'block';
+                    label.textContent = 'UIDを非表示';
+                } else {
+                    uidDiv.style.display = 'none';
+                    label.textContent = 'UIDを表示';
+                }
+            } else if (postType === 'application') {
+                // 申請型の場合：
+                // ここに申請詳細を表示するロジックを追加します
+                // 例えば、専用のモーダルを開くなど
+                alert('申請型投稿の詳細は、今後実装予定です。');
+            }
+        }
+
+        // 募集終了確認モーダル表示
+        let currentPostElement = null; // 現在操作中の投稿要素を保持
+
+        function openConfirm(button) {
+            currentPostElement = button.closest('.post'); // 親の.post要素を取得
+            document.getElementById('modalBg').style.display = 'flex';
+        }
+
+        // 募集終了「はい」ボタン
+        document.getElementById('confirmYes').addEventListener('click', () => {
+            if (!currentPostElement) return;
+
+            // 投稿のisEndedフラグを更新し、localStorageに保存
+            const posts = loadPosts();
+            // 現在の表示順（逆順）から、元の配列でのインデックスを計算
+            const postElements = Array.from(document.getElementById("postsContainer").children);
+            const displayIndex = postElements.indexOf(currentPostElement);
+            const actualIndex = posts.length - 1 - displayIndex;
+
+
+            if (posts[actualIndex]) {
+                posts[actualIndex].isEnded = true;
+                savePosts(posts);
+                // 画面を再描画して、募集終了の状態を反映
+                displayPosts();
+            }
+
+            closeModal();
+        });
+
+        // 募集終了「いいえ」ボタン
+        document.getElementById('confirmNo').addEventListener('click', () => {
+            closeModal();
+        });
+
+        // モーダルを閉じる
+        function closeModal() {
+            document.getElementById('modalBg').style.display = 'none';
+            currentPostElement = null;
+        }
+
+        // モーダル背景クリックで閉じる
+        document.getElementById('modalBg').addEventListener('click', (e) => {
+            if (e.target === e.currentTarget) closeModal();
+        });
+
+        // 初期表示とフォームのデフォルト選択
+        window.addEventListener("load", () => {
+            displayPosts();
+            switchForm('anyone'); // デフォルトで「誰でも」フォームを表示
+        });
+    </script>
 </body>
 </html>
