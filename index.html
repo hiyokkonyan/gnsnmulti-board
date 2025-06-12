@@ -205,9 +205,11 @@
         }
 
         .post .world-rank-display { /* 世界ランク表示用のスタイル */
-            font-weight: bold;
-            color: #555; /* 名前の色と同じ */
-            font-size: 1em; /* 名前のサイズと同じ */
+            /* ★ここから修正点★ */
+            font-weight: normal; /* 太字ではなくノーマルに */
+            color: #888; /* 薄いグレーに */
+            font-size: 0.9em; /* 少し小さく */
+            /* ★ここまで修正点★ */
             margin-top: 5px; /* 名前との間隔 */
             margin-bottom: 10px; /* 募集内容との間隔 */
             text-align: left; /* 左揃え */
@@ -239,7 +241,7 @@
             font-size: 1.05em;
             white-space: pre-wrap; 
             word-wrap: break-word; 
-            /* ★募集内容のフォントをNoto Sans JPに変更★ */
+            /* 募集内容のフォントをNoto Sans JPに変更 */
             font-family: 'Noto Sans JP', 'Hiragino Sans', 'Meiryo', sans-serif;
             font-weight: 400; /* 通常の太さ */
         }
