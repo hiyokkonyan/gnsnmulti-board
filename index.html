@@ -165,6 +165,7 @@
             word-wrap: break-word; /* 長い単語の折り返し */
         }
 
+        /* UID表示部分のスタイル */
         .uid {
             margin-top: 10px;
             font-size: 0.9em;
@@ -173,6 +174,13 @@
             padding: 6px 10px;
             border-radius: 4px;
             display: none; /* 初期は非表示 */
+            display: flex; /* Flexboxで中身を横並びにする */
+            align-items: center; /* 垂直方向中央揃え */
+            justify-content: space-between; /* UIDとコピーボタンを両端に */
+        }
+
+        .uid-value {
+            font-weight: bold; /* UIDの数字を強調 */
         }
 
         .end-button {
@@ -223,6 +231,92 @@
             filter: contrast(140%) saturate(150%);
             image-rendering: pixelated;
         }
+
+        /* コピーボタンのスタイル */
+        .copy-button {
+            background: none;
+            border: none;
+            color: #5A8EA8;
+            cursor: pointer;
+            font-size: 1.2em; /* アイコンのサイズ調整 */
+            padding: 0 5px;
+            margin-left: 10px;
+            display: flex; /* アイコン中央揃え用 */
+            align-items: center;
+            justify-content: center;
+            position: relative; /* コピーしました表示用 */
+            transition: color 0.2s;
+        }
+        .copy-button:hover {
+            color: #4a7390;
+        }
+
+        /* コピーアイコンのCSS */
+        .copy-icon {
+            position: relative;
+            width: 18px;
+            height: 20px; /* 高さも少し調整 */
+            border: 2px solid #5A8EA8;
+            border-radius: 3px;
+            box-sizing: border-box;
+            background: #fff; /* 背景を白くして紙っぽく */
+        }
+
+        .copy-icon::before {
+            content: '';
+            position: absolute;
+            top: -4px; /* 親の少し上に */
+            left: 4px; /* 右にずらして重なりを表現 */
+            width: 18px;
+            height: 20px;
+            border: 2px solid #5A8EA8;
+            border-radius: 3px;
+            box-sizing: border-box;
+            background: #fff; /* 背景を白くして紙っぽく */
+            transform: translate(2px, -2px); /* 少しずらして重ねる */
+            z-index: -1; /* 下に重ねる */
+        }
+
+        .copy-icon::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 0;
+            height: 0;
+            border-top: 5px solid #5A8EA8; /* めくれ部分 */
+            border-left: 5px solid transparent;
+            border-bottom: 5px solid transparent;
+            border-right: 5px solid #5A8EA8;
+            border-top-right-radius: 3px; /* 少し角丸に */
+            background-color: transparent; /* 背景なし */
+            transform: rotate(45deg); /* めくれ表現 */
+            transform-origin: top right;
+            z-index: 1;
+        }
+
+
+        /* コピー成功時のフィードバックメッセージ */
+        .copy-feedback {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            white-space: nowrap;
+            opacity: 0;
+            transition: opacity 0.3s ease-out;
+            pointer-events: none; /* クリックを阻害しない */
+            z-index: 10;
+        }
+        .copy-feedback.show {
+            opacity: 1;
+        }
+
 
         /* 募集終了時のスタイル */
         .ended {
@@ -528,7 +622,16 @@
             let uidTogglePointerEvents = 'auto'; // デフォルトは有効
 
             if (post.type === 'anyone') {
-                uidHtml = `<div class="uid" style="display: none;">UID: ${post.uid}</div>`;
+                // 誰でも型の場合: UIDとコピーボタンを表示
+                uidHtml = `
+                    <div class="uid" style="display: none;">
+                        <span>UID: <span class="uid-value">${post.uid}</span></span>
+                        <button class="copy-button" onclick="copyUid(this, '${post.uid}')" aria-label="UIDをコピー">
+                            <div class="copy-icon"></div>
+                            <span class="copy-feedback">コピーしました！</span>
+                        </button>
+                    </div>
+                `;
             } else if (post.type === 'application') {
                 // 申請型の場合、UIDは初期状態では表示せず、募集終了時はさらに非表示に
                 uidHtml = `<div class="uid" style="display: none;">（承認後にUID開示）</div>`; // 実際のUIDは承認ロジックで制御
@@ -648,7 +751,7 @@
             if (postType === 'anyone') {
                 // 誰でも型の場合のUID表示/非表示
                 if (uidDiv.style.display === 'none') {
-                    uidDiv.style.display = 'block';
+                    uidDiv.style.display = 'flex'; // flexにすることで中の要素が横並びになる
                     label.textContent = 'UIDを非表示';
                 } else {
                     uidDiv.style.display = 'none';
@@ -659,6 +762,27 @@
                 // ここに申請詳細を表示するロジックを追加します
                 // 例えば、専用のモーダルを開くなど
                 alert('申請型投稿の詳細は、今後実装予定です。');
+            }
+        }
+
+        // UIDをクリップボードにコピーする関数
+        async function copyUid(buttonElement, uidValue) {
+            const feedbackSpan = buttonElement.querySelector('.copy-feedback');
+            try {
+                await navigator.clipboard.writeText(uidValue);
+                feedbackSpan.textContent = 'コピーしました！';
+                feedbackSpan.classList.add('show');
+                setTimeout(() => {
+                    feedbackSpan.classList.remove('show');
+                }, 1500); // 1.5秒後にメッセージを非表示
+            } catch (err) {
+                console.error('UIDのコピーに失敗しました: ', err);
+                feedbackSpan.textContent = 'コピー失敗...';
+                feedbackSpan.classList.add('show');
+                setTimeout(() => {
+                    feedbackSpan.classList.remove('show');
+                }, 2000); // 2秒後にメッセージを非表示
+                alert('UIDのコピーに失敗しました。手動でコピーしてください。'); // エラー時にはアラートも表示
             }
         }
 
