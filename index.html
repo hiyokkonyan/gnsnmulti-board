@@ -264,7 +264,15 @@
         .ended .content,
         .ended .uid,
         .ended .end-button {
-            filter: blur(2.5px); /* ぼかしを調整（ご自身で調整された値に仮定） */
+            filter: blur(5px); /* ぼかしを調整 */
+        }
+
+        /* UIDエラーメッセージのスタイル */
+        .uid-error-message {
+            color: red;
+            font-size: 0.8em; /* （募集投稿に直接表示されます）と同じくらいの大きさ */
+            margin-left: 5px; /* 横に少しスペースを開ける */
+            display: none; /* 初期は非表示 */
         }
 
         .modal-bg {
@@ -345,7 +353,10 @@
             <label for="nameAnyone">名前（任意）</label>
             <input type="text" id="nameAnyone" placeholder="名無し">
 
-            <label for="uidAnyone">あなたのUID</label>
+            <label>
+                あなたのUID
+                <span id="uidAnyoneValidationMsg" class="uid-error-message"></span>
+            </label>
             <input type="text" id="uidAnyone" placeholder="123456789" maxlength="15">
             <span style="font-size: 0.8em; color: #666;">（募集投稿に直接表示されます）</span>
 
@@ -359,7 +370,10 @@
             <label for="nameApplication">名前（任意）</label>
             <input type="text" id="nameApplication" placeholder="名無し">
 
-            <label for="uidApplication">あなたのUID</label>
+            <label>
+                あなたのUID
+                <span id="uidApplicationValidationMsg" class="uid-error-message"></span>
+            </label>
             <input type="text" id="uidApplication" placeholder="123456789" maxlength="15">
             <span style="font-size: 0.8em; color: #666;">（申請を承認するまで、あなたのUIDは公開されません）</span>
 
@@ -396,15 +410,66 @@
             if (type === 'anyone') {
                 document.getElementById('formAnyone').classList.add('active');
                 document.getElementById('typeButtonAnyone').classList.add('active');
+                // フォーム切り替え時にエラーメッセージをリセット
+                hideUidError('anyone');
             } else if (type === 'application') {
                 document.getElementById('formApplication').classList.add('active');
                 document.getElementById('typeButtonApplication').classList.add('active');
+                // フォーム切り替え時にエラーメッセージをリセット
+                hideUidError('application');
             }
         }
 
         // ボタンクリックでフォーム切り替え
         document.getElementById('typeButtonAnyone').addEventListener('click', () => switchForm('anyone'));
         document.getElementById('typeButtonApplication').addEventListener('click', () => switchForm('application'));
+
+        // UID入力欄のchangeイベントリスナーを設定
+        // changeイベントは入力欄からフォーカスが外れた時（PCでのEnterキー、スマホでの改行キーなど）に発生
+        document.getElementById('uidAnyone').addEventListener('change', (event) => validateUidOnBlur('anyone', event.target.value));
+        document.getElementById('uidApplication').addEventListener('change', (event) => validateUidOnBlur('application', event.target.value));
+
+        // UID入力時のバリデーションと半角変換（入力完了時のみ）
+        function validateUidOnBlur(type, uidValue) {
+            const uidInput = document.getElementById(`uid${type === 'anyone' ? 'Anyone' : 'Application'}`);
+            const errorMsgSpan = document.getElementById(`uid${type === 'anyone' ? 'Anyone' : 'Application'}ValidationMsg`);
+
+            // 全角数字を半角に強制変換
+            const halfWidthUid = toHalfWidthNumbers(uidValue);
+            uidInput.value = halfWidthUid; // 変換した値を入力欄に反映
+
+            // バリデーション
+            let errorMessage = '';
+            if (!/^[0-9]+$/.test(halfWidthUid)) {
+                errorMessage = '数字で入力してください';
+            } else if (halfWidthUid.length < 9) {
+                errorMessage = '9桁以上で入力してください';
+            }
+
+            if (errorMessage) {
+                errorMsgSpan.textContent = errorMessage;
+                errorMsgSpan.style.display = 'inline';
+                return false; // エラーあり
+            } else {
+                errorMsgSpan.textContent = '';
+                errorMsgSpan.style.display = 'none';
+                return true; // エラーなし
+            }
+        }
+
+        // 全角数字を半角数字に変換する関数
+        function toHalfWidthNumbers(str) {
+            return str.replace(/[０-９]/g, function(s) {
+                return String.fromCharCode(s.charCodeAt(0) - 0xFEE0);
+            });
+        }
+
+        // UIDエラーメッセージを非表示にする関数
+        function hideUidError(type) {
+            const errorMsgSpan = document.getElementById(`uid${type === 'anyone' ? 'Anyone' : 'Application'}ValidationMsg`);
+            errorMsgSpan.textContent = '';
+            errorMsgSpan.style.display = 'none';
+        }
 
 
         // 投稿データをlocalStorageに保存
@@ -501,31 +566,34 @@
                 container.appendChild(el);
             });
             // 投稿を表示後、コピーイベントリスナーをセット
-            addCopyBlockers(); // ← 新しい関数を呼び出し
+            addCopyBlockers();
         }
 
         // 投稿ボタン押下時
         function submitPost(type) {
             let name, uid, content;
+            const uidInput = document.getElementById(`uid${type === 'anyone' ? 'Anyone' : 'Application'}`);
+            const contentInput = document.getElementById(`content${type === 'anyone' ? 'Anyone' : 'Application'}`);
 
-            if (type === 'anyone') {
-                name = document.getElementById("nameAnyone").value.trim();
-                uid = document.getElementById("uidAnyone").value.trim();
-                content = document.getElementById("contentAnyone").value.trim();
-            } else if (type === 'application') {
-                name = document.getElementById("nameApplication").value.trim();
-                uid = document.getElementById("uidApplication").value.trim();
-                content = document.getElementById("contentApplication").value.trim();
+            name = document.getElementById(`name${type === 'anyone' ? 'Anyone' : 'Application'}`).value.trim();
+            uid = uidInput.value.trim();
+            content = contentInput.value.trim();
+
+            // UIDの最終バリデーション（投稿ボタン押下時）
+            if (!validateUidOnBlur(type, uid)) {
+                // validateUidOnBlurがfalseを返したら、エラーメッセージが表示されているので、ここで処理を中断
+                alert("UIDに誤りがあります。ご確認ください。"); // ユーザーにエラーがあることを伝えるアラート
+                return;
             }
 
-            if (!uid || !content) {
-                alert("UIDと募集内容は必須です。");
+            if (!content) {
+                alert("募集内容は必須です。");
                 return;
             }
 
             const newPost = {
                 name: name || '名無し',
-                uid: uid,
+                uid: uid, // 半角に変換されたUIDが使用される
                 content: content,
                 timestamp: Date.now(),
                 type: type, // 'anyone' or 'application'
@@ -550,8 +618,9 @@
                 document.getElementById("uidApplication").value = "";
                 document.getElementById("contentApplication").value = "";
             }
+            // フォームクリア時にエラーメッセージもリセット
+            hideUidError(type);
         }
-
 
         // UID表示・非表示のトグル
         function toggleUID(button) {
@@ -639,7 +708,6 @@
             const endedPosts = document.querySelectorAll('.post.ended');
             endedPosts.forEach(post => {
                 // copyイベントリスナーを一度だけ追加する
-                // cloneNodeで要素が再生成されるたびに新しいリスナーが必要
                 if (!post.dataset.copyBlocked) { // フラグで重複追加を防ぐ
                     post.addEventListener('copy', blockCopy);
                     post.dataset.copyBlocked = 'true'; // フラグを設定
