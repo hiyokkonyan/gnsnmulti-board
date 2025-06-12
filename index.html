@@ -521,7 +521,7 @@
     </div>
 
     <div class="posts-container" id="postsContainer">
-        </div>
+    </div>
 
     <div class="modal-bg" id="modalBg">
         <div class="modal">
@@ -706,8 +706,10 @@
             }
 
             // VCとワールドの表示を新しい形式に変換
+            // worldのカッコ内を削除する処理を追加
+            const cleanedWorld = post.world.replace(/（募集主）|（参加者）/g, '');
             const vcDisplay = `<div class="option-display"><span class="option-circle vc-${post.vc}-circle"></span>${post.vc}</div>`;
-            const worldDisplay = `<div class="option-display"><span class="option-circle world-${post.world.replace(/（募集主）|（参加者）/g, '')}-circle"></span>${post.world.replace(/（募集主）|（参加者）/g, '')}</div>`; //カッコ内を削除
+            const worldDisplay = `<div class="option-display"><span class="option-circle world-${cleanedWorld}-circle"></span>${cleanedWorld}</div>`;
 
             div.innerHTML = `
                 <div class="header">
