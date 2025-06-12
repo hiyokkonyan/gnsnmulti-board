@@ -71,34 +71,40 @@
         .form-container label {
             display: block;
             margin-top: 15px;
-            margin-bottom: 5px; /* ここを調整: 質問と選択肢の間の幅 */
+            margin-bottom: 5px; /* ここを以前の5pxに戻す */
             font-weight: bold;
             font-size: 0.95em;
         }
         
         /* 質問と質問の間の幅を調整するためのクラス */
+        /* これはVCは？のラベルにのみ適用される */
         .form-label-margin-bottom {
-            margin-bottom: 25px; /* ここを広げる */
+            margin-bottom: 25px; 
+        }
+
+        /* VCとテイワットの質問のラベルにのみ適用し、ラジオボタンとの距離を詰める */
+        .radio-question-label {
+            margin-bottom: 2px; /* この新しいクラスで質問とラジオボタンの距離を詰める */
         }
 
 
         /* ラジオボタン用のスタイル */
         .radio-group {
-            margin-top: 5px; /* ここを調整: 質問と選択肢の間の幅 */
-            margin-bottom: 15px; /* ここを調整: ラジオグループと次の要素の間の幅 */
+            margin-top: 3px; /* ここを調整: 質問と選択肢の間の幅をさらに詰める */
+            margin-bottom: 15px; 
             display: flex;
             flex-wrap: wrap;
             gap: 10px;
         }
 
         .radio-group label {
-            display: inline-flex; /* ラジオボタンとテキストを横並びにする */
+            display: inline-flex; 
             align-items: center;
-            margin-bottom: 0; /* 親のlabelのmargin-bottomを打ち消す */
-            font-weight: normal; /* 親のlabelの太字を打ち消す */
+            margin-bottom: 0; 
+            font-weight: normal; 
             font-size: 0.9em;
             cursor: pointer;
-            padding: 5px 10px; /* クリックしやすいようにパディングを追加 */
+            padding: 5px 10px; 
             border: 1px solid #ccc;
             border-radius: 4px;
             background-color: #f0f0f0;
@@ -107,7 +113,7 @@
 
         .radio-group input[type="radio"] {
             margin-right: 5px;
-            transform: scale(1.1); /* ラジオボタンを少し大きく */
+            transform: scale(1.1); 
             cursor: pointer;
         }
 
@@ -213,20 +219,19 @@
             margin: 10px 0 15px;
             line-height: 1.6;
             font-size: 1.05em;
-            white-space: pre-wrap; /* 改行を反映 */
-            word-wrap: break-word; /* 長い単語の折り返し */
+            white-space: pre-wrap; 
+            word-wrap: break-word; 
         }
 
-        /* VC/テイワット タグのスタイル */
         .post-tags {
             margin-top: 10px;
             display: flex;
             flex-wrap: wrap;
-            gap: 8px; /* タグ間のスペース */
-            font-size: 0.85em; /* 文字を小さめに */
-            padding-bottom: 5px; /* 下に少し余白 */
-            border-bottom: 1px dashed #eee; /* 薄い点線の下線 */
-            margin-bottom: 10px; /* タグの下にスペース */
+            gap: 8px; 
+            font-size: 0.85em; 
+            padding-bottom: 5px; 
+            border-bottom: 1px dashed #eee; 
+            margin-bottom: 10px; 
         }
 
         .tag {
@@ -236,50 +241,45 @@
             display: inline-flex;
             align-items: center;
             gap: 4px;
-            white-space: nowrap; /* タグ内で改行しない */
+            white-space: nowrap; 
         }
 
-        /* VCタグの色分け */
         .tag.vc-tag-VCあり {
-            background-color: #e0f2f7; /* 明るい水色 */
-            color: #2a6a8a; /* 濃いめの水色 */
+            background-color: #e0f2f7; 
+            color: #2a6a8a; 
             border: 1px solid #c9e6f0;
         }
         .tag.vc-tag-VCなし {
-            background-color: #f0f0f0; /* 灰色 */
+            background-color: #f0f0f0; 
             color: #555;
             border: 1px solid #ddd;
         }
-        /* "どちらでも" のタグスタイル (VCからは削除されたがCSSには残す) */
         .tag.vc-tag-どちらでも {
-            background-color: #fcebeb; /* 淡い赤系 */
+            background-color: #fcebeb; 
             color: #a04040;
             border: 1px solid #fbdcdc;
         }
 
-        /* テイワットタグの色分け */
         .tag.teiwat-tag-私のテイワット {
-            background-color: #e6ffe6; /* 明るい緑色 */
-            color: #3d8c3d; /* 濃いめの緑色 */
+            background-color: #e6ffe6; 
+            color: #3d8c3d; 
             border: 1px solid #d2f0d2;
         }
         .tag.teiwat-tag-あなたのテイワット {
-            background-color: #fff3e0; /* 明るいオレンジ */
-            color: #e65100; /* 濃いオレンジ */
+            background-color: #fff3e0; 
+            color: #e65100; 
             border: 1px solid #ffddb3;
         }
         .tag.teiwat-tag-どちらでも {
-            background-color: #e8eaf6; /* 薄い紫 */
-            color: #3f51b5; /* 濃い紫 */
+            background-color: #e8eaf6; 
+            color: #3f51b5; 
             border: 1px solid #c5cae9;
         }
 
         .tag i {
-            font-size: 1em; /* アイコンサイズを調整 */
+            font-size: 1em; 
         }
 
-
-        /* UID表示部分のスタイル */
         .uid {
             margin-top: 10px;
             font-size: 0.9em;
@@ -287,14 +287,14 @@
             background-color: #eef;
             padding: 6px 10px;
             border-radius: 4px;
-            display: none; /* 初期は非表示 */
-            display: flex; /* Flexboxで中身を横並びにする */
-            align-items: center; /* 垂直方向中央揃え */
-            justify-content: space-between; /* UIDとコピーボタンを両端に */
+            display: none; 
+            display: flex; 
+            align-items: center; 
+            justify-content: space-between; 
         }
 
         .uid-value {
-            font-weight: bold; /* UIDの数字を強調 */
+            font-weight: bold; 
         }
 
         .end-button {
@@ -313,7 +313,6 @@
             background-color: #4a7390;
         }
 
-        /* UID表示・非表示の目アイコン */
         .eye {
             position: relative;
             display: inline-block;
@@ -346,67 +345,62 @@
             image-rendering: pixelated;
         }
 
-        /* コピーボタンのスタイル */
         .copy-button {
             background: none;
             border: none;
-            color: #5A8EA8; /* アイコンの色 */
+            color: #5A8EA8; 
             cursor: pointer;
-            font-size: 1.2em; /* アイコンのサイズ調整 */
+            font-size: 1.2em; 
             padding: 0 5px;
             margin-left: 10px;
-            display: flex; /* アイコン中央揃え用 */
+            display: flex; 
             align-items: center;
             justify-content: center;
-            position: relative; /* コピーしました表示用 */
+            position: relative; 
             transition: color 0.2s;
-            /* 点滅カーソルとフォーカスのアウトラインを消す */
             outline: none;
             text-decoration: none;
-            caret-color: transparent; /* キャレットの色を透明に */
+            caret-color: transparent; 
         }
         .copy-button:hover {
             color: #4a7390;
         }
 
-        /* コピー成功時のフィードバックメッセージ */
         .copy-feedback {
             position: absolute;
-            top: -20px; /* ボタンの少し上に表示（数値で調整） */
+            top: -20px; 
             left: 50%;
-            transform: translate(-50%, 0); /* Y軸のtranslateを0にすることで、topからの距離を正確にする */
+            transform: translate(-50%, 0); 
             background-color: rgba(0, 0, 0, 0.7);
             color: white;
-            padding: 4px 8px; /* パディングを小さく */
+            padding: 4px 8px; 
             border-radius: 4px;
-            font-size: 0.7em; /* フォントサイズを小さく */
+            font-size: 0.7em; 
             white-space: nowrap;
             opacity: 0;
             transition: opacity 0.3s ease-out;
-            pointer-events: none; /* クリックを阻害しない */
+            pointer-events: none; 
             z-index: 10;
         }
         .copy-feedback.show {
             opacity: 1;
         }
 
-
-        /* 募集終了時のスタイル */
         .ended {
-            opacity: 0.6; /* 全体的に薄くする */
+            opacity: 0.6; 
             position: relative;
-            pointer-events: none; /* クリックイベント無効化 */
-            user-select: none; /* ← 追加: テキスト選択を無効化 */
-            -webkit-user-select: none; /* Safari, Chrome */
-            -moz-user-select: none;    /* Firefox */
-            -ms-user-select: none;     /* IE/Edge */
+            pointer-events: none; 
+            user-select: none; 
+            -webkit-user-select: none; 
+            -moz-user-select: none;    
+            -ms-user-select: none;     
         }
 
         .ended::before {
             content: "";
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
-            background-color: rgba(128, 128, 128, 0.1); /* オーバーレイ */
+            background-color: rgba(128, 128, 128, 0.1); 
             border-radius: 8px;
             z-index: 1;
         }
@@ -414,33 +408,32 @@
         .ended::after {
             content: '募集は終了しました';
             position: absolute;
-            left: 50%; /* 中央に配置 */
+            left: 50%; 
             top: 50%;
-            transform: translate(-50.5%, -50%); /* Y軸中央寄せを維持しつつ、X軸を微調整（-50.5%を適用） */
-            color: #444; /* 文字色を濃いグレーに変更 */
+            transform: translate(-50.5%, -50%); 
+            color: #444; 
             font-weight: bold;
             padding: 4px 10px;
             border-radius: 6px;
             z-index: 2;
             font-size: 1.1em;
             white-space: nowrap;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3); /* 文字に影を追加 */
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3); 
         }
 
         .ended .header,
         .ended .content,
         .ended .uid,
         .ended .end-button,
-        .ended .post-tags { /* タグもぼかす対象に追加 */
-            filter: blur(5px); /* ぼかしを調整 */
+        .ended .post-tags { 
+            filter: blur(5px); 
         }
 
-        /* UIDエラーメッセージのスタイル */
         .uid-error-message {
             color: red;
-            font-size: 0.8em; /* （募集投稿に直接表示されます）と同じくらいの大きさ */
-            margin-left: 5px; /* 横に少しスペースを開ける */
-            display: none; /* 初期は非表示 */
+            font-size: 0.8em; 
+            margin-left: 5px; 
+            display: none; 
         }
 
         .modal-bg {
@@ -451,7 +444,7 @@
             justify-content: center;
             align-items: center;
             z-index: 1000;
-            display: none; /* 初期は非表示 */
+            display: none; 
         }
 
         .modal {
@@ -528,7 +521,7 @@
             <input type="text" id="uidAnyone" placeholder="123456789" maxlength="15">
             <span style="font-size: 0.8em; color: #666;">（募集投稿に直接表示されます）</span>
 
-            <label class="form-label-margin-bottom">VCは？</label>
+            <label class="form-label-margin-bottom radio-question-label">VCは？</label>
             <div class="radio-group">
                 <label>
                     <input type="radio" name="vcAnyone" value="VCあり" checked>
@@ -540,7 +533,7 @@
                 </label>
             </div>
 
-            <label>どちらのテイワットで遊ぶ？</label>
+            <label class="radio-question-label">どちらのテイワットで遊ぶ？</label>
             <div class="radio-group">
                 <label>
                     <input type="radio" name="teiwatAnyone" value="私のテイワット" checked>
@@ -573,7 +566,7 @@
             <input type="text" id="uidApplication" placeholder="123456789" maxlength="15">
             <span style="font-size: 0.8em; color: #666;">（申請を承認するまで、あなたのUIDは公開されません）</span>
 
-            <label class="form-label-margin-bottom">VCは？</label>
+            <label class="form-label-margin-bottom radio-question-label">VCは？</label>
             <div class="radio-group">
                 <label>
                     <input type="radio" name="vcApplication" value="VCあり" checked>
@@ -585,7 +578,7 @@
                 </label>
             </div>
 
-            <label>どちらのテイワットで遊ぶ？</label>
+            <label class="radio-question-label">どちらのテイワットで遊ぶ？</label>
             <div class="radio-group">
                 <label>
                     <input type="radio" name="teiwatApplication" value="私のテイワット" checked>
