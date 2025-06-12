@@ -259,8 +259,7 @@
         /* コピー成功時のフィードバックメッセージ */
         .copy-feedback {
             position: absolute;
-            /* ここを調整 */
-            top: -20px; /* ボタンの少し上に表示 */
+            top: -20px; /* ボタンの少し上に表示（数値で調整） */
             left: 50%;
             transform: translate(-50%, 0); /* Y軸のtranslateを0にすることで、topからの距離を正確にする */
             background-color: rgba(0, 0, 0, 0.7);
@@ -305,7 +304,8 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            color: #5A8EA8;
+            /* ここを調整 */
+            color: #7F9EB0; /* 彩度を落とした青系の色に変更 */
             font-weight: bold;
             background-color: rgba(255, 255, 255, 0.9); /* 白背景で見やすく */
             padding: 4px 10px;
