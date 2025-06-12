@@ -2,6 +2,7 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>マルチ募集掲示板</title>
 
     <link href="https://fonts.googleapis.com/css2?family=Rounded+Mplus+1c&display=swap" rel="stylesheet" />
@@ -55,7 +56,7 @@
             border: 1px solid #ccc;
             border-radius: 8px;
             padding: 20px;
-            max-width: 500px;
+            max-width: 500px; /* PCでの最大幅 */
             margin: 0 auto 30px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
@@ -71,7 +72,7 @@
         .form-container label {
             display: block;
             margin-top: 15px;
-            margin-bottom: 5px; /* ここは変更せず、他のラベルに影響を与えない */
+            margin-bottom: 5px; 
             font-weight: bold;
             font-size: 0.95em;
         }
@@ -84,11 +85,11 @@
 
         /* ラジオボタン用のスタイル */
         .radio-group {
-            margin-top: 5px; /* ここも変更せず、他の要素に影響を与えない */
+            margin-top: 5px; 
             margin-bottom: 15px; 
             display: flex;
             flex-wrap: wrap;
-            gap: 10px;
+            gap: 10px; /* PCでの選択肢間の余白 */
         }
 
         .radio-group label {
@@ -172,7 +173,7 @@
             margin: 15px auto;
             border-radius: 8px;
             background-color: #fdfdfd;
-            max-width: 500px;
+            max-width: 500px; /* PCでの最大幅 */
             position: relative;
             box-shadow: 0 1px 3px rgba(0,0,0,0.08);
         }
@@ -493,6 +494,123 @@
             max-width: 600px;
             margin: 0 auto;
         }
+
+        /* スマートフォン向けスタイル */
+        @media (max-width: 768px) { /* 768px以下をスマートフォンと見なす */
+            body {
+                padding: 10px; /* 全体のパディングを減らす */
+            }
+
+            h1 {
+                font-size: 1.4em; /* タイトルを少し小さく */
+            }
+
+            .type-switcher {
+                flex-wrap: wrap; /* ボタンが複数行になる可能性も考慮 */
+                gap: 5px; /* ボタン間の間隔を狭める */
+                margin-bottom: 15px;
+            }
+            .type-button {
+                padding: 8px 15px; /* ボタンのパディングを減らす */
+                font-size: 0.9em;
+            }
+
+            .form-container, .post {
+                padding: 15px; /* フォームと投稿のパディングを減らす */
+                max-width: 100%; /* 最大幅を画面幅に合わせる */
+                margin: 0 auto 20px; /* 左右の余白をなくす（autoで中央寄せ） */
+                border-radius: 0; /* 角丸をなくす（任意） */
+            }
+
+            .form-container label {
+                font-size: 0.9em; /* ラベルのフォントサイズを調整 */
+                margin-top: 12px;
+                margin-bottom: 3px;
+            }
+
+            .radio-group {
+                gap: 5px; /* ラジオボタン間の間隔を狭める */
+                margin-bottom: 10px;
+            }
+
+            .radio-group label {
+                padding: 4px 8px; /* ラジオボタンのパディングを減らす */
+                font-size: 0.85em;
+            }
+
+            /* VCは？のラベルのスタイル */
+            .form-label-margin-bottom {
+                margin-bottom: 20px; /* 少し狭める */
+            }
+
+            /* どちらのテイワットで遊ぶ？のラベルのスタイル */
+            .form-container label[style*="margin-top: 20px;"] {
+                margin-top: 15px !important; /* スマホでは少し狭める */
+            }
+            /* この!importantは直接style属性に記述したものを上書きするため */
+            /* もしstyle属性が優先されすぎる場合は、classを追加して上書きする方が安全 */
+
+            .form-container input[type="text"],
+            .form-container textarea,
+            .form-container select {
+                padding: 6px; /* 入力欄のパディングを減らす */
+                font-size: 0.9em;
+            }
+
+            .form-container button {
+                padding: 10px 20px; /* ボタンのパディングを減らす */
+                font-size: 1em;
+                margin-top: 20px;
+            }
+
+            .post .header {
+                font-size: 0.8em;
+            }
+
+            .post .name {
+                font-size: 1em;
+            }
+
+            .uid-toggle {
+                font-size: 0.8em;
+            }
+
+            .content {
+                font-size: 0.95em;
+            }
+
+            .post-tags {
+                gap: 5px;
+                font-size: 0.8em;
+            }
+
+            .tag {
+                padding: 3px 6px;
+            }
+
+            .uid {
+                font-size: 0.8em;
+                padding: 5px 8px;
+            }
+
+            .end-button {
+                padding: 6px 12px;
+                font-size: 0.8em;
+            }
+
+            .modal {
+                padding: 20px;
+                max-width: 90%;
+                font-size: 1em;
+            }
+            .modal-buttons {
+                gap: 10px;
+            }
+            .modal-button {
+                padding: 8px 15px;
+                font-size: 0.9em;
+            }
+        }
     </style>
 </head>
 <body>
@@ -589,7 +707,7 @@
             </div>
 
             <label for="contentApplication">募集内容</label>
-            <textarea id="contentApplication" rows="4" placeholder="募集内容の詳細を入力してください。例：まったり探索、素材集め、お助けしますなど"></textarea>
+            <textarea id="contentApplication" rows="4" placeholder="募集内容の詳細を入力してください。例：まったり探索、素材集め、お手伝いしますなど"></textarea>
 
             <button onclick="submitPost('application')">投稿する</button>
         </div>
