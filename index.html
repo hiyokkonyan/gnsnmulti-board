@@ -392,6 +392,23 @@
             max-width: 600px;
             margin: 0 auto;
         }
+
+        /* VCおよびテイワット選択のスタイル */
+        .radio-group {
+            margin-top: 15px;
+            margin-bottom: 10px;
+        }
+
+        .radio-group label {
+            display: inline-block; /* ラジオボタンのラベルを横並びに */
+            margin-right: 15px;
+            font-weight: normal; /* 親のlabelのスタイルを継承しないように */
+            margin-bottom: 0; /* 親のlabelのmargin-bottomをリセット */
+        }
+
+        .radio-group input[type="radio"] {
+            margin-right: 5px;
+        }
     </style>
 </head>
 <body>
@@ -414,6 +431,18 @@
             <input type="text" id="uidAnyone" placeholder="123456789" maxlength="15">
             <span style="font-size: 0.8em; color: #666;">（募集投稿に直接表示されます）</span>
 
+            <label>VCは？</label>
+            <div class="radio-group">
+                <label><input type="radio" name="vcAnyone" value="あり" checked> VCあり</label>
+                <label><input type="radio" name="vcAnyone" value="なし"> VCなし</label>
+            </div>
+
+            <label>プレイするワールドは？</label>
+            <div class="radio-group">
+                <label><input type="radio" name="worldAnyone" value="募集主" checked> あなたのテイワット（募集主）</label>
+                <label><input type="radio" name="worldAnyone" value="参加者"> 私のテイワット（参加者）</label>
+            </div>
+
             <label for="contentAnyone">募集内容</label>
             <textarea id="contentAnyone" rows="4" placeholder="募集内容の詳細を入力してください。例：秘境の周回、週ボス、素材集めなど"></textarea>
 
@@ -430,6 +459,18 @@
             </label>
             <input type="text" id="uidApplication" placeholder="123456789" maxlength="15">
             <span style="font-size: 0.8em; color: #666;">（申請を承認するまで、あなたのUIDは公開されません）</span>
+
+            <label>VCは？</label>
+            <div class="radio-group">
+                <label><input type="radio" name="vcApplication" value="あり" checked> VCあり</label>
+                <label><input type="radio" name="vcApplication" value="なし"> VCなし</label>
+            </div>
+
+            <label>プレイするワールドは？</label>
+            <div class="radio-group">
+                <label><input type="radio" name="worldApplication" value="募集主" checked> あなたのテイワット（募集主）</label>
+                <label><input type="radio" name="worldApplication" value="参加者"> 私のテイワット（参加者）</label>
+            </div>
 
             <label for="contentApplication">募集内容</label>
             <textarea id="contentApplication" rows="4" placeholder="募集内容を具体的に入力してください。例：〇〇の周回、エンジョイ勢募集など"></textarea>
@@ -634,7 +675,11 @@
                     </span>
                     <span class="time">${formatTime(post.timestamp)}</span>
                 </div>
-                <div class="content">${escapeHtml(post.content)}</div>
+                <div class="content">
+                    <p><strong>VC:</strong> ${post.vc}</p>
+                    <p><strong>ワールド:</strong> ${post.world}</p>
+                    <p>${escapeHtml(post.content)}</p>
+                </div>
                 ${uidHtml}
                 <button class="end-button" onclick="openConfirm(this)" style="display: ${post.isEnded ? 'none' : 'block'};">募集を終了する</button>
             `;
@@ -657,12 +702,14 @@
 
         // 投稿ボタン押下時
         function submitPost(type) {
-            let name, uid, content;
+            let name, uid, vc, world, content;
             const uidInput = document.getElementById(`uid${type === 'anyone' ? 'Anyone' : 'Application'}`);
             const contentInput = document.getElementById(`content${type === 'anyone' ? 'Anyone' : 'Application'}`);
 
             name = document.getElementById(`name${type === 'anyone' ? 'Anyone' : 'Application'}`).value.trim();
             uid = uidInput.value.trim();
+            vc = document.querySelector(`input[name="vc${type === 'anyone' ? 'Anyone' : 'Application'}"]:checked`).value;
+            world = document.querySelector(`input[name="world${type === 'anyone' ? 'Anyone' : 'Application'}"]:checked`).value;
             content = contentInput.value.trim();
 
             // UIDの最終バリデーション（投稿ボタン押下時）
@@ -677,7 +724,6 @@
                 return;
             }
 
-
             if (!content) {
                 alert("募集内容は必須です。");
                 return;
@@ -686,6 +732,8 @@
             const newPost = {
                 name: escapeHtml(name || '名無し'), // ここでエスケープ処理を適用
                 uid: uid, // 半角に変換されたUIDが使用される
+                vc: vc,
+                world: world,
                 content: escapeHtml(content), // ここでエスケープ処理を適用
                 timestamp: Date.now(),
                 type: type, // 'anyone' or 'application'
@@ -704,10 +752,14 @@
             if (type === 'anyone') {
                 document.getElementById("nameAnyone").value = "";
                 document.getElementById("uidAnyone").value = "";
+                document.querySelector('input[name="vcAnyone"][value="あり"]').checked = true; // VC初期値に戻す
+                document.querySelector('input[name="worldAnyone"][value="募集主"]').checked = true; // World初期値に戻す
                 document.getElementById("contentAnyone").value = "";
             } else if (type === 'application') {
                 document.getElementById("nameApplication").value = "";
                 document.getElementById("uidApplication").value = "";
+                document.querySelector('input[name="vcApplication"][value="あり"]').checked = true; // VC初期値に戻す
+                document.querySelector('input[name="worldApplication"][value="募集主"]').checked = true; // World初期値に戻す
                 document.getElementById("contentApplication").value = "";
             }
             // フォームクリア時にエラーメッセージもリセット
