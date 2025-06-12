@@ -256,20 +256,18 @@
             color: #4a7390;
         }
 
-        /* 以前の copy-icon に関するCSSは削除 */
-        /* .copy-icon, .copy-icon::before, .copy-icon::after は不要 */
-
         /* コピー成功時のフィードバックメッセージ */
         .copy-feedback {
             position: absolute;
-            top: 50%;
+            /* ここを調整 */
+            top: -20px; /* ボタンの少し上に表示 */
             left: 50%;
-            transform: translate(-50%, -50%);
+            transform: translate(-50%, 0); /* Y軸のtranslateを0にすることで、topからの距離を正確にする */
             background-color: rgba(0, 0, 0, 0.7);
             color: white;
-            padding: 5px 10px;
+            padding: 4px 8px; /* パディングを小さく */
             border-radius: 4px;
-            font-size: 0.8em;
+            font-size: 0.7em; /* フォントサイズを小さく */
             white-space: nowrap;
             opacity: 0;
             transition: opacity 0.3s ease-out;
