@@ -71,15 +71,21 @@
         .form-container label {
             display: block;
             margin-top: 15px;
-            margin-bottom: 5px;
+            margin-bottom: 5px; /* ここを調整: 質問と選択肢の間の幅 */
             font-weight: bold;
             font-size: 0.95em;
         }
+        
+        /* 質問と質問の間の幅を調整するためのクラス */
+        .form-label-margin-bottom {
+            margin-bottom: 25px; /* ここを広げる */
+        }
+
 
         /* ラジオボタン用のスタイル */
         .radio-group {
-            margin-top: 10px;
-            margin-bottom: 15px;
+            margin-top: 5px; /* ここを調整: 質問と選択肢の間の幅 */
+            margin-bottom: 15px; /* ここを調整: ラジオグループと次の要素の間の幅 */
             display: flex;
             flex-wrap: wrap;
             gap: 10px;
@@ -244,6 +250,7 @@
             color: #555;
             border: 1px solid #ddd;
         }
+        /* "どちらでも" のタグスタイル (VCからは削除されたがCSSには残す) */
         .tag.vc-tag-どちらでも {
             background-color: #fcebeb; /* 淡い赤系 */
             color: #a04040;
@@ -521,7 +528,7 @@
             <input type="text" id="uidAnyone" placeholder="123456789" maxlength="15">
             <span style="font-size: 0.8em; color: #666;">（募集投稿に直接表示されます）</span>
 
-            <label>VCは？</label>
+            <label class="form-label-margin-bottom">VCは？</label>
             <div class="radio-group">
                 <label>
                     <input type="radio" name="vcAnyone" value="VCあり" checked>
@@ -530,10 +537,6 @@
                 <label>
                     <input type="radio" name="vcAnyone" value="VCなし">
                     <span>VCなし</span>
-                </label>
-                <label>
-                    <input type="radio" name="vcAnyone" value="どちらでも">
-                    <span>どちらでも</span>
                 </label>
             </div>
 
@@ -553,8 +556,8 @@
                 </label>
             </div>
 
-            <label for="contentAnyone">募集内容の詳細を入力してください。例：秘境の周回、週ボス、素材集めなど</label>
-            <textarea id="contentAnyone" rows="4" placeholder="具体的な募集内容や目的を記入してください。"></textarea>
+            <label for="contentAnyone">募集内容</label>
+            <textarea id="contentAnyone" rows="4" placeholder="例：秘境の周回、週ボス、素材集めなど"></textarea>
 
             <button onclick="submitPost('anyone')">投稿する</button>
         </div>
@@ -570,7 +573,7 @@
             <input type="text" id="uidApplication" placeholder="123456789" maxlength="15">
             <span style="font-size: 0.8em; color: #666;">（申請を承認するまで、あなたのUIDは公開されません）</span>
 
-            <label>VCは？</label>
+            <label class="form-label-margin-bottom">VCは？</label>
             <div class="radio-group">
                 <label>
                     <input type="radio" name="vcApplication" value="VCあり" checked>
@@ -579,10 +582,6 @@
                 <label>
                     <input type="radio" name="vcApplication" value="VCなし">
                     <span>VCなし</span>
-                </label>
-                <label>
-                    <input type="radio" name="vcApplication" value="どちらでも">
-                    <span>どちらでも</span>
                 </label>
             </div>
 
@@ -602,8 +601,8 @@
                 </label>
             </div>
 
-            <label for="contentApplication">募集内容の詳細を入力してください。例：〇〇秘境の高速周回、まったり素材集め（VCなし）など</label>
-            <textarea id="contentApplication" rows="4" placeholder="具体的な募集内容や目的を記入してください。"></textarea>
+            <label for="contentApplication">募集内容</label>
+            <textarea id="contentApplication" rows="4" placeholder="例：〇〇秘境の高速周回、まったり素材集め（VCなし）など"></textarea>
 
             <button onclick="submitPost('application')">投稿する</button>
         </div>
@@ -795,7 +794,7 @@
                     let vcIcon = '';
                     if (post.vcOption === 'VCあり') vcIcon = '<i class="fa-solid fa-microphone-alt"></i>';
                     else if (post.vcOption === 'VCなし') vcIcon = '<i class="fa-solid fa-microphone-alt-slash"></i>';
-                    else if (post.vcOption === 'どちらでも') vcIcon = '<i class="fa-solid fa-sync-alt"></i>'; // どちらでものアイコン
+                    // VCの「どちらでも」は投稿フォームから削除されたため、ここでは考慮しない
                     tagsHtml += `<span class="tag vc-tag-${post.vcOption.replace(/\s+/g, '')}">${vcIcon} ${post.vcOption}</span>`;
                 }
                 if (post.teiwatOption) {
