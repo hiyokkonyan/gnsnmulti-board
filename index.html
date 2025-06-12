@@ -6,6 +6,7 @@
     <title>マルチ募集掲示板</title>
 
     <link href="https://fonts.googleapis.com/css2?family=Rounded+Mplus+1c&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
     <style>
@@ -192,24 +193,26 @@
             align-items: center;
             font-size: 0.85em;
             color: #666;
+            /* 名前とUIDトグルの間にスペースを確保 */
             margin-bottom: 10px;
         }
 
         .post .name {
             font-weight: bold;
             color: #555;
-            /* .postのpadding-left分を考慮すると実質0になるはず */
+            /* postのpadding-left(15px)と同じ位置に揃えるため、margin-leftは0 */
             margin-left: 0; 
         }
 
-        .post .world-rank-display { /* 世界ランク表示用のスタイルを追加 */
+        .post .world-rank-display { /* 世界ランク表示用のスタイル */
             font-weight: bold;
             color: #555; /* 名前の色と同じ */
             font-size: 1em; /* 名前のサイズと同じ */
             margin-top: 5px; /* 名前との間隔 */
             margin-bottom: 10px; /* 募集内容との間隔 */
             text-align: left; /* 左揃え */
-            padding-left: 0; /* ★ここを0に設定★ */
+            /* postのpadding-left(15px)と同じ位置に揃えるため、padding-leftは0 */
+            padding-left: 0; 
         }
 
         .uid-toggle {
@@ -236,6 +239,9 @@
             font-size: 1.05em;
             white-space: pre-wrap; 
             word-wrap: break-word; 
+            /* ★募集内容のフォントをNoto Sans JPに変更★ */
+            font-family: 'Noto Sans JP', 'Hiragino Sans', 'Meiryo', sans-serif;
+            font-weight: 400; /* 通常の太さ */
         }
 
         .post-tags {
@@ -597,6 +603,8 @@
 
             .content {
                 font-size: 0.95em;
+                /* スマホでの募集内容フォントも調整 */
+                font-family: 'Noto Sans JP', 'Hiragino Sans', 'Meiryo', sans-serif;
             }
 
             .post-tags {
