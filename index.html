@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ja">
 <head>
     <meta charset="UTF-8" />
@@ -301,13 +301,11 @@
         .ended::after {
             content: '募集は終了しました';
             position: absolute;
+            left: 50%; /* 中央に配置 */
             top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            /* ここを調整 */
+            transform: translate(-50.5%, -50%); /* Y軸中央寄せを維持しつつ、X軸を微調整（-50.5%を適用） */
             color: #444; /* 文字色を濃いグレーに変更 */
             font-weight: bold;
-            /* background-color: rgba(255, 255, 255, 0.9);  白背景を削除 */
             padding: 4px 10px;
             border-radius: 6px;
             z-index: 2;
