@@ -71,26 +71,20 @@
         .form-container label {
             display: block;
             margin-top: 15px;
-            margin-bottom: 5px; /* ここを以前の5pxに戻す */
+            margin-bottom: 5px; /* ここは変更せず、他のラベルに影響を与えない */
             font-weight: bold;
             font-size: 0.95em;
         }
         
         /* 質問と質問の間の幅を調整するためのクラス */
-        /* これはVCは？のラベルにのみ適用される */
+        /* これはVCは？のラベルにのみ適用される（今回は変更なし） */
         .form-label-margin-bottom {
             margin-bottom: 25px; 
         }
 
-        /* VCとテイワットの質問のラベルにのみ適用し、ラジオボタンとの距離を詰める */
-        .radio-question-label {
-            margin-bottom: 2px; /* この新しいクラスで質問とラジオボタンの距離を詰める */
-        }
-
-
         /* ラジオボタン用のスタイル */
         .radio-group {
-            margin-top: 3px; /* ここを調整: 質問と選択肢の間の幅をさらに詰める */
+            margin-top: 5px; /* ここも変更せず、他の要素に影響を与えない */
             margin-bottom: 15px; 
             display: flex;
             flex-wrap: wrap;
@@ -521,7 +515,7 @@
             <input type="text" id="uidAnyone" placeholder="123456789" maxlength="15">
             <span style="font-size: 0.8em; color: #666;">（募集投稿に直接表示されます）</span>
 
-            <label class="form-label-margin-bottom radio-question-label">VCは？</label>
+            <label class="form-label-margin-bottom" style="margin-bottom: -5px;">VCは？</label>
             <div class="radio-group">
                 <label>
                     <input type="radio" name="vcAnyone" value="VCあり" checked>
@@ -533,7 +527,7 @@
                 </label>
             </div>
 
-            <label class="radio-question-label">どちらのテイワットで遊ぶ？</label>
+            <label style="margin-bottom: -5px;">どちらのテイワットで遊ぶ？</label>
             <div class="radio-group">
                 <label>
                     <input type="radio" name="teiwatAnyone" value="私のテイワット" checked>
@@ -566,7 +560,7 @@
             <input type="text" id="uidApplication" placeholder="123456789" maxlength="15">
             <span style="font-size: 0.8em; color: #666;">（申請を承認するまで、あなたのUIDは公開されません）</span>
 
-            <label class="form-label-margin-bottom radio-question-label">VCは？</label>
+            <label class="form-label-margin-bottom" style="margin-bottom: -5px;">VCは？</label>
             <div class="radio-group">
                 <label>
                     <input type="radio" name="vcApplication" value="VCあり" checked>
@@ -578,7 +572,7 @@
                 </label>
             </div>
 
-            <label class="radio-question-label">どちらのテイワットで遊ぶ？</label>
+            <label style="margin-bottom: -5px;">どちらのテイワットで遊ぶ？</label>
             <div class="radio-group">
                 <label>
                     <input type="radio" name="teiwatApplication" value="私のテイワット" checked>
