@@ -396,15 +396,21 @@
         /* VCおよびテイワット選択のスタイル */
         .radio-group {
             margin-top: 5px; /* 質問からの距離を狭める */
-            margin-bottom: 25px; /* 次の質問との距離を広げる */
+            /* margin-bottomは個別のradio-groupで調整 */
         }
 
         /* VCラジオボタンの調整 */
+        .radio-group.vc-options {
+            margin-bottom: 25px; /* 次の質問との距離を広げる */
+        }
         .radio-group.vc-options label {
             margin-right: 10px; /* VCの選択肢間の距離を狭める */
         }
 
         /* テイワットラジオボタンの調整 */
+        .radio-group.world-options {
+            margin-bottom: 15px; /* 募集内容との距離を調整 */
+        }
         .radio-group.world-options label {
             margin-right: 10px; /* テイワットの選択肢間の距離を狭める */
         }
@@ -444,8 +450,8 @@
 
             <label>VCは？</label>
             <div class="radio-group vc-options">
-                <label><input type="radio" name="vcAnyone" value="あり" checked> VCあり</label>
-                <label><input type="radio" name="vcAnyone" value="なし"> VCなし</label>
+                <label><input type="radio" name="vcAnyone" value="なし" checked> VCなし</label>
+                <label><input type="radio" name="vcAnyone" value="あり"> VCあり</label>
             </div>
 
             <label>どちらのテイワットで遊ぶ？</label>
@@ -473,8 +479,8 @@
 
             <label>VCは？</label>
             <div class="radio-group vc-options">
-                <label><input type="radio" name="vcApplication" value="あり" checked> VCあり</label>
-                <label><input type="radio" name="vcApplication" value="なし"> VCなし</label>
+                <label><input type="radio" name="vcApplication" value="なし" checked> VCなし</label>
+                <label><input type="radio" name="vcApplication" value="あり"> VCあり</label>
             </div>
 
             <label>どちらのテイワットで遊ぶ？</label>
@@ -764,13 +770,13 @@
             if (type === 'anyone') {
                 document.getElementById("nameAnyone").value = "";
                 document.getElementById("uidAnyone").value = "";
-                document.querySelector('input[name="vcAnyone"][value="あり"]').checked = true; // VC初期値に戻す
+                document.querySelector('input[name="vcAnyone"][value="なし"]').checked = true; // VC初期値に戻す
                 document.querySelector('input[name="worldAnyone"][value="私のテイワット（募集主）"]').checked = true; // World初期値に戻す
                 document.getElementById("contentAnyone").value = "";
             } else if (type === 'application') {
                 document.getElementById("nameApplication").value = "";
                 document.getElementById("uidApplication").value = "";
-                document.querySelector('input[name="vcApplication"][value="あり"]').checked = true; // VC初期値に戻す
+                document.querySelector('input[name="vcApplication"][value="なし"]').checked = true; // VC初期値に戻す
                 document.querySelector('input[name="worldApplication"][value="私のテイワット（募集主）"]').checked = true; // World初期値に戻す
                 document.getElementById("contentApplication").value = "";
             }
