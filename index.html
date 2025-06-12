@@ -244,6 +244,7 @@
             color: #555;
             border: 1px solid #ddd;
         }
+        /* "どちらでも" のタグスタイル (フォームにはないが、将来のデータで来る可能性を考慮しCSSには残す) */
         .tag.vc-tag-どちらでも {
             background-color: #fcebeb; /* 淡い赤系 */
             color: #a04040;
@@ -261,6 +262,7 @@
             color: #e65100; /* 濃いオレンジ */
             border: 1px solid #ffddb3;
         }
+        /* "どちらでも" のタグスタイル (フォームにはないが、将来のデータで来る可能性を考慮しCSSには残す) */
         .tag.teiwat-tag-どちらでも {
             background-color: #e8eaf6; /* 薄い紫 */
             color: #3f51b5; /* 濃い紫 */
@@ -531,10 +533,6 @@
                     <input type="radio" name="vcAnyone" value="VCなし">
                     <span>VCなし</span>
                 </label>
-                <label>
-                    <input type="radio" name="vcAnyone" value="どちらでも">
-                    <span>どちらでも</span>
-                </label>
             </div>
 
             <label>どちらのテイワットで遊びますか？</label>
@@ -546,10 +544,6 @@
                 <label>
                     <input type="radio" name="teiwatAnyone" value="あなたのテイワット">
                     <span>あなたのテイワット</span>
-                </label>
-                <label>
-                    <input type="radio" name="teiwatAnyone" value="どちらでも">
-                    <span>どちらでも</span>
                 </label>
             </div>
 
@@ -580,10 +574,6 @@
                     <input type="radio" name="vcApplication" value="VCなし">
                     <span>VCなし</span>
                 </label>
-                <label>
-                    <input type="radio" name="vcApplication" value="どちらでも">
-                    <span>どちらでも</span>
-                </label>
             </div>
 
             <label>どちらのテイワットで遊びますか？</label>
@@ -595,10 +585,6 @@
                 <label>
                     <input type="radio" name="teiwatApplication" value="あなたのテイワット">
                     <span>あなたのテイワット</span>
-                </label>
-                <label>
-                    <input type="radio" name="teiwatApplication" value="どちらでも">
-                    <span>どちらでも</span>
                 </label>
             </div>
 
@@ -793,16 +779,16 @@
                 tagsHtml += `<div class="post-tags">`;
                 if (post.vcOption) {
                     let vcIcon = '';
+                    // 投稿フォームには「どちらでも」がないため、VCあり/なしのみを考慮
                     if (post.vcOption === 'VCあり') vcIcon = '<i class="fa-solid fa-microphone-alt"></i>';
                     else if (post.vcOption === 'VCなし') vcIcon = '<i class="fa-solid fa-microphone-alt-slash"></i>';
-                    else if (post.vcOption === 'どちらでも') vcIcon = '<i class="fa-solid fa-sync-alt"></i>'; // どちらでものアイコン
                     tagsHtml += `<span class="tag vc-tag-${post.vcOption.replace(/\s+/g, '')}">${vcIcon} ${post.vcOption}</span>`;
                 }
                 if (post.teiwatOption) {
                     let teiwatIcon = '';
+                    // 投稿フォームには「どちらでも」がないため、私のテイワット/あなたのテイワットのみを考慮
                     if (post.teiwatOption === '私のテイワット') teiwatIcon = '<i class="fa-solid fa-home"></i>'; // 家のアイコン
                     else if (post.teiwatOption === 'あなたのテイワット') teiwatIcon = '<i class="fa-solid fa-users"></i>'; // 複数の人のアイコン
-                    else if (post.teiwatOption === 'どちらでも') teiwatIcon = '<i class="fa-solid fa-exchange-alt"></i>'; // 交換アイコン
                     tagsHtml += `<span class="tag teiwat-tag-${post.teiwatOption.replace(/\s+/g, '')}">${teiwatIcon} ${post.teiwatOption}</span>`;
                 }
                 tagsHtml += `</div>`;
@@ -852,7 +838,7 @@
             uid = uidInput.value.trim();
             content = contentInput.value.trim();
 
-            // ラジオボタンの値を取得
+            // ラジオボタンの値を取得 (フォームの変更なし)
             vcOption = document.querySelector(`input[name="vc${type === 'anyone' ? 'Anyone' : 'Application'}"]:checked`).value;
             teiwatOption = document.querySelector(`input[name="teiwat${type === 'anyone' ? 'Anyone' : 'Application'}"]:checked`).value;
 
@@ -894,14 +880,14 @@
                 document.getElementById("nameAnyone").value = "";
                 document.getElementById("uidAnyone").value = "";
                 document.getElementById("contentAnyone").value = "";
-                // ラジオボタンの初期値（checked）を再設定
+                // ラジオボタンの初期値（checked）を再設定 (フォームの変更なし)
                 document.querySelector('input[name="vcAnyone"][value="VCあり"]').checked = true;
                 document.querySelector('input[name="teiwatAnyone"][value="私のテイワット"]').checked = true;
             } else if (type === 'application') {
                 document.getElementById("nameApplication").value = "";
                 document.getElementById("uidApplication").value = "";
                 document.getElementById("contentApplication").value = "";
-                // ラジオボタンの初期値（checked）を再設定
+                // ラジオボタンの初期値（checked）を再設定 (フォームの変更なし)
                 document.querySelector('input[name="vcApplication"][value="VCあり"]').checked = true;
                 document.querySelector('input[name="teiwatApplication"][value="私のテイワット"]').checked = true;
             }
