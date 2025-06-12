@@ -426,6 +426,30 @@
         .radio-group input[type="radio"] {
             margin-right: 5px;
         }
+
+        /* 新しいVCとワールドの表示スタイル */
+        .option-display {
+            display: flex;
+            align-items: center;
+            gap: 8px; /* 丸と文字の間のスペース */
+            margin-bottom: 5px; /* 各項目間のスペース */
+        }
+
+        .option-circle {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            display: inline-block;
+            flex-shrink: 0; /* 要素が縮まないようにする */
+        }
+
+        /* VCの色の定義 */
+        .vc-なし-circle { background-color: #888; } /* 灰色 */
+        .vc-あり-circle { background-color: #5cb85c; } /* 緑色 */
+
+        /* ワールドの色の定義 */
+        .world-私のテイワット-circle { background-color: #428bca; } /* 青色 */
+        .world-あなたのテイワット-circle { background-color: #9658b1; } /* 紫色 */
     </style>
 </head>
 <body>
@@ -456,8 +480,8 @@
 
             <label>どちらのテイワットで遊ぶ？</label>
             <div class="radio-group world-options">
-                <label><input type="radio" name="worldAnyone" value="私のテイワット（募集主）" checked> 私のテイワット（募集主）</label>
-                <label><input type="radio" name="worldAnyone" value="あなたのテイワット（参加者）"> あなたのテイワット（参加者）</label>
+                <label><input type="radio" name="worldAnyone" value="私のテイワット" checked> 私のテイワット（募集主）</label>
+                <label><input type="radio" name="worldAnyone" value="あなたのテイワット"> あなたのテイワット（参加者）</label>
             </div>
 
             <label for="contentAnyone">募集内容</label>
@@ -485,8 +509,8 @@
 
             <label>どちらのテイワットで遊ぶ？</label>
             <div class="radio-group world-options">
-                <label><input type="radio" name="worldApplication" value="私のテイワット（募集主）" checked> 私のテイワット（募集主）</label>
-                <label><input type="radio" name="worldApplication" value="あなたのテイワット（参加者）"> あなたのテイワット（参加者）</label>
+                <label><input type="radio" name="worldApplication" value="私のテイワット" checked> 私のテイワット（募集主）</label>
+                <label><input type="radio" name="worldApplication" value="あなたのテイワット"> あなたのテイワット（参加者）</label>
             </div>
 
             <label for="contentApplication">募集内容</label>
@@ -681,6 +705,10 @@
                 uidTogglePointerEvents = 'none'; // 募集終了時はUIDトグルも無効化
             }
 
+            // VCとワールドの表示を新しい形式に変換
+            const vcDisplay = `<div class="option-display"><span class="option-circle vc-${post.vc}-circle"></span>${post.vc}</div>`;
+            const worldDisplay = `<div class="option-display"><span class="option-circle world-${post.world.replace(/（募集主）|（参加者）/g, '')}-circle"></span>${post.world.replace(/（募集主）|（参加者）/g, '')}</div>`; //カッコ内を削除
+
             div.innerHTML = `
                 <div class="header">
                     <span class="name">${escapeHtml(post.name || '名無し')}</span>
@@ -693,8 +721,8 @@
                     <span class="time">${formatTime(post.timestamp)}</span>
                 </div>
                 <div class="content">
-                    <p><strong>VC:</strong> ${post.vc}</p>
-                    <p><strong>ワールド:</strong> ${post.world}</p>
+                    ${vcDisplay}
+                    ${worldDisplay}
                     <p>${escapeHtml(post.content)}</p>
                 </div>
                 ${uidHtml}
@@ -726,6 +754,7 @@
             name = document.getElementById(`name${type === 'anyone' ? 'Anyone' : 'Application'}`).value.trim();
             uid = uidInput.value.trim();
             vc = document.querySelector(`input[name="vc${type === 'anyone' ? 'Anyone' : 'Application'}"]:checked`).value;
+            // worldの選択値は、カッコ内を含まない形にする
             world = document.querySelector(`input[name="world${type === 'anyone' ? 'Anyone' : 'Application'}"]:checked`).value;
             content = contentInput.value.trim();
 
@@ -751,7 +780,7 @@
                 name: escapeHtml(name || '名無し'), // ここでエスケープ処理を適用
                 uid: uid, // 半角に変換されたUIDが使用される
                 vc: vc,
-                world: world,
+                world: world, // カッコ内を削除したワールドの値
                 content: escapeHtml(content), // ここでエスケープ処理を適用
                 timestamp: Date.now(),
                 type: type, // 'anyone' or 'application'
@@ -771,13 +800,13 @@
                 document.getElementById("nameAnyone").value = "";
                 document.getElementById("uidAnyone").value = "";
                 document.querySelector('input[name="vcAnyone"][value="なし"]').checked = true; // VC初期値に戻す
-                document.querySelector('input[name="worldAnyone"][value="私のテイワット（募集主）"]').checked = true; // World初期値に戻す
+                document.querySelector('input[name="worldAnyone"][value="私のテイワット"]').checked = true; // World初期値に戻す（カッコなしの値で選択）
                 document.getElementById("contentAnyone").value = "";
             } else if (type === 'application') {
                 document.getElementById("nameApplication").value = "";
                 document.getElementById("uidApplication").value = "";
                 document.querySelector('input[name="vcApplication"][value="なし"]').checked = true; // VC初期値に戻す
-                document.querySelector('input[name="worldApplication"][value="私のテイワット（募集主）"]').checked = true; // World初期値に戻す
+                document.querySelector('input[name="worldApplication"][value="私のテイワット"]').checked = true; // World初期値に戻す（カッコなしの値で選択）
                 document.getElementById("contentApplication").value = "";
             }
             // フォームクリア時にエラーメッセージもリセット
