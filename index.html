@@ -415,7 +415,7 @@
             <span style="font-size: 0.8em; color: #666;">（募集投稿に直接表示されます）</span>
 
             <label for="contentAnyone">募集内容</label>
-            <textarea id="contentAnyone" rows="4" placeholder="一緒にのんびりマルチしませんか？"></textarea>
+            <textarea id="contentAnyone" rows="4" placeholder="募集内容の詳細を入力してください。例：秘境の周回、週ボス、素材集めなど"></textarea>
 
             <button onclick="submitPost('anyone')">投稿する</button>
         </div>
@@ -530,6 +530,24 @@
             errorMsgSpan.style.display = 'none';
         }
 
+        // HTMLエスケープ処理を行う関数
+        function escapeHtml(text) {
+            const map = {
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#039;'
+            };
+            // ここで特殊文字や絵文字は変換しないように注意するが、
+            // 基本的なHTMLエンティティ変換であれば問題ない
+            // `replace(/[&<>"']/g, function(m) { return map[m]; });`
+            // 上記だと絵文字などが含まれていても変換されてしまう可能性が低い。
+            // さらに厳密にする場合は、ホワイトリスト方式で許可するタグのみを許可するなどが考えられるが
+            // 今回は不正なHTMLタグの挿入を防ぐことが目的なので、これで十分。
+            return text.replace(/[&<>]/g, function(m) { return map[m]; });
+        }
+
 
         // 投稿データをlocalStorageに保存
         function savePosts(posts) {
@@ -562,7 +580,8 @@
                 return `(たった今) ${hh}:${mm} 投稿`;
             } else if (diffMinutes < 60) {
                 return `(${diffMinutes}分前) ${hh}:${mm} 投稿`;
-            } else if (diffMinutes < 1440) { // 24時間以内
+            } else if (diffMinutes < 1440) // 24時間以内
+            {
                 const diffHours = Math.floor(diffMinutes / 60);
                 return `(${diffHours}時間前) ${hh}:${mm} 投稿`;
             } else {
@@ -606,7 +625,7 @@
 
             div.innerHTML = `
                 <div class="header">
-                    <span class="name">${post.name || '名無し'}</span>
+                    <span class="name">${escapeHtml(post.name || '名無し')}</span>
                     <span class="uid-toggle" onclick="toggleUID(this)" style="pointer-events: ${uidTogglePointerEvents};">
                         <span class="eye">
                             <span class="pupil"></span>
@@ -615,7 +634,7 @@
                     </span>
                     <span class="time">${formatTime(post.timestamp)}</span>
                 </div>
-                <div class="content">${post.content}</div>
+                <div class="content">${escapeHtml(post.content)}</div>
                 ${uidHtml}
                 <button class="end-button" onclick="openConfirm(this)" style="display: ${post.isEnded ? 'none' : 'block'};">募集を終了する</button>
             `;
@@ -665,9 +684,9 @@
             }
 
             const newPost = {
-                name: name || '名無し',
+                name: escapeHtml(name || '名無し'), // ここでエスケープ処理を適用
                 uid: uid, // 半角に変換されたUIDが使用される
-                content: content,
+                content: escapeHtml(content), // ここでエスケープ処理を適用
                 timestamp: Date.now(),
                 type: type, // 'anyone' or 'application'
                 isEnded: false // 募集が終了しているかどうかのフラグ
