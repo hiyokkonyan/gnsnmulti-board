@@ -246,6 +246,10 @@
             justify-content: center;
             position: relative; /* コピーしました表示用 */
             transition: color 0.2s;
+            /* 点滅カーソルとフォーカスのアウトラインを消す */
+            outline: none;
+            text-decoration: none;
+            caret-color: transparent; /* キャレットの色を透明に */
         }
         .copy-button:hover {
             color: #4a7390;
@@ -277,6 +281,7 @@
             z-index: -1; /* 下に重ねる */
         }
 
+        /* めくれ部分の修正 */
         .copy-icon::after {
             content: '';
             position: absolute;
@@ -284,15 +289,17 @@
             right: 0;
             width: 0;
             height: 0;
-            border-top: 5px solid #5A8EA8; /* めくれ部分 */
-            border-left: 5px solid transparent;
-            border-bottom: 5px solid transparent;
-            border-right: 5px solid #5A8EA8;
-            border-top-right-radius: 3px; /* 少し角丸に */
+            /* 三角形を形成するボーダーを変更 */
+            border-top: 7px solid #5A8EA8; /* めくれの上辺（色付き） */
+            border-left: 7px solid transparent; /* めくれの左辺（透明） */
+            border-bottom: 7px solid transparent; /* めくれの下辺（透明） */
+            border-right: 7px solid #5A8EA8; /* めくれの右辺（色付き） */
+            border-radius: 0 3px 0 0; /* 右上の角だけ丸める */
             background-color: transparent; /* 背景なし */
-            transform: rotate(45deg); /* めくれ表現 */
-            transform-origin: top right;
-            z-index: 1;
+            transform: rotate(-45deg) translate(5px, -5px); /* 右上から左下へめくれるように回転と移動 */
+            transform-origin: top right; /* 回転の基準点を右上に */
+            z-index: 1; /* 手前に表示 */
+            box-shadow: -1px 1px 2px rgba(0,0,0,0.2); /* めくれに影をつける */
         }
 
 
