@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ja">
 <head>
     <meta charset="UTF-8" />
@@ -434,7 +434,8 @@
         .ended .content,
         .ended .uid,
         .ended .end-button,
-        .ended .post-tags { 
+        .ended .post-tags,
+        .ended .world-rank-display { /* 世界ランク表示もぼかす対象に */
             filter: blur(5px); 
         }
 
@@ -818,6 +819,39 @@
         document.getElementById('uidAnyone').addEventListener('change', (event) => validateUidOnBlur('anyone', event.target.value));
         document.getElementById('uidApplication').addEventListener('change', (event) => validateUidOnBlur('application', event.target.value));
 
+        // UID入力時のバリデーションと半角変換（入力完了時のみ）
+        function validateUidOnBlur(type, uidValue) {
+            const uidInput = document.getElementById(`uid${type === 'anyone' ? 'Anyone' : 'Application'}`);
+            const errorMsgSpan = document.getElementById(`uid${type === 'anyone' ? 'Anyone' : 'Application'}ValidationMsg`);
+
+            // 全角数字を半角に強制変換
+            const halfWidthUid = toHalfWidthNumbers(uidValue);
+            uidInput.value = halfWidthUid; // 変換した値を入力欄に反映
+
+            let errorMessage = '';
+
+            // 1. 入力値が空白の場合、エラーメッセージを消す (必須チェックはsubmitPostで行う)
+            if (halfWidthUid.trim() === '') {
+                errorMessage = ''; // エラーなし
+            } else if (!/^[0-9]+$/.test(halfWidthUid)) {
+                // 2. 数字以外が入力された場合
+                errorMessage = '数字で入力してください';
+            } else if (halfWidthUid.length < 9) {
+                // 3. 9桁未満の場合
+                errorMessage = '9桁以上で入力してください';
+            }
+
+            if (errorMessage) {
+                errorMsgSpan.textContent = errorMessage;
+                errorMsgSpan.style.display = 'inline';
+                return false; // エラーあり
+            } else {
+                errorMsgSpan.textContent = '';
+                errorMsgSpan.style.display = 'none';
+                return true; // エラーなし
+            }
+        }
+
         // 全角数字を半角数字に変換する関数
         function toHalfWidthNumbers(str) {
             return str.replace(/[０-９]/g, function(s) {
@@ -939,6 +973,7 @@
             }
 
             // 世界ランクの表示部分 (タグではなくテキスト)
+            // post.worldRank が空文字 ('') でない場合にのみ表示
             const worldRankDisplayHtml = post.worldRank && post.worldRank !== '' ? 
                 `<div class="world-rank-display">世界ランク${escapeHtml(post.worldRank)}</div>` : '';
 
@@ -1001,7 +1036,7 @@
                 alert("UIDは必須です。");
                 isValid = false;
             } else if (!validateUidOnBlur(type, uid)) {
-                // UIDバリデーション関数はアラートを出すのでここでは不要
+                // validateUidOnBlurは既にエラーメッセージを表示するのでここではアラート不要
                 isValid = false;
             }
 
