@@ -540,15 +540,15 @@
             <label>どちらのテイワットで遊びますか？</label>
             <div class="radio-group">
                 <label>
-                    <input type="radio" name="teiwatAnyone" value="私のテイワット" checked>
-                    <span>私のテイワット</span>
+                    <input type="radio" name="teiwatAnyone" value="私のテイワット">
+                    <span>私のテイワット（募集主）</span>
                 </label>
                 <label>
                     <input type="radio" name="teiwatAnyone" value="あなたのテイワット">
-                    <span>あなたのテイワット</span>
+                    <span>あなたのテイワット（参加者）</span>
                 </label>
                 <label>
-                    <input type="radio" name="teiwatAnyone" value="どちらでも">
+                    <input type="radio" name="teiwatAnyone" value="どちらでも" checked>
                     <span>どちらでも</span>
                 </label>
             </div>
@@ -589,15 +589,15 @@
             <label>どちらのテイワットで遊びますか？</label>
             <div class="radio-group">
                 <label>
-                    <input type="radio" name="teiwatApplication" value="私のテイワット" checked>
-                    <span>私のテイワット</span>
+                    <input type="radio" name="teiwatApplication" value="私のテイワット">
+                    <span>私のテイワット（募集主）</span>
                 </label>
                 <label>
                     <input type="radio" name="teiwatApplication" value="あなたのテイワット">
-                    <span>あなたのテイワット</span>
+                    <span>あなたのテイワット（参加者）</span>
                 </label>
                 <label>
-                    <input type="radio" name="teiwatApplication" value="どちらでも">
+                    <input type="radio" name="teiwatApplication" value="どちらでも" checked>
                     <span>どちらでも</span>
                 </label>
             </div>
@@ -895,14 +895,16 @@
                 document.getElementById("contentAnyone").value = "";
                 // ラジオボタンの初期値（checked）を再設定
                 document.querySelector('input[name="vcAnyone"][value="VCあり"]').checked = true;
-                document.querySelector('input[name="teiwatAnyone"][value="私のテイワット"]').checked = true;
+                // 「私のテイワット」と「どちらでも」のどちらをデフォルトにするかによって変更
+                document.querySelector('input[name="teiwatAnyone"][value="私のテイワット"]').checked = true; // または 'どちらでも'
             } else if (type === 'application') {
                 document.getElementById("nameApplication").value = "";
                 document.getElementById("uidApplication").value = "";
                 document.getElementById("contentApplication").value = "";
                 // ラジオボタンの初期値（checked）を再設定
                 document.querySelector('input[name="vcApplication"][value="VCあり"]').checked = true;
-                document.querySelector('input[name="teiwatApplication"][value="私のテイワット"]').checked = true;
+                // 「私のテイワット」と「どちらでも」のどちらをデフォルトにするかによって変更
+                document.querySelector('input[name="teiwatApplication"][value="私のテイワット"]').checked = true; // または 'どちらでも'
             }
             // フォームクリア時にエラーメッセージもリセット
             hideUidError(type);
