@@ -76,51 +76,6 @@
             font-size: 0.95em;
         }
 
-        /* ラジオボタン用のスタイル */
-        .radio-group {
-            margin-top: 10px;
-            margin-bottom: 15px;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        .radio-group label {
-            display: inline-flex; /* ラジオボタンとテキストを横並びにする */
-            align-items: center;
-            margin-bottom: 0; /* 親のlabelのmargin-bottomを打ち消す */
-            font-weight: normal; /* 親のlabelの太字を打ち消す */
-            font-size: 0.9em;
-            cursor: pointer;
-            padding: 5px 10px; /* クリックしやすいようにパディングを追加 */
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            background-color: #f0f0f0;
-            transition: background-color 0.2s, border-color 0.2s;
-        }
-
-        .radio-group input[type="radio"] {
-            margin-right: 5px;
-            transform: scale(1.1); /* ラジオボタンを少し大きく */
-            cursor: pointer;
-        }
-
-        .radio-group input[type="radio"]:checked + span {
-            font-weight: bold;
-            color: #5A8EA8;
-        }
-
-        .radio-group label:hover {
-            background-color: #e6e6e6;
-            border-color: #999;
-        }
-
-        .radio-group input[type="radio"]:checked ~ label {
-            background-color: #e0f2f7;
-            border-color: #5A8EA8;
-        }
-
-
         .form-container input[type="text"],
         .form-container textarea,
         .form-container select {
@@ -210,69 +165,6 @@
             white-space: pre-wrap; /* 改行を反映 */
             word-wrap: break-word; /* 長い単語の折り返し */
         }
-
-        /* VC/テイワット タグのスタイル */
-        .post-tags {
-            margin-top: 10px;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px; /* タグ間のスペース */
-            font-size: 0.85em; /* 文字を小さめに */
-            padding-bottom: 5px; /* 下に少し余白 */
-            border-bottom: 1px dashed #eee; /* 薄い点線の下線 */
-            margin-bottom: 10px; /* タグの下にスペース */
-        }
-
-        .tag {
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-weight: bold;
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            white-space: nowrap; /* タグ内で改行しない */
-        }
-
-        /* VCタグの色分け */
-        .tag.vc-tag-VCあり {
-            background-color: #e0f2f7; /* 明るい水色 */
-            color: #2a6a8a; /* 濃いめの水色 */
-            border: 1px solid #c9e6f0;
-        }
-        .tag.vc-tag-VCなし {
-            background-color: #f0f0f0; /* 灰色 */
-            color: #555;
-            border: 1px solid #ddd;
-        }
-        /* "どちらでも" のタグスタイル (フォームにはないが、将来のデータで来る可能性を考慮しCSSには残す) */
-        .tag.vc-tag-どちらでも {
-            background-color: #fcebeb; /* 淡い赤系 */
-            color: #a04040;
-            border: 1px solid #fbdcdc;
-        }
-
-        /* テイワットタグの色分け */
-        .tag.teiwat-tag-私のテイワット {
-            background-color: #e6ffe6; /* 明るい緑色 */
-            color: #3d8c3d; /* 濃いめの緑色 */
-            border: 1px solid #d2f0d2;
-        }
-        .tag.teiwat-tag-あなたのテイワット {
-            background-color: #fff3e0; /* 明るいオレンジ */
-            color: #e65100; /* 濃いオレンジ */
-            border: 1px solid #ffddb3;
-        }
-        /* "どちらでも" のタグスタイル (フォームにはないが、将来のデータで来る可能性を考慮しCSSには残す) */
-        .tag.teiwat-tag-どちらでも {
-            background-color: #e8eaf6; /* 薄い紫 */
-            color: #3f51b5; /* 濃い紫 */
-            border: 1px solid #c5cae9;
-        }
-
-        .tag i {
-            font-size: 1em; /* アイコンサイズを調整 */
-        }
-
 
         /* UID表示部分のスタイル */
         .uid {
@@ -425,8 +317,7 @@
         .ended .header,
         .ended .content,
         .ended .uid,
-        .ended .end-button,
-        .ended .post-tags { /* タグもぼかす対象に追加 */
+        .ended .end-button {
             filter: blur(5px); /* ぼかしを調整 */
         }
 
@@ -523,32 +414,8 @@
             <input type="text" id="uidAnyone" placeholder="123456789" maxlength="15">
             <span style="font-size: 0.8em; color: #666;">（募集投稿に直接表示されます）</span>
 
-            <label>VCについて</label>
-            <div class="radio-group">
-                <label>
-                    <input type="radio" name="vcAnyone" value="VCあり" checked>
-                    <span>VCあり</span>
-                </label>
-                <label>
-                    <input type="radio" name="vcAnyone" value="VCなし">
-                    <span>VCなし</span>
-                </label>
-            </div>
-
-            <label>どちらのテイワットで遊びますか？</label>
-            <div class="radio-group">
-                <label>
-                    <input type="radio" name="teiwatAnyone" value="私のテイワット" checked>
-                    <span>私のテイワット</span>
-                </label>
-                <label>
-                    <input type="radio" name="teiwatAnyone" value="あなたのテイワット">
-                    <span>あなたのテイワット</span>
-                </label>
-            </div>
-
-            <label for="contentAnyone">募集内容の詳細を入力してください。例：秘境の周回、週ボス、素材集めなど</label>
-            <textarea id="contentAnyone" rows="4" placeholder="具体的な募集内容や目的を記入してください。"></textarea>
+            <label for="contentAnyone">募集内容</label>
+            <textarea id="contentAnyone" rows="4" placeholder="募集内容の詳細を入力してください。例：秘境の周回、週ボス、素材集めなど"></textarea>
 
             <button onclick="submitPost('anyone')">投稿する</button>
         </div>
@@ -564,39 +431,15 @@
             <input type="text" id="uidApplication" placeholder="123456789" maxlength="15">
             <span style="font-size: 0.8em; color: #666;">（申請を承認するまで、あなたのUIDは公開されません）</span>
 
-            <label>VCについて</label>
-            <div class="radio-group">
-                <label>
-                    <input type="radio" name="vcApplication" value="VCあり" checked>
-                    <span>VCあり</span>
-                </label>
-                <label>
-                    <input type="radio" name="vcApplication" value="VCなし">
-                    <span>VCなし</span>
-                </label>
-            </div>
-
-            <label>どちらのテイワットで遊びますか？</label>
-            <div class="radio-group">
-                <label>
-                    <input type="radio" name="teiwatApplication" value="私のテイワット" checked>
-                    <span>私のテイワット</span>
-                </label>
-                <label>
-                    <input type="radio" name="teiwatApplication" value="あなたのテイワット">
-                    <span>あなたのテイワット</span>
-                </label>
-            </div>
-
-            <label for="contentApplication">募集内容の詳細を入力してください。例：〇〇秘境の高速周回、まったり素材集め（VCなし）など</label>
-            <textarea id="contentApplication" rows="4" placeholder="具体的な募集内容や目的を記入してください。"></textarea>
+            <label for="contentApplication">募集内容</label>
+            <textarea id="contentApplication" rows="4" placeholder="募集内容を具体的に入力してください。例：〇〇の周回、エンジョイ勢募集など"></textarea>
 
             <button onclick="submitPost('application')">投稿する</button>
         </div>
     </div>
 
     <div class="posts-container" id="postsContainer">
-    </div>
+        </div>
 
     <div class="modal-bg" id="modalBg">
         <div class="modal">
@@ -696,6 +539,12 @@
                 '"': '&quot;',
                 "'": '&#039;'
             };
+            // ここで特殊文字や絵文字は変換しないように注意するが、
+            // 基本的なHTMLエンティティ変換であれば問題ない
+            // `replace(/[&<>"']/g, function(m) { return map[m]; });`
+            // 上記だと絵文字などが含まれていても変換されてしまう可能性が低い。
+            // さらに厳密にする場合は、ホワイトリスト方式で許可するタグのみを許可するなどが考えられるが
+            // 今回は不正なHTMLタグの挿入を防ぐことが目的なので、これで十分。
             return text.replace(/[&<>]/g, function(m) { return map[m]; });
         }
 
@@ -731,7 +580,8 @@
                 return `(たった今) ${hh}:${mm} 投稿`;
             } else if (diffMinutes < 60) {
                 return `(${diffMinutes}分前) ${hh}:${mm} 投稿`;
-            } else if (diffMinutes < 1440) { // 24時間以内
+            } else if (diffMinutes < 1440) // 24時間以内
+            {
                 const diffHours = Math.floor(diffMinutes / 60);
                 return `(${diffHours}時間前) ${hh}:${mm} 投稿`;
             } else {
@@ -773,28 +623,6 @@
                 uidTogglePointerEvents = 'none'; // 募集終了時はUIDトグルも無効化
             }
 
-            // VCとテイワットのタグHTMLを生成
-            let tagsHtml = '';
-            if (post.vcOption || post.teiwatOption) {
-                tagsHtml += `<div class="post-tags">`;
-                if (post.vcOption) {
-                    let vcIcon = '';
-                    // 投稿フォームには「どちらでも」がないため、VCあり/なしのみを考慮
-                    if (post.vcOption === 'VCあり') vcIcon = '<i class="fa-solid fa-microphone-alt"></i>';
-                    else if (post.vcOption === 'VCなし') vcIcon = '<i class="fa-solid fa-microphone-alt-slash"></i>';
-                    tagsHtml += `<span class="tag vc-tag-${post.vcOption.replace(/\s+/g, '')}">${vcIcon} ${post.vcOption}</span>`;
-                }
-                if (post.teiwatOption) {
-                    let teiwatIcon = '';
-                    // 投稿フォームには「どちらでも」がないため、私のテイワット/あなたのテイワットのみを考慮
-                    if (post.teiwatOption === '私のテイワット') teiwatIcon = '<i class="fa-solid fa-home"></i>'; // 家のアイコン
-                    else if (post.teiwatOption === 'あなたのテイワット') teiwatIcon = '<i class="fa-solid fa-users"></i>'; // 複数の人のアイコン
-                    tagsHtml += `<span class="tag teiwat-tag-${post.teiwatOption.replace(/\s+/g, '')}">${teiwatIcon} ${post.teiwatOption}</span>`;
-                }
-                tagsHtml += `</div>`;
-            }
-
-
             div.innerHTML = `
                 <div class="header">
                     <span class="name">${escapeHtml(post.name || '名無し')}</span>
@@ -804,10 +632,9 @@
                         </span>
                         <span class="uid-label">${uidToggleLabel}</span>
                     </span>
-                    <span class="time" data-timestamp="${post.timestamp}">${formatTime(post.timestamp)}</span>
+                    <span class="time">${formatTime(post.timestamp)}</span>
                 </div>
                 <div class="content">${escapeHtml(post.content)}</div>
-                ${tagsHtml}
                 ${uidHtml}
                 <button class="end-button" onclick="openConfirm(this)" style="display: ${post.isEnded ? 'none' : 'block'};">募集を終了する</button>
             `;
@@ -830,7 +657,7 @@
 
         // 投稿ボタン押下時
         function submitPost(type) {
-            let name, uid, content, vcOption, teiwatOption;
+            let name, uid, content;
             const uidInput = document.getElementById(`uid${type === 'anyone' ? 'Anyone' : 'Application'}`);
             const contentInput = document.getElementById(`content${type === 'anyone' ? 'Anyone' : 'Application'}`);
 
@@ -838,18 +665,18 @@
             uid = uidInput.value.trim();
             content = contentInput.value.trim();
 
-            // ラジオボタンの値を取得 (フォームの変更なし)
-            vcOption = document.querySelector(`input[name="vc${type === 'anyone' ? 'Anyone' : 'Application'}"]:checked`).value;
-            teiwatOption = document.querySelector(`input[name="teiwat${type === 'anyone' ? 'Anyone' : 'Application'}"]:checked`).value;
-
             // UIDの最終バリデーション（投稿ボタン押下時）
+            // 入力値が空でない場合のみバリデーションを実行する
             if (uid !== '' && !validateUidOnBlur(type, uid)) {
-                alert("UIDに誤りがあります。ご確認ください。");
+                // validateUidOnBlurがfalseを返したら、エラーメッセージが表示されているので、ここで処理を中断
+                alert("UIDに誤りがあります。ご確認ください。"); // ユーザーにエラーがあることを伝えるアラート
                 return;
             } else if (uid === '') {
+                // UIDが空白の場合は、必須項目エラーとしてアラートを出す
                 alert("UIDは必須です。");
                 return;
             }
+
 
             if (!content) {
                 alert("募集内容は必須です。");
@@ -857,14 +684,12 @@
             }
 
             const newPost = {
-                name: escapeHtml(name || '名無し'),
-                uid: uid,
-                content: escapeHtml(content),
+                name: escapeHtml(name || '名無し'), // ここでエスケープ処理を適用
+                uid: uid, // 半角に変換されたUIDが使用される
+                content: escapeHtml(content), // ここでエスケープ処理を適用
                 timestamp: Date.now(),
                 type: type, // 'anyone' or 'application'
-                isEnded: false, // 募集が終了しているかどうかのフラグ
-                vcOption: vcOption, // VCオプションを追加
-                teiwatOption: teiwatOption // テイワットオプションを追加
+                isEnded: false // 募集が終了しているかどうかのフラグ
             };
 
             const posts = loadPosts();
@@ -880,16 +705,10 @@
                 document.getElementById("nameAnyone").value = "";
                 document.getElementById("uidAnyone").value = "";
                 document.getElementById("contentAnyone").value = "";
-                // ラジオボタンの初期値（checked）を再設定 (フォームの変更なし)
-                document.querySelector('input[name="vcAnyone"][value="VCあり"]').checked = true;
-                document.querySelector('input[name="teiwatAnyone"][value="私のテイワット"]').checked = true;
             } else if (type === 'application') {
                 document.getElementById("nameApplication").value = "";
                 document.getElementById("uidApplication").value = "";
                 document.getElementById("contentApplication").value = "";
-                // ラジオボタンの初期値（checked）を再設定 (フォームの変更なし)
-                document.querySelector('input[name="vcApplication"][value="VCあり"]').checked = true;
-                document.querySelector('input[name="teiwatApplication"][value="私のテイワット"]').checked = true;
             }
             // フォームクリア時にエラーメッセージもリセット
             hideUidError(type);
@@ -945,47 +764,76 @@
             }
         }
 
-        // 募集終了ボタン押下時の確認モーダル表示
-        let currentPostToToggle; // 現在操作対象の投稿要素を保持する変数
+        // 募集終了確認モーダル表示
+        let currentPostElement = null; // 現在操作中の投稿要素を保持
 
-        function openConfirm(buttonElement) {
-            currentPostToToggle = buttonElement.closest('.post');
+        function openConfirm(button) {
+            currentPostElement = button.closest('.post'); // 親の.post要素を取得
             document.getElementById('modalBg').style.display = 'flex';
         }
 
-        // モーダル「はい」ボタン
+        // 募集終了「はい」ボタン
         document.getElementById('confirmYes').addEventListener('click', () => {
-            if (currentPostToToggle) {
-                const posts = loadPosts();
-                // 表示されている投稿は逆順なので、元の配列で探すためにタイムスタンプで検索
-                const postTimestamp = parseInt(currentPostToToggle.querySelector('.time').dataset.timestamp);
-                const postIndex = posts.findIndex(p => p.timestamp === postTimestamp);
+            if (!currentPostElement) return;
+
+            // 投稿のisEndedフラグを更新し、localStorageに保存
+            const posts = loadPosts();
+            // 現在の表示順（逆順）から、元の配列でのインデックスを計算
+            const postElements = Array.from(document.getElementById("postsContainer").children);
+            const displayIndex = postElements.indexOf(currentPostElement);
+            const actualIndex = posts.length - 1 - displayIndex;
 
 
-                if (postIndex !== -1) {
-                    posts[postIndex].isEnded = true; // 募集終了フラグを立てる
-                    savePosts(posts);
-                    displayPosts(); // 再表示
-                }
+            if (posts[actualIndex]) {
+                posts[actualIndex].isEnded = true;
+                savePosts(posts);
+                // 画面を再描画して、募集終了の状態を反映
+                displayPosts(); // 再表示時にaddCopyBlockersが呼ばれる
             }
-            document.getElementById('modalBg').style.display = 'none';
+
+            closeModal();
         });
 
-        // モーダル「いいえ」ボタン
+        // 募集終了「いいえ」ボタン
         document.getElementById('confirmNo').addEventListener('click', () => {
-            document.getElementById('modalBg').style.display = 'none';
-            currentPostToToggle = null; // 変数をリセット
+            closeModal();
         });
 
-        // ページ読み込み時に投稿を表示
-        document.addEventListener("DOMContentLoaded", displayPosts);
+        // モーダルを閉じる
+        function closeModal() {
+            document.getElementById('modalBg').style.display = 'none';
+            currentPostElement = null;
+        }
 
-        // UIDのコピーを阻害するイベントリスナーを追加する関数
+        // モーダル背景クリックで閉じる
+        document.getElementById('modalBg').addEventListener('click', (e) => {
+            if (e.target === e.currentTarget) closeModal();
+        });
+
+        // コピーイベントをブロックする関数
+        function blockCopy(event) {
+            // イベントのデフォルト動作（コピー）を阻止する
+            event.preventDefault();
+        }
+
+        // 全ての.endedクラスを持つ要素にコピーブロックのイベントリスナーを追加
         function addCopyBlockers() {
-            document.querySelectorAll('.copy-button').forEach(button => {
-                button.addEventListener('mousedown', (e) => e.preventDefault()); // クリック時の点滅防止
+            const endedPosts = document.querySelectorAll('.post.ended');
+            endedPosts.forEach(post => {
+                // copyイベントリスナーを一度だけ追加する
+                if (!post.dataset.copyBlocked) { // フラグで重複追加を防ぐ
+                    post.addEventListener('copy', blockCopy);
+                    post.dataset.copyBlocked = 'true'; // フラグを設定
+                }
             });
         }
+
+
+        // 初期表示とフォームのデフォルト選択
+        window.addEventListener("load", () => {
+            displayPosts();
+            switchForm('anyone'); // デフォルトで「誰でも」フォームを表示
+        });
     </script>
 </body>
 </html>
