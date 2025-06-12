@@ -305,14 +305,15 @@
             left: 50%;
             transform: translate(-50%, -50%);
             /* ここを調整 */
-            color: #7F9EB0; /* 彩度を落とした青系の色に変更 */
+            color: #444; /* 文字色を濃いグレーに変更 */
             font-weight: bold;
-            background-color: rgba(255, 255, 255, 0.9); /* 白背景で見やすく */
+            /* background-color: rgba(255, 255, 255, 0.9);  白背景を削除 */
             padding: 4px 10px;
             border-radius: 6px;
             z-index: 2;
             font-size: 1.1em;
             white-space: nowrap;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3); /* 文字に影を追加 */
         }
 
         .ended .header,
