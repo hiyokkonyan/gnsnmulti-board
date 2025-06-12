@@ -76,6 +76,51 @@
             font-size: 0.95em;
         }
 
+        /* ラジオボタン用のスタイル */
+        .radio-group {
+            margin-top: 10px;
+            margin-bottom: 15px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .radio-group label {
+            display: inline-flex; /* ラジオボタンとテキストを横並びにする */
+            align-items: center;
+            margin-bottom: 0; /* 親のlabelのmargin-bottomを打ち消す */
+            font-weight: normal; /* 親のlabelの太字を打ち消す */
+            font-size: 0.9em;
+            cursor: pointer;
+            padding: 5px 10px; /* クリックしやすいようにパディングを追加 */
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background-color: #f0f0f0;
+            transition: background-color 0.2s, border-color 0.2s;
+        }
+
+        .radio-group input[type="radio"] {
+            margin-right: 5px;
+            transform: scale(1.1); /* ラジオボタンを少し大きく */
+            cursor: pointer;
+        }
+
+        .radio-group input[type="radio"]:checked + span {
+            font-weight: bold;
+            color: #5A8EA8;
+        }
+
+        .radio-group label:hover {
+            background-color: #e6e6e6;
+            border-color: #999;
+        }
+
+        .radio-group input[type="radio"]:checked ~ label {
+            background-color: #e0f2f7;
+            border-color: #5A8EA8;
+        }
+
+
         .form-container input[type="text"],
         .form-container textarea,
         .form-container select {
@@ -165,6 +210,67 @@
             white-space: pre-wrap; /* 改行を反映 */
             word-wrap: break-word; /* 長い単語の折り返し */
         }
+
+        /* VC/テイワット タグのスタイル */
+        .post-tags {
+            margin-top: 10px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px; /* タグ間のスペース */
+            font-size: 0.85em; /* 文字を小さめに */
+            padding-bottom: 5px; /* 下に少し余白 */
+            border-bottom: 1px dashed #eee; /* 薄い点線の下線 */
+            margin-bottom: 10px; /* タグの下にスペース */
+        }
+
+        .tag {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            white-space: nowrap; /* タグ内で改行しない */
+        }
+
+        /* VCタグの色分け */
+        .tag.vc-tag-VCあり {
+            background-color: #e0f2f7; /* 明るい水色 */
+            color: #2a6a8a; /* 濃いめの水色 */
+            border: 1px solid #c9e6f0;
+        }
+        .tag.vc-tag-VCなし {
+            background-color: #f0f0f0; /* 灰色 */
+            color: #555;
+            border: 1px solid #ddd;
+        }
+        .tag.vc-tag-どちらでも {
+            background-color: #fcebeb; /* 淡い赤系 */
+            color: #a04040;
+            border: 1px solid #fbdcdc;
+        }
+
+        /* テイワットタグの色分け */
+        .tag.teiwat-tag-私のテイワット {
+            background-color: #e6ffe6; /* 明るい緑色 */
+            color: #3d8c3d; /* 濃いめの緑色 */
+            border: 1px solid #d2f0d2;
+        }
+        .tag.teiwat-tag-あなたのテイワット {
+            background-color: #fff3e0; /* 明るいオレンジ */
+            color: #e65100; /* 濃いオレンジ */
+            border: 1px solid #ffddb3;
+        }
+        .tag.teiwat-tag-どちらでも {
+            background-color: #e8eaf6; /* 薄い紫 */
+            color: #3f51b5; /* 濃い紫 */
+            border: 1px solid #c5cae9;
+        }
+
+        .tag i {
+            font-size: 1em; /* アイコンサイズを調整 */
+        }
+
 
         /* UID表示部分のスタイル */
         .uid {
@@ -317,7 +423,8 @@
         .ended .header,
         .ended .content,
         .ended .uid,
-        .ended .end-button {
+        .ended .end-button,
+        .ended .post-tags { /* タグもぼかす対象に追加 */
             filter: blur(5px); /* ぼかしを調整 */
         }
 
@@ -392,64 +499,6 @@
             max-width: 600px;
             margin: 0 auto;
         }
-
-        /* VCおよびテイワット選択のスタイル */
-        .radio-group {
-            margin-top: 5px; /* 質問からの距離を狭める */
-            /* margin-bottomは個別のradio-groupで調整 */
-        }
-
-        /* VCラジオボタンの調整 */
-        .radio-group.vc-options {
-            margin-bottom: 25px; /* 次の質問との距離を広げる */
-        }
-        .radio-group.vc-options label {
-            margin-right: 10px; /* VCの選択肢間の距離を狭める */
-        }
-
-        /* テイワットラジオボタンの調整 */
-        .radio-group.world-options {
-            margin-bottom: 15px; /* 募集内容との距離を調整 */
-        }
-        .radio-group.world-options label {
-            margin-right: 10px; /* テイワットの選択肢間の距離を狭める */
-        }
-
-
-        .radio-group label {
-            display: inline-block; /* ラジオボタンのラベルを横並びに */
-            /* margin-rightは個別のradio-groupで調整 */
-            font-weight: normal; /* 親のlabelのスタイルを継承しないように */
-            margin-bottom: 0; /* 親のlabelのmargin-bottomをリセット */
-        }
-
-        .radio-group input[type="radio"] {
-            margin-right: 5px;
-        }
-
-        /* 新しいVCとワールドの表示スタイル */
-        .option-display {
-            display: flex;
-            align-items: center;
-            gap: 8px; /* 丸と文字の間のスペース */
-            margin-bottom: 5px; /* 各項目間のスペース */
-        }
-
-        .option-circle {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            display: inline-block;
-            flex-shrink: 0; /* 要素が縮まないようにする */
-        }
-
-        /* VCの色の定義 */
-        .vc-なし-circle { background-color: #888; } /* 灰色 */
-        .vc-あり-circle { background-color: #5cb85c; } /* 緑色 */
-
-        /* ワールドの色の定義 */
-        .world-私のテイワット-circle { background-color: #428bca; } /* 青色 */
-        .world-あなたのテイワット-circle { background-color: #9658b1; } /* 紫色 */
     </style>
 </head>
 <body>
@@ -472,20 +521,40 @@
             <input type="text" id="uidAnyone" placeholder="123456789" maxlength="15">
             <span style="font-size: 0.8em; color: #666;">（募集投稿に直接表示されます）</span>
 
-            <label>VCは？</label>
-            <div class="radio-group vc-options">
-                <label><input type="radio" name="vcAnyone" value="なし" checked> VCなし</label>
-                <label><input type="radio" name="vcAnyone" value="あり"> VCあり</label>
+            <label>VCについて</label>
+            <div class="radio-group">
+                <label>
+                    <input type="radio" name="vcAnyone" value="VCあり" checked>
+                    <span>VCあり</span>
+                </label>
+                <label>
+                    <input type="radio" name="vcAnyone" value="VCなし">
+                    <span>VCなし</span>
+                </label>
+                <label>
+                    <input type="radio" name="vcAnyone" value="どちらでも">
+                    <span>どちらでも</span>
+                </label>
             </div>
 
-            <label>どちらのテイワットで遊ぶ？</label>
-            <div class="radio-group world-options">
-                <label><input type="radio" name="worldAnyone" value="私のテイワット" checked> 私のテイワット（募集主）</label>
-                <label><input type="radio" name="worldAnyone" value="あなたのテイワット"> あなたのテイワット（参加者）</label>
+            <label>どちらのテイワットで遊びますか？</label>
+            <div class="radio-group">
+                <label>
+                    <input type="radio" name="teiwatAnyone" value="私のテイワット" checked>
+                    <span>私のテイワット</span>
+                </label>
+                <label>
+                    <input type="radio" name="teiwatAnyone" value="あなたのテイワット">
+                    <span>あなたのテイワット</span>
+                </label>
+                <label>
+                    <input type="radio" name="teiwatAnyone" value="どちらでも">
+                    <span>どちらでも</span>
+                </label>
             </div>
 
-            <label for="contentAnyone">募集内容</label>
-            <textarea id="contentAnyone" rows="4" placeholder="募集内容の詳細を入力してください。例：秘境の周回、週ボス、アチーブメントなど"></textarea>
+            <label for="contentAnyone">募集内容の詳細を入力してください。例：秘境の周回、週ボス、素材集めなど</label>
+            <textarea id="contentAnyone" rows="4" placeholder="具体的な募集内容や目的を記入してください。"></textarea>
 
             <button onclick="submitPost('anyone')">投稿する</button>
         </div>
@@ -501,20 +570,40 @@
             <input type="text" id="uidApplication" placeholder="123456789" maxlength="15">
             <span style="font-size: 0.8em; color: #666;">（申請を承認するまで、あなたのUIDは公開されません）</span>
 
-            <label>VCは？</label>
-            <div class="radio-group vc-options">
-                <label><input type="radio" name="vcApplication" value="なし" checked> VCなし</label>
-                <label><input type="radio" name="vcApplication" value="あり"> VCあり</label>
+            <label>VCについて</label>
+            <div class="radio-group">
+                <label>
+                    <input type="radio" name="vcApplication" value="VCあり" checked>
+                    <span>VCあり</span>
+                </label>
+                <label>
+                    <input type="radio" name="vcApplication" value="VCなし">
+                    <span>VCなし</span>
+                </label>
+                <label>
+                    <input type="radio" name="vcApplication" value="どちらでも">
+                    <span>どちらでも</span>
+                </label>
             </div>
 
-            <label>どちらのテイワットで遊ぶ？</label>
-            <div class="radio-group world-options">
-                <label><input type="radio" name="worldApplication" value="私のテイワット" checked> 私のテイワット（募集主）</label>
-                <label><input type="radio" name="worldApplication" value="あなたのテイワット"> あなたのテイワット（参加者）</label>
+            <label>どちらのテイワットで遊びますか？</label>
+            <div class="radio-group">
+                <label>
+                    <input type="radio" name="teiwatApplication" value="私のテイワット" checked>
+                    <span>私のテイワット</span>
+                </label>
+                <label>
+                    <input type="radio" name="teiwatApplication" value="あなたのテイワット">
+                    <span>あなたのテイワット</span>
+                </label>
+                <label>
+                    <input type="radio" name="teiwatApplication" value="どちらでも">
+                    <span>どちらでも</span>
+                </label>
             </div>
 
-            <label for="contentApplication">募集内容</label>
-            <textarea id="contentApplication" rows="4" placeholder="募集内容の詳細を入力してください。例：まったり探索、素材集め、お助けしますなど"></textarea>
+            <label for="contentApplication">募集内容の詳細を入力してください。例：〇〇秘境の高速周回、まったり素材集め（VCなし）など</label>
+            <textarea id="contentApplication" rows="4" placeholder="具体的な募集内容や目的を記入してください。"></textarea>
 
             <button onclick="submitPost('application')">投稿する</button>
         </div>
@@ -621,12 +710,6 @@
                 '"': '&quot;',
                 "'": '&#039;'
             };
-            // ここで特殊文字や絵文字は変換しないように注意するが、
-            // 基本的なHTMLエンティティ変換であれば問題ない
-            // `replace(/[&<>"']/g, function(m) { return map[m]; });`
-            // 上記だと絵文字などが含まれていても変換されてしまう可能性が低い。
-            // さらに厳密にする場合は、ホワイトリスト方式で許可するタグのみを許可するなどが考えられるが
-            // 今回は不正なHTMLタグの挿入を防ぐことが目的なので、これで十分。
             return text.replace(/[&<>]/g, function(m) { return map[m]; });
         }
 
@@ -662,8 +745,7 @@
                 return `(たった今) ${hh}:${mm} 投稿`;
             } else if (diffMinutes < 60) {
                 return `(${diffMinutes}分前) ${hh}:${mm} 投稿`;
-            } else if (diffMinutes < 1440) // 24時間以内
-            {
+            } else if (diffMinutes < 1440) { // 24時間以内
                 const diffHours = Math.floor(diffMinutes / 60);
                 return `(${diffHours}時間前) ${hh}:${mm} 投稿`;
             } else {
@@ -705,9 +787,27 @@
                 uidTogglePointerEvents = 'none'; // 募集終了時はUIDトグルも無効化
             }
 
-            // VCとワールドの表示を新しい形式に変換
-            const vcDisplay = `<div class="option-display"><span class="option-circle vc-${post.vc}-circle"></span>${post.vc}</div>`;
-            const worldDisplay = `<div class="option-display"><span class="option-circle world-${post.world.replace(/（募集主）|（参加者）/g, '')}-circle"></span>${post.world.replace(/（募集主）|（参加者）/g, '')}</div>`; //カッコ内を削除
+            // VCとテイワットのタグHTMLを生成
+            let tagsHtml = '';
+            if (post.vcOption || post.teiwatOption) {
+                tagsHtml += `<div class="post-tags">`;
+                if (post.vcOption) {
+                    let vcIcon = '';
+                    if (post.vcOption === 'VCあり') vcIcon = '<i class="fa-solid fa-microphone-alt"></i>';
+                    else if (post.vcOption === 'VCなし') vcIcon = '<i class="fa-solid fa-microphone-alt-slash"></i>';
+                    else if (post.vcOption === 'どちらでも') vcIcon = '<i class="fa-solid fa-sync-alt"></i>'; // どちらでものアイコン
+                    tagsHtml += `<span class="tag vc-tag-${post.vcOption.replace(/\s+/g, '')}">${vcIcon} ${post.vcOption}</span>`;
+                }
+                if (post.teiwatOption) {
+                    let teiwatIcon = '';
+                    if (post.teiwatOption === '私のテイワット') teiwatIcon = '<i class="fa-solid fa-home"></i>'; // 家のアイコン
+                    else if (post.teiwatOption === 'あなたのテイワット') teiwatIcon = '<i class="fa-solid fa-users"></i>'; // 複数の人のアイコン
+                    else if (post.teiwatOption === 'どちらでも') teiwatIcon = '<i class="fa-solid fa-exchange-alt"></i>'; // 交換アイコン
+                    tagsHtml += `<span class="tag teiwat-tag-${post.teiwatOption.replace(/\s+/g, '')}">${teiwatIcon} ${post.teiwatOption}</span>`;
+                }
+                tagsHtml += `</div>`;
+            }
+
 
             div.innerHTML = `
                 <div class="header">
@@ -720,12 +820,8 @@
                     </span>
                     <span class="time">${formatTime(post.timestamp)}</span>
                 </div>
-                <div class="content">
-                    ${vcDisplay}
-                    ${worldDisplay}
-                    <p>${escapeHtml(post.content)}</p>
-                </div>
-                ${uidHtml}
+                <div class="content">${escapeHtml(post.content)}</div>
+                ${tagsHtml} ${uidHtml}
                 <button class="end-button" onclick="openConfirm(this)" style="display: ${post.isEnded ? 'none' : 'block'};">募集を終了する</button>
             `;
             return div;
@@ -747,29 +843,26 @@
 
         // 投稿ボタン押下時
         function submitPost(type) {
-            let name, uid, vc, world, content;
+            let name, uid, content, vcOption, teiwatOption;
             const uidInput = document.getElementById(`uid${type === 'anyone' ? 'Anyone' : 'Application'}`);
             const contentInput = document.getElementById(`content${type === 'anyone' ? 'Anyone' : 'Application'}`);
 
             name = document.getElementById(`name${type === 'anyone' ? 'Anyone' : 'Application'}`).value.trim();
             uid = uidInput.value.trim();
-            vc = document.querySelector(`input[name="vc${type === 'anyone' ? 'Anyone' : 'Application'}"]:checked`).value;
-            // worldの選択値は、カッコ内を含まない形にする
-            world = document.querySelector(`input[name="world${type === 'anyone' ? 'Anyone' : 'Application'}"]:checked`).value;
             content = contentInput.value.trim();
 
+            // ラジオボタンの値を取得
+            vcOption = document.querySelector(`input[name="vc${type === 'anyone' ? 'Anyone' : 'Application'}"]:checked`).value;
+            teiwatOption = document.querySelector(`input[name="teiwat${type === 'anyone' ? 'Anyone' : 'Application'}"]:checked`).value;
+
             // UIDの最終バリデーション（投稿ボタン押下時）
-            // 入力値が空でない場合のみバリデーションを実行する
             if (uid !== '' && !validateUidOnBlur(type, uid)) {
-                // validateUidOnBlurがfalseを返したら、エラーメッセージが表示されているので、ここで処理を中断
-                alert("UIDに誤りがあります。ご確認ください。"); // ユーザーにエラーがあることを伝えるアラート
+                alert("UIDに誤りがあります。ご確認ください。");
                 return;
             } else if (uid === '') {
-                // UIDが空白の場合は、必須項目エラーとしてアラートを出す
                 alert("UIDは必須です。");
                 return;
             }
-
 
             if (!content) {
                 alert("募集内容は必須です。");
@@ -777,14 +870,14 @@
             }
 
             const newPost = {
-                name: escapeHtml(name || '名無し'), // ここでエスケープ処理を適用
-                uid: uid, // 半角に変換されたUIDが使用される
-                vc: vc,
-                world: world, // カッコ内を削除したワールドの値
-                content: escapeHtml(content), // ここでエスケープ処理を適用
+                name: escapeHtml(name || '名無し'),
+                uid: uid,
+                content: escapeHtml(content),
                 timestamp: Date.now(),
                 type: type, // 'anyone' or 'application'
-                isEnded: false // 募集が終了しているかどうかのフラグ
+                isEnded: false, // 募集が終了しているかどうかのフラグ
+                vcOption: vcOption, // VCオプションを追加
+                teiwatOption: teiwatOption // テイワットオプションを追加
             };
 
             const posts = loadPosts();
@@ -799,15 +892,17 @@
             if (type === 'anyone') {
                 document.getElementById("nameAnyone").value = "";
                 document.getElementById("uidAnyone").value = "";
-                document.querySelector('input[name="vcAnyone"][value="なし"]').checked = true; // VC初期値に戻す
-                document.querySelector('input[name="worldAnyone"][value="私のテイワット"]').checked = true; // World初期値に戻す（カッコなしの値で選択）
                 document.getElementById("contentAnyone").value = "";
+                // ラジオボタンの初期値（checked）を再設定
+                document.querySelector('input[name="vcAnyone"][value="VCあり"]').checked = true;
+                document.querySelector('input[name="teiwatAnyone"][value="私のテイワット"]').checked = true;
             } else if (type === 'application') {
                 document.getElementById("nameApplication").value = "";
                 document.getElementById("uidApplication").value = "";
-                document.querySelector('input[name="vcApplication"][value="なし"]').checked = true; // VC初期値に戻す
-                document.querySelector('input[name="worldApplication"][value="私のテイワット"]').checked = true; // World初期値に戻す（カッコなしの値で選択）
                 document.getElementById("contentApplication").value = "";
+                // ラジオボタンの初期値（checked）を再設定
+                document.querySelector('input[name="vcApplication"][value="VCあり"]').checked = true;
+                document.querySelector('input[name="teiwatApplication"][value="私のテイワット"]').checked = true;
             }
             // フォームクリア時にエラーメッセージもリセット
             hideUidError(type);
