@@ -206,8 +206,8 @@
             font-size: 1em; /* 名前のサイズと同じ */
             margin-top: 5px; /* 名前との間隔 */
             margin-bottom: 10px; /* 募集内容との間隔 */
-            text-align: right; /* 右寄せに */
-            padding-right: 5px; /* 右端との余白 */
+            text-align: left; /* ★ここを左揃えに変更★ */
+            padding-left: 5px; /* 左端との余白 */
         }
 
         .uid-toggle {
@@ -651,8 +651,7 @@
             <input type="text" id="uidAnyone" placeholder="123456789" maxlength="15">
             <span style="font-size: 0.8em; color: #666;">（募集投稿に直接表示されます）</span>
             
-            <label for="worldRankAnyone" style="margin-top: 20px; margin-bottom: 5px;">
-                世界ランク
+            <label for="worldRankAnyone" style="margin-top: 15px; margin-bottom: 5px;"> 世界ランク
             </label>
             <select id="worldRankAnyone">
                 <option value="">ー</option>
@@ -713,8 +712,7 @@
             <input type="text" id="uidApplication" placeholder="123456789" maxlength="15">
             <span style="font-size: 0.8em; color: #666;">（申請を承認するまで、あなたのUIDは公開されません）</span>
 
-            <label for="worldRankApplication" style="margin-top: 20px; margin-bottom: 5px;">
-                世界ランク
+            <label for="worldRankApplication" style="margin-top: 15px; margin-bottom: 5px;"> 世界ランク
             </label>
             <select id="worldRankApplication">
                 <option value="">ー</option>
