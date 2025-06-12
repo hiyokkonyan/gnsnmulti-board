@@ -438,11 +438,16 @@
             const halfWidthUid = toHalfWidthNumbers(uidValue);
             uidInput.value = halfWidthUid; // 変換した値を入力欄に反映
 
-            // バリデーション
             let errorMessage = '';
-            if (!/^[0-9]+$/.test(halfWidthUid)) {
+
+            // 1. 入力値が空白の場合、エラーメッセージを消す
+            if (halfWidthUid.trim() === '') {
+                errorMessage = ''; // エラーなし
+            } else if (!/^[0-9]+$/.test(halfWidthUid)) {
+                // 2. 数字以外が入力された場合
                 errorMessage = '数字で入力してください';
             } else if (halfWidthUid.length < 9) {
+                // 3. 9桁未満の場合
                 errorMessage = '9桁以上で入力してください';
             }
 
@@ -580,11 +585,17 @@
             content = contentInput.value.trim();
 
             // UIDの最終バリデーション（投稿ボタン押下時）
-            if (!validateUidOnBlur(type, uid)) {
+            // 入力値が空でない場合のみバリデーションを実行する
+            if (uid !== '' && !validateUidOnBlur(type, uid)) {
                 // validateUidOnBlurがfalseを返したら、エラーメッセージが表示されているので、ここで処理を中断
                 alert("UIDに誤りがあります。ご確認ください。"); // ユーザーにエラーがあることを伝えるアラート
                 return;
+            } else if (uid === '') {
+                // UIDが空白の場合は、必須項目エラーとしてアラートを出す
+                alert("UIDは必須です。");
+                return;
             }
+
 
             if (!content) {
                 alert("募集内容は必須です。");
