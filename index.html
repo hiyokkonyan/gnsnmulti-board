@@ -617,7 +617,8 @@
 
         .info-tooltip {
             visibility: hidden;
-            width: 200px; /* ツールチップの幅を調整して改行を制御 */
+            width: auto; /* スマホ版の横書き表示のためautoに変更 */
+            max-width: 200px; /* 広がりすぎないように最大幅を設定 */
             background-color: #6a7f8e; /* 落ち着いた青グレーに変更 */
             color: #fff;
             text-align: center;
@@ -771,10 +772,19 @@
             }
             /* Information icon and tooltip for Auto-cancel on mobile */
             .info-tooltip {
-                width: 90%; /* スマホでは画面幅に合わせる */
+                width: auto; /* スマホでは画面幅に合わせるのではなく、内容に合わせる */
+                max-width: 90%; /* 広がりすぎないように最大幅を設定 */
                 left: 50%;
                 transform: translateX(-50%);
                 bottom: 120%; /* アイコンの上に表示 */
+            }
+
+            /* スマホ版申請フォームの閉じるボタン位置調整 */
+            .application-modal .modal-close-button {
+                top: 5px; /* 上からの位置 */
+                right: 5px; /* 右からの位置 */
+                position: absolute; /* モーダル内での絶対位置 */
+                font-size: 1.8em; /* スマホで押しやすいように大きく */
             }
         }
 
@@ -791,13 +801,12 @@
                 transform: translate(-50%, -50%);
             }
 
-            /* PC版の閉じるボタンの位置調整 - 固定位置に変更 */
+            /* PC版の閉じるボタンの位置調整 - モーダル内の絶対位置に変更 */
             .application-modal .modal-close-button {
-                position: fixed; /* ここをfixedに変更 */
-                /* モーダルの中央からの相対位置を計算して配置 */
-                top: calc(50vh - 40vh + 15px); /* (ビューポートの高さ半分) - (モーダル高さの半分) + (モーダルトップからの余白) */
-                right: calc(50vw - 200px + 15px); /* (ビューポートの幅半分) - (モーダル幅の半分) + (モーダルライトからの余白) */
-                z-index: 1001; /* モーダルよりも手前に表示 */
+                position: absolute; /* モーダル内の絶対位置 */
+                top: 15px; /* モーダルの上端からの距離 */
+                right: 15px; /* モーダルの右端からの距離 */
+                font-size: 1.5em;
             }
         }
     </style>
@@ -1539,7 +1548,7 @@
             document.getElementById('applicationModalBg').style.display = 'none';
             targetPostTimestampForApplication = null; // リセット
             // 関連する確認モーダルも閉じる
-            document.getElementById('applyWorldRankConfirmModalBg').style.display = 'none';
+            document.getElementById('applyWorldRankConfirmModalModalBg').style.display = 'none';
             document.getElementById('applyMessageConfirmModalBg').style.display = 'none';
             pendingApplicationData = null; // 申請用データもリセット
             // ツールチップを非表示にする
