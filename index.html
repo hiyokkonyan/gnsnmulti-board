@@ -1002,8 +1002,24 @@
 
         // UID入力時のバリデーションと半角変換（入力完了時のみ）
         function validateUidOnBlur(type, uidValue) {
-            const uidInputId = `uid${type === 'anyone' ? 'Anyone' : type === 'application' ? 'Application' : 'applicant'}`;
-            const errorMsgSpanId = `uid${type === 'anyone' ? 'Anyone' : type === 'application' ? 'Application' : 'applicant'}ValidationMsg`;
+            // タイプに基づいてUID入力欄とエラーメッセージ要素を特定
+            let uidInputId;
+            let errorMsgSpanId;
+
+            if (type === 'anyone') {
+                uidInputId = 'uidAnyone';
+                errorMsgSpanId = 'uidAnyoneValidationMsg';
+            } else if (type === 'application') {
+                uidInputId = 'uidApplication';
+                errorMsgSpanId = 'uidApplicationValidationMsg';
+            } else if (type === 'applicant') { // 申請フォーム用
+                uidInputId = 'applicantUid';
+                errorMsgSpanId = 'applicantUidValidationMsg';
+            } else {
+                console.error("Invalid type for validateUidOnBlur:", type);
+                return false;
+            }
+
             const uidInput = document.getElementById(uidInputId);
             const errorMsgSpan = document.getElementById(errorMsgSpanId);
 
@@ -1013,7 +1029,7 @@
             let errorMessage = '';
 
             if (halfWidthUid.trim() === '') {
-                errorMessage = '';
+                errorMessage = ''; // 空の場合はエラーメッセージなし
             } else if (!/^[0-9]+$/.test(halfWidthUid)) {
                 errorMessage = '数字で入力してください';
             } else if (halfWidthUid.length < 9) {
@@ -1040,7 +1056,18 @@
 
         // UIDエラーメッセージを非表示にする関数
         function hideUidError(type) {
-            const errorMsgSpan = document.getElementById(`uid${type === 'anyone' ? 'Anyone' : type === 'application' ? 'Application' : 'applicant'}ValidationMsg`);
+            let errorMsgSpanId;
+            if (type === 'anyone') {
+                errorMsgSpanId = 'uidAnyoneValidationMsg';
+            } else if (type === 'application') {
+                errorMsgSpanId = 'uidApplicationValidationMsg';
+            } else if (type === 'applicant') { // 申請フォーム用
+                errorMsgSpanId = 'applicantUidValidationMsg';
+            } else {
+                console.error("Invalid type for hideUidError:", type);
+                return;
+            }
+            const errorMsgSpan = document.getElementById(errorMsgSpanId);
             errorMsgSpan.textContent = '';
             errorMsgSpan.style.display = 'none';
         }
@@ -1448,6 +1475,8 @@
 
             // UIDの必須チェックとバリデーション
             if (applicantUid.trim() === '') {
+                // UIDが空の場合は、validateUidOnBlur内でエラーメッセージを表示しないように修正されているため、
+                // ここでalertを出す
                 alert("UIDは必須です。");
                 isValid = false;
             } else if (!validateUidOnBlur('applicant', applicantUid)) {
