@@ -6,7 +6,7 @@
     <title>マルチ募集掲示板</title>
 
     <link href="https://fonts.googleapis.com/css2?family=Rounded+Mplus+1c&display=swap" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
     <style>
@@ -577,9 +577,8 @@
         .modal-button.no:hover {
             background-color: #bbb;
         }
-        /* 閉じるボタンのスタイル - 固定位置に変更 */
         .modal-close-button {
-            position: fixed; /* ここをfixedに変更 */
+            position: absolute;
             top: 10px;
             right: 10px;
             background: none;
@@ -588,7 +587,6 @@
             color: #aaa;
             cursor: pointer;
             transition: color 0.2s;
-            z-index: 1001; /* モーダルよりも手前に表示 */
         }
         .modal-close-button:hover {
             color: #666;
@@ -730,13 +728,10 @@
                 transform: translate(-50%, -50%);
             }
 
-            /* PC版の閉じるボタンの位置調整 - 固定位置に変更 */
+            /* PC版の閉じるボタンの位置調整 */
             .application-modal .modal-close-button {
-                position: fixed; /* ここをfixedに変更 */
-                /* モーダルの中央からの相対位置を計算して配置 */
-                top: calc(50vh - 40vh + 15px); /* (ビューポートの高さ半分) - (モーダル高さの半分) + (モーダルトップからの余白) */
-                right: calc(50vw - 200px + 15px); /* (ビューポートの幅半分) - (モーダル幅の半分) + (モーダルライトからの余白) */
-                z-index: 1001; /* モーダルよりも手前に表示 */
+                top: 15px; /* フォームの右上へ移動 */
+                right: 15px; /* フォームの右上へ移動 */
             }
         }
     </style>
@@ -1542,6 +1537,38 @@
             // 全てのチェックを通過した場合
             finalizeApplication(applicantName, applicantUid, applicantWorldRank, autoCancelTime, applicantMessage);
         });
+
+        // 申請を最終的に確定する関数
+        function finalizeApplication(applicantName, applicantUid, applicantWorldRank, autoCancelTime, applicantMessage) {
+            const newApplication = {
+                applicationId: generateApplicationId(),
+                applicantName: escapeHtml(applicantName || '名無し'),
+                applicantUid: applicantUid,
+                applicantWorldRank: applicantWorldRank,
+                autoCancelTime: autoCancelTime,
+                applicantMessage: escapeHtml(applicantMessage),
+                applyTimestamp: Date.now(),
+                status: 'pending' // 初期ステータスは「承認待ち」
+            };
+
+            const posts = loadPosts();
+            const postIndex = posts.findIndex(p => p.timestamp === targetPostTimestampForApplication);
+
+            if (postIndex !== -1) {
+                if (!posts[postIndex].applications) {
+                    posts[postIndex].applications = []; // 無ければ初期化
+                }
+                posts[postIndex].applications.push(newApplication);
+                savePosts(posts);
+                alert(`申請しました！あなたの申請IDは「${newApplication.applicationId}」です。控えておいてください。`);
+                closeApplicationModal(); // 申請フォームを閉じる
+                displayPosts(); // 投稿リストを更新して、申請があったことを反映 (今回は見た目には変化なし)
+            } else {
+                alert('エラー: 申請対象の投稿が見つかりませんでした。');
+                closeApplicationModal();
+            }
+            pendingApplicationData = null; // データリセット
+        }
 
         // 申請世界ランク確認モーダル「はい」ボタン
         document.getElementById('applyWorldRankConfirmYes').addEventListener('click', () => {
