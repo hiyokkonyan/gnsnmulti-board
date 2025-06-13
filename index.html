@@ -6,7 +6,7 @@
     <title>マルチ募集掲示板</title>
 
     <link href="https://fonts.googleapis.com/css2?family=Rounded+Mplus+1c&display=swap" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
     <style>
@@ -73,33 +73,33 @@
         .form-container label {
             display: block;
             margin-top: 15px;
-            margin-bottom: 5px; 
+            margin-bottom: 5px;
             font-weight: bold;
             font-size: 0.95em;
         }
-        
+
         /* 質問と質問の間の幅を調整するためのクラス */
         .form-label-margin-bottom {
-            margin-bottom: 25px; 
+            margin-bottom: 25px;
         }
 
         /* ラジオボタン用のスタイル */
         .radio-group {
-            margin-top: 5px; 
-            margin-bottom: 15px; 
+            margin-top: 5px;
+            margin-bottom: 15px;
             display: flex;
             flex-wrap: wrap;
             gap: 10px; /* PCでの選択肢間の余白 */
         }
 
         .radio-group label {
-            display: inline-flex; 
+            display: inline-flex;
             align-items: center;
-            margin-bottom: 0; 
-            font-weight: normal; 
+            margin-bottom: 0;
+            font-weight: normal;
             font-size: 0.9em;
             cursor: pointer;
-            padding: 5px 10px; 
+            padding: 5px 10px;
             border: 1px solid #ccc;
             border-radius: 4px;
             background-color: #f0f0f0;
@@ -108,7 +108,7 @@
 
         .radio-group input[type="radio"] {
             margin-right: 5px;
-            transform: scale(1.1); 
+            transform: scale(1.1);
             cursor: pointer;
         }
 
@@ -198,17 +198,17 @@
         .post .name {
             font-weight: bold;
             color: #555;
-            margin-left: 0; 
+            margin-left: 0;
         }
 
         .post .world-rank-display { /* 世界ランク表示用のスタイル */
-            font-weight: normal; 
-            color: #888; 
-            font-size: 0.9em; 
-            margin-top: 5px; 
-            margin-bottom: 10px; 
-            text-align: left; 
-            padding-left: 0; 
+            font-weight: normal;
+            color: #888;
+            font-size: 0.9em;
+            margin-top: 5px;
+            margin-bottom: 10px;
+            text-align: left;
+            padding-left: 0;
         }
 
         .uid-toggle, .apply-button { /* .apply-button を追加 */
@@ -236,21 +236,21 @@
             margin: 10px 0 15px;
             line-height: 1.6;
             font-size: 1.05em;
-            white-space: pre-wrap; 
-            word-wrap: break-word; 
+            white-space: pre-wrap;
+            word-wrap: break-word;
             font-family: 'Noto Sans JP', 'Hiragino Sans', 'Meiryo', sans-serif;
-            font-weight: 400; 
+            font-weight: 400;
         }
 
         .post-tags {
             margin-top: 10px;
             display: flex;
             flex-wrap: wrap;
-            gap: 8px; 
-            font-size: 0.85em; 
-            padding-bottom: 5px; 
-            border-bottom: 1px dashed #eee; 
-            margin-bottom: 10px; 
+            gap: 8px;
+            font-size: 0.85em;
+            padding-bottom: 5px;
+            border-bottom: 1px dashed #eee;
+            margin-bottom: 10px;
         }
 
         .tag {
@@ -260,33 +260,33 @@
             display: inline-flex;
             align-items: center;
             gap: 4px;
-            white-space: nowrap; 
+            white-space: nowrap;
         }
 
         .tag.vc-tag-VCあり {
-            background-color: #e0f2f7; 
-            color: #2a6a8a; 
+            background-color: #e0f2f7;
+            color: #2a6a8a;
             border: 1px solid #c9e6f0;
         }
         .tag.vc-tag-VCなし {
-            background-color: #f0f0f0; 
+            background-color: #f0f0f0;
             color: #555;
             border: 1px solid #ddd;
         }
 
         .tag.teiwat-tag-私のテイワット {
-            background-color: #e6ffe6; 
-            color: #3d8c3d; 
+            background-color: #e6ffe6;
+            color: #3d8c3d;
             border: 1px solid #d2f0d2;
         }
         .tag.teiwat-tag-あなたのテイワット {
-            background-color: #fff3e0; 
-            color: #e65100; 
+            background-color: #fff3e0;
+            color: #e65100;
             border: 1px solid #ffddb3;
         }
 
         .tag i {
-            font-size: 1em; 
+            font-size: 1em;
         }
 
         .uid {
@@ -296,14 +296,14 @@
             background-color: #eef;
             padding: 6px 10px;
             border-radius: 4px;
-            display: none; 
-            display: flex; 
-            align-items: center; 
-            justify-content: space-between; 
+            display: none;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
 
         .uid-value {
-            font-weight: bold; 
+            font-weight: bold;
         }
 
         .end-button {
@@ -357,19 +357,19 @@
         .copy-button {
             background: none;
             border: none;
-            color: #5A8EA8; 
+            color: #5A8EA8;
             cursor: pointer;
-            font-size: 1.2em; 
+            font-size: 1.2em;
             padding: 0 5px;
             margin-left: 10px;
-            display: flex; 
+            display: flex;
             align-items: center;
             justify-content: center;
-            position: relative; 
+            position: relative;
             transition: color 0.2s;
             outline: none;
             text-decoration: none;
-            caret-color: transparent; 
+            caret-color: transparent;
         }
         .copy-button:hover {
             color: #4a7390;
@@ -377,18 +377,18 @@
 
         .copy-feedback {
             position: absolute;
-            top: -20px; 
+            top: -20px;
             left: 50%;
-            transform: translate(-50%, 0); 
+            transform: translate(-50%, 0);
             background-color: rgba(0, 0, 0, 0.7);
             color: white;
-            padding: 4px 8px; 
+            padding: 4px 8px;
             border-radius: 4px;
-            font-size: 0.7em; 
+            font-size: 0.7em;
             white-space: nowrap;
             opacity: 0;
             transition: opacity 0.3s ease-out;
-            pointer-events: none; 
+            pointer-events: none;
             z-index: 10;
         }
         .copy-feedback.show {
@@ -396,20 +396,20 @@
         }
 
         .ended {
-            opacity: 0.6; 
+            opacity: 0.6;
             position: relative;
-            pointer-events: none; 
-            user-select: none; 
-            -webkit-user-select: none; 
-            -moz-user-select: none;    
-            -ms-user-select: none;     
+            pointer-events: none;
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
         }
 
         .ended::before {
             content: "";
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
-            background-color: rgba(128, 128, 128, 0.1); 
+            background-color: rgba(128, 128, 128, 0.1);
             border-radius: 8px;
             z-index: 1;
         }
@@ -417,17 +417,17 @@
         .ended::after {
             content: '募集は終了しました';
             position: absolute;
-            left: 50%; 
+            left: 50%;
             top: 50%;
-            transform: translate(-50.5%, -50%); 
-            color: #444; 
+            transform: translate(-50.5%, -50%);
+            color: #444;
             font-weight: bold;
             padding: 4px 10px;
             border-radius: 6px;
             z-index: 2;
             font-size: 1.1em;
             white-space: nowrap;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3); 
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
         }
 
         .ended .header,
@@ -437,14 +437,14 @@
         .ended .post-tags,
         .ended .world-rank-display,
         .ended .apply-button { /* 募集終了時に申請ボタンもぼかす */
-            filter: blur(5px); 
+            filter: blur(5px);
         }
 
         .uid-error-message {
             color: red;
-            font-size: 0.8em; 
-            margin-left: 5px; 
-            display: none; 
+            font-size: 0.8em;
+            margin-left: 5px;
+            display: none;
         }
 
         .modal-bg {
@@ -455,7 +455,7 @@
             justify-content: center;
             align-items: center;
             z-index: 1000;
-            display: none; 
+            display: none;
         }
 
         .modal {
@@ -470,21 +470,22 @@
             color: #333;
             font-size: 1.1em;
         }
-        
+
         /* 申請フォームモーダル用のスタイル */
         .application-modal .modal {
             background-color: white;
             padding: 30px;
             border-radius: 10px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-            max-width: 350px;
+            max-width: 350px; /* スマートフォン版のデフォルト幅 */
             width: 90%;
-            max-height: 600px; /* モーダルの最大高さ */
+            max-height: 600px; /* スマートフォン版のデフォルト高さ */
             overflow-y: auto; /* 縦方向のスクロールを許可 */
             text-align: center;
             font-weight: bold;
             color: #333;
             font-size: 1.1em;
+            /* スマートフォン版では、中央配置はflexboxに任せる */
         }
 
         .application-modal .modal-content {
@@ -713,6 +714,26 @@
                 font-size: 0.9em;
             }
         }
+
+        /* PC版（769px以上）の申請フォームモーダル調整 */
+        @media (min-width: 769px) {
+            .application-modal .modal {
+                max-width: 400px; /* PCでの横幅を少し広げる */
+                max-height: 80vh; /* PCでの縦の長さを調整 */
+                padding: 30px; /* 上下のパディングを確保 */
+                /* 中央配置 */
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
+
+            /* PC版の閉じるボタンの位置調整 */
+            .application-modal .modal-close-button {
+                top: 15px; /* フォームの右上へ移動 */
+                right: 15px; /* フォームの右上へ移動 */
+            }
+        }
     </style>
 </head>
 <body>
@@ -734,7 +755,7 @@
             </label>
             <input type="text" id="uidAnyone" placeholder="123456789" maxlength="15">
             <span style="font-size: 0.8em; color: #666;">（募集投稿に直接表示されます）</span>
-            
+
             <label for="worldRankAnyone" style="margin-top: 15px; margin-bottom: 5px;">
                 世界ランク
             </label>
@@ -913,7 +934,7 @@
                 </label>
                 <input type="text" id="applicantUid" placeholder="123456789" maxlength="15">
                 <span style="font-size: 0.8em; color: #666;">（承認されるまで、あなたのUIDは投稿主に非表示です）</span>
-                
+
                 <label for="applicantWorldRank" style="margin-top: 15px; margin-bottom: 5px;">
                     世界ランク
                 </label>
@@ -1216,7 +1237,7 @@
                 tagsHtml += `</div>`;
             }
 
-            const worldRankDisplayHtml = post.worldRank && post.worldRank !== '' ? 
+            const worldRankDisplayHtml = post.worldRank && post.worldRank !== '' ?
                 `<div class="world-rank-display">世界ランク${escapeHtml(post.worldRank)}</div>` : '';
 
             div.innerHTML = `
@@ -1362,7 +1383,7 @@
             const postElement = button.closest('.post');
             const uidDiv = postElement.querySelector('.uid');
             const label = button.querySelector('.uid-label');
-            
+
             if (postElement.classList.contains('ended')) {
                 return;
             }
