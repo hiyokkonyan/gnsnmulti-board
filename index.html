@@ -635,8 +635,8 @@
             white-space: normal; /* テキストの折り返しを許可 */
             line-height: 1.4;
             box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-            word-break: keep-all; /* 単語の途中で改行しないようにする */
             overflow-wrap: break-word; /* 長い単語は強制的に改行 */
+            writing-mode: horizontal-tb; /* 明示的に横書きを指定 */
         }
 
         .info-tooltip::after {
@@ -777,6 +777,10 @@
                 left: 50%;
                 transform: translateX(-50%);
                 bottom: 120%; /* アイコンの上に表示 */
+                white-space: normal; /* テキストの折り返しを許可 */
+                word-break: break-all; /* 日本語の単語も強制的に改行 */
+                overflow-wrap: break-word; /* 長い単語は強制的に改行 */
+                writing-mode: horizontal-tb; /* 明示的に横書きを指定 */
             }
 
             /* スマホ版申請フォームの閉じるボタン位置調整 */
@@ -807,6 +811,15 @@
                 top: 15px; /* モーダルの上端からの距離 */
                 right: 15px; /* モーダルの右端からの距離 */
                 font-size: 1.5em;
+            }
+
+            /* PC版のツールチップはそのまま維持 */
+            .info-tooltip {
+                width: auto;
+                max-width: 200px; /* PC版では適度な幅に */
+                white-space: normal;
+                overflow-wrap: break-word;
+                writing-mode: horizontal-tb; /* 明示的に横書きを指定 */
             }
         }
     </style>
@@ -1548,7 +1561,7 @@
             document.getElementById('applicationModalBg').style.display = 'none';
             targetPostTimestampForApplication = null; // リセット
             // 関連する確認モーダルも閉じる
-            document.getElementById('applyWorldRankConfirmModalModalBg').style.display = 'none';
+            document.getElementById('applyWorldRankConfirmModalBg').style.display = 'none'; // ID修正
             document.getElementById('applyMessageConfirmModalBg').style.display = 'none';
             pendingApplicationData = null; // 申請用データもリセット
             // ツールチップを非表示にする
@@ -1619,34 +1632,6 @@
             // 全てのチェックを通過した場合
             finalizeApplication(applicantName, applicantUid, applicantWorldRank, autoCancelTime, applicantMessage);
         });
-
-        // 申請を最終的に確定する関数
-        function finalizeApplication(applicantName, applicantUid, applicantWorldRank, autoCancelTime, applicantMessage) {
-            const posts = loadPosts();
-            const targetPostIndex = posts.findIndex(p => p.timestamp === targetPostTimestampForApplication);
-
-            if (targetPostIndex !== -1) {
-                const newApplication = {
-                    id: generateApplicationId(),
-                    applicantName: escapeHtml(applicantName || '名無し'),
-                    applicantUid: applicantUid,
-                    applicantWorldRank: applicantWorldRank,
-                    autoCancelTime: autoCancelTime,
-                    applicantMessage: escapeHtml(applicantMessage),
-                    applyTimestamp: Date.now(),
-                    status: 'pending' // 'pending', 'approved', 'rejected', 'cancelled_by_auto', 'cancelled_by_applicant'
-                };
-                posts[targetPostIndex].applications.push(newApplication);
-                savePosts(posts);
-                alert("申請を送信しました！"); // 成功メッセージ
-                closeApplicationModal(); // モーダルを閉じる
-                displayPosts(); // 投稿リストを更新
-            } else {
-                alert("対象の募集が見つかりませんでした。");
-                closeApplicationModal(); // モーダルを閉じる
-            }
-            pendingApplicationData = null; // リセット
-        }
 
         // 申請世界ランク確認モーダル「はい」ボタン
         document.getElementById('applyWorldRankConfirmYes').addEventListener('click', () => {
