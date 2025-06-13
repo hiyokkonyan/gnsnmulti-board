@@ -289,11 +289,11 @@
             color: #e65100; 
             border: 1px solid #ffddb3;
         }
-        .tag.teiwat-tag-どちらでも {
+        /* .tag.teiwat-tag-どちらでも {
             background-color: #e8eaf6; 
             color: #3f51b5; 
             border: 1px solid #c5cae9;
-        }
+        } */
 
         .tag i {
             font-size: 1em; 
@@ -690,6 +690,10 @@
                     <input type="radio" name="vcAnyone" value="VCなし">
                     <span>VCなし</span>
                 </label>
+                <label>
+                    <input type="radio" name="vcAnyone" value="どちらでも">
+                    <span>どちらでも</span>
+                </label>
             </div>
 
             <label style="margin-top: 20px; margin-bottom: -5px;">どちらのテイワットで遊ぶ？</label>
@@ -750,6 +754,10 @@
                 <label>
                     <input type="radio" name="vcApplication" value="VCなし">
                     <span>VCなし</span>
+                </label>
+                <label>
+                    <input type="radio" name="vcApplication" value="どちらでも">
+                    <span>どちらでも</span>
                 </label>
             </div>
 
@@ -968,18 +976,29 @@
             let tagsHtml = '';
             if (post.vcOption || post.teiwatOption) {
                 tagsHtml += `<div class="post-tags">`;
+                // VCオプションのタグ生成
                 if (post.vcOption) {
-                    let vcIcon = '';
-                    if (post.vcOption === 'VCあり') vcIcon = '<i class="fa-solid fa-microphone-alt"></i>';
-                    else if (post.vcOption === 'VCなし') vcIcon = '<i class="fa-solid fa-microphone-alt-slash"></i>';
-                    tagsHtml += `<span class="tag vc-tag-${post.vcOption.replace(/\s+/g, '')}">${vcIcon} ${post.vcOption}</span>`;
+                    if (post.vcOption === 'どちらでも') {
+                        tagsHtml += `<span class="tag vc-tag-VCあり"><i class="fa-solid fa-microphone-alt"></i> VCあり</span>`;
+                        tagsHtml += `<span class="tag vc-tag-VCなし"><i class="fa-solid fa-microphone-alt-slash"></i> VCなし</span>`;
+                    } else {
+                        let vcIcon = '';
+                        if (post.vcOption === 'VCあり') vcIcon = '<i class="fa-solid fa-microphone-alt"></i>';
+                        else if (post.vcOption === 'VCなし') vcIcon = '<i class="fa-solid fa-microphone-alt-slash"></i>';
+                        tagsHtml += `<span class="tag vc-tag-${post.vcOption.replace(/\s+/g, '')}">${vcIcon} ${post.vcOption}</span>`;
+                    }
                 }
+                // テイワットオプションのタグ生成
                 if (post.teiwatOption) {
-                    let teiwatIcon = '';
-                    if (post.teiwatOption === '私のテイワット') teiwatIcon = '<i class="fa-solid fa-home"></i>'; // 家のアイコン
-                    else if (post.teiwatOption === 'あなたのテイワット') teiwatIcon = '<i class="fa-solid fa-users"></i>'; // 複数の人のアイコン
-                    else if (post.teiwatOption === 'どちらでも') teiwatIcon = '<i class="fa-solid fa-exchange-alt"></i>'; // 交換アイコン
-                    tagsHtml += `<span class="tag teiwat-tag-${post.teiwatOption.replace(/\s+/g, '')}">${teiwatIcon} ${post.teiwatOption}</span>`;
+                    if (post.teiwatOption === 'どちらでも') {
+                        tagsHtml += `<span class="tag teiwat-tag-私のテイワット"><i class="fa-solid fa-home"></i> 私のテイワット（募集主）</span>`;
+                        tagsHtml += `<span class="tag teiwat-tag-あなたのテイワット"><i class="fa-solid fa-users"></i> あなたのテイワット（参加者）</span>`;
+                    } else {
+                        let teiwatIcon = '';
+                        if (post.teiwatOption === '私のテイワット') teiwatIcon = '<i class="fa-solid fa-home"></i>'; // 家のアイコン
+                        else if (post.teiwatOption === 'あなたのテイワット') teiwatIcon = '<i class="fa-solid fa-users"></i>'; // 複数の人のアイコン
+                        tagsHtml += `<span class="tag teiwat-tag-${post.teiwatOption.replace(/\s+/g, '')}">${teiwatIcon} ${post.teiwatOption}</span>`;
+                    }
                 }
                 tagsHtml += `</div>`;
             }
