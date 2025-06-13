@@ -1448,9 +1448,9 @@
 
             // UIDの必須チェックとバリデーション
             if (applicantUid.trim() === '') {
-                alert("UIDは必須です。");
+                alert("UIDは必須です。"); // This is the required field check for submission
                 isValid = false;
-            } else if (!validateUidOnBlur('applicant', applicantUid)) {
+            } else if (!validateUidOnBlur('applicant', applicantUid)) { // This calls the shared validation logic
                 isValid = false; // validateUidOnBlurがエラーメッセージを表示済み
             }
 
