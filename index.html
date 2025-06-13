@@ -617,8 +617,8 @@
 
         .info-tooltip {
             visibility: hidden;
-            width: 220px; /* ツールチップの幅 */
-            background-color: rgba(0, 0, 0, 0.8);
+            width: 200px; /* ツールチップの幅を調整して改行を制御 */
+            background-color: #6a7f8e; /* 落ち着いた青グレーに変更 */
             color: #fff;
             text-align: center;
             border-radius: 6px;
@@ -634,6 +634,8 @@
             white-space: normal; /* テキストの折り返しを許可 */
             line-height: 1.4;
             box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            word-break: keep-all; /* 単語の途中で改行しないようにする */
+            overflow-wrap: break-word; /* 長い単語は強制的に改行 */
         }
 
         .info-tooltip::after {
@@ -644,7 +646,7 @@
             margin-left: -5px;
             border-width: 5px;
             border-style: solid;
-            border-color: rgba(0, 0, 0, 0.8) transparent transparent transparent;
+            border-color: #6a7f8e transparent transparent transparent; /* 色を合わせる */
         }
 
         .info-icon.active .info-tooltip {
@@ -1018,7 +1020,7 @@
                 <label style="margin-top: 20px;">
                     自動キャンセル
                     <i class="fa-solid fa-circle-info info-icon" id="autoCancelInfoIcon">
-                        <span class="info-tooltip">投稿主から反応がない場合、設定した時間で申請を自動的にキャンセルします</span>
+                        <span class="info-tooltip">投稿主から反応がない場合、<br>設定した時間で申請を<br>自動的にキャンセルします</span>
                     </i>
                 </label>
                 <div class="radio-group">
