@@ -570,7 +570,7 @@
         /* PC版のツールチップ設定 (デフォルト) */
         .info-tooltip {
             visibility: hidden;
-            width: 120px;
+            width: 120px; /* PC版の幅 */
             background-color: #555;
             color: #fff;
             text-align: center;
@@ -580,15 +580,21 @@
             z-index: 1;
             bottom: 125%; /* アイコンの上に表示 */
             left: 50%;
-            margin-left: -60px; /* ツールチップを中央に配置 */
+            margin-left: -60px; /* ツールチップを中央に配置 (widthの半分) */
             opacity: 0;
             transition: opacity 0.3s;
             font-size: 0.8em;
-            white-space: normal; /* テキストを折り返す */
+            white-space: nowrap; /* PC版は折り返さない */
             line-height: 1.2;
             writing-mode: horizontal-tb; /* 明示的に横書きを指定 */
             box-shadow: 0 2px 5px rgba(0,0,0,0.2); /* 影を追加 */
         }
+        /* PC版で長い単語がはみ出すのを防ぐための設定 (white-space: nowrap; と併用) */
+        .info-tooltip[style*="white-space: nowrap;"] { /* もし特定のスタイルで nowrap が設定されている場合 */
+            overflow-wrap: break-word; /* 長い単語は改行 */
+            word-break: break-word; /* 長い単語は改行 (古いブラウザ対応) */
+        }
+
 
         /* スマホ版のスタイル調整 */
         @media (max-width: 768px) {
