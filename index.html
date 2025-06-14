@@ -617,12 +617,12 @@
 
         .info-tooltip {
             visibility: hidden;
-            width: auto;
-            min-width: 150px; /* 最低幅を確保 */
-            max-width: 250px; /* 最大幅を設定 */
+            width: auto; /* PC版ではコンテンツに合わせる */
+            min-width: 180px; /* PC版の最低幅 */
+            max-width: 280px; /* PC版の最大幅 */
             background-color: #6a7f8e;
             color: #fff;
-            text-align: left; /* ★ここを左揃えに */
+            text-align: left;
             border-radius: 6px;
             padding: 8px 10px;
             position: absolute;
@@ -633,12 +633,13 @@
             opacity: 0;
             transition: opacity 0.3s;
             font-size: 0.8em;
-            white-space: normal !important; /* ★最重要: テキストの折り返しを強制 */
+            white-space: nowrap; /* PC版では基本折り返さない */
             line-height: 1.4;
             box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-            word-break: break-all; /* ★長い単語は強制的に改行 */
-            overflow-wrap: break-word; /* ★長い単語は強制的に改行 (モダンブラウザ用) */
-            writing-mode: horizontal-tb; /* ★重要: 明示的に横書きを指定 */
+            /* 長いURLなどで必要に応じて改行するが、基本は nowrap */
+            overflow-wrap: break-word; /* 単語の途中で改行 */
+            word-break: break-word; /* 互換性のため */
+            writing-mode: horizontal-tb; /* 明示的に横書き */
         }
 
         .info-tooltip::after {
