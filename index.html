@@ -243,6 +243,14 @@
             font-weight: 400;
         }
 
+        /* 投稿内容とボタン群の間の区切り線 */
+        .post-footer-divider {
+            border-bottom: 1px dashed #eee;
+            margin-top: 15px;
+            margin-bottom: 10px;
+        }
+
+
         .post-tags {
             margin-top: 10px;
             display: flex;
@@ -250,7 +258,7 @@
             gap: 8px;
             font-size: 0.85em;
             padding-bottom: 5px;
-            border-bottom: 1px dashed #eee;
+            border-bottom: 1px dashed #eee; /* ここはタグの下なので残す */
             margin-bottom: 10px;
         }
 
@@ -399,6 +407,7 @@
             opacity: 1;
         }
 
+        /* リプライボタンのスタイル */
         .reply-button {
             position: absolute;
             bottom: 15px;
@@ -406,14 +415,46 @@
             background: none;
             border: none;
             font-size: 1.8em; /* アイコンを少し大きく */
-            color: #5A8EA8;
+            color: #ccc; /* 0件の場合のデフォルト色 */
             cursor: pointer;
             transition: color 0.2s;
             z-index: 5;
+            display: flex; /* アイコンと数字を並べるため */
+            align-items: center;
+            padding: 0; /* デフォルトのパディングをなくす */
+        }
+        .reply-button i {
+            font-size: 1em; /* 親のfont-size基準 */
+        }
+        /* リプライが1件以上ある場合の色 */
+        .reply-button.has-replies {
+            color: #5A8EA8; /* サイトのテーマカラー */
         }
         .reply-button:hover {
             color: #4a7390;
         }
+
+        /* リプライ数のバッジ */
+        .reply-count-badge {
+            font-size: 0.5em; /* アイコンに合わせた数字のサイズ */
+            font-weight: bold;
+            color: white;
+            background-color: #FF5722; /* 目立つ赤オレンジ */
+            border-radius: 50%;
+            padding: 2px 5px; /* 上下左右のパディング調整 */
+            position: absolute;
+            top: -2px; /* アイコンの右上へ移動 */
+            right: -2px;
+            font-family: Arial, sans-serif;
+            min-width: 1.4em; /* 数字が1桁でも2桁でも円形を保つ */
+            height: 1.4em;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-sizing: border-box;
+            line-height: 1; /* 行の高さを調整して中央揃え */
+        }
+
 
         .ended {
             opacity: 0.6;
@@ -696,7 +737,15 @@
         .replies-container {
             margin-top: 20px;
             padding-top: 10px;
+            /* この線はリプライエリアの区切りなので、ここでは維持 */
             border-top: 1px dashed #eee;
+        }
+        /* リプライリストの表示/非表示 */
+        .replies-list-wrapper {
+            display: none; /* デフォルトで非表示 */
+        }
+        .replies-list-wrapper.active {
+            display: block; /* アクティブな時に表示 */
         }
 
         .reply {
@@ -744,6 +793,26 @@
             word-wrap: break-word;
             font-family: 'Noto Sans JP', 'Hiragino Sans', 'Meiryo', sans-serif;
             font-weight: 400;
+        }
+
+        .add-reply-button-container {
+            text-align: center;
+            margin-top: 15px;
+            margin-bottom: 5px;
+        }
+        .add-reply-button {
+            padding: 8px 15px;
+            background-color: #5A8EA8;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 0.9em;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .add-reply-button:hover {
+            background-color: #4a7390;
         }
 
         /* スマートフォン向けスタイル */
@@ -882,6 +951,15 @@
             }
             .reply-button {
                 font-size: 1.6em; /* スマホでは少し小さく */
+            }
+            .reply-button i {
+                font-size: 1em; /* 親のfont-size基準 */
+            }
+            .reply-count-badge {
+                font-size: 0.5em; /* スマホで調整 */
+                padding: 2px 4px;
+                min-width: 1.3em;
+                height: 1.3em;
             }
         }
 
@@ -1513,6 +1591,12 @@
             const worldRankDisplayHtml = post.worldRank && post.worldRank !== '' ?
                 `<div class="world-rank-display">世界ランク${escapeHtml(post.worldRank)}</div>` : '';
 
+            // リプライボタンのクラスとバッジの有無を決定
+            const replyCount = post.replies ? post.replies.length : 0;
+            const replyButtonClass = replyCount > 0 ? 'reply-button has-replies' : 'reply-button';
+            const replyBadgeHtml = replyCount > 0 ? `<span class="reply-count-badge">${replyCount}</span>` : '';
+
+
             div.innerHTML = `
                 <div class="header">
                     <span class="name">${escapeHtml(post.name || '名無し')}</span>
@@ -1522,18 +1606,25 @@
                 ${worldRankDisplayHtml}
                 <div class="content">${escapeHtml(post.content)}</div>
                 ${tagsHtml}
-                ${uidDisplayHtml}
+                <div class="post-footer-divider"></div> ${uidDisplayHtml}
                 <button class="end-button" onclick="openConfirm(this)" style="display: ${post.isEnded ? 'none' : 'block'};">募集を終了する</button>
-                <button class="reply-button" onclick="openReplyModal('${post.timestamp}')" style="pointer-events: ${post.isEnded ? 'none' : 'auto'};">
+                <button class="${replyButtonClass}" onclick="toggleReplySection('${post.timestamp}')" style="pointer-events: ${post.isEnded ? 'none' : 'auto'};">
                     <i class="fa-solid fa-comment-dots"></i>
+                    ${replyBadgeHtml}
                 </button>
-                <div class="replies-container" id="replies-${post.timestamp}"></div>
+                <div class="replies-container" id="replies-container-${post.timestamp}">
+                    <div class="replies-list-wrapper" id="replies-list-wrapper-${post.timestamp}">
+                        </div>
+                    <div class="add-reply-button-container">
+                        <button class="add-reply-button" onclick="openReplyModal('${post.timestamp}')">リプライを送信する</button>
+                    </div>
+                </div>
             `;
             // リプライがあれば表示
             if (post.replies && post.replies.length > 0) {
-                const repliesContainer = div.querySelector(`#replies-${post.timestamp}`);
+                const repliesListWrapper = div.querySelector(`#replies-list-wrapper-${post.timestamp}`);
                 post.replies.forEach(reply => {
-                    repliesContainer.appendChild(createReplyElement(reply));
+                    repliesListWrapper.appendChild(createReplyElement(reply));
                 });
             }
             return div;
@@ -1590,7 +1681,7 @@
 
             let isValid = true;
 
-            // UIDのバリデーション
+            // UIDの必須チェックとバリデーション
             if (uid.trim() === '') {
                 alert("UIDは必須です。");
                 isValid = false;
@@ -1972,8 +2063,37 @@
                 alert("エラー: 投稿が見つかりませんでした。");
             }
         }
-        // ========== リプライ機能関連のJavaScriptここまで ==========
 
+        // リプライセクションの表示/非表示をトグル
+        function toggleReplySection(postTimestamp) {
+            const postElement = document.querySelector(`.post[data-timestamp="${postTimestamp}"]`);
+            if (!postElement) return;
+
+            const repliesListWrapper = postElement.querySelector(`#replies-list-wrapper-${postTimestamp}`);
+            const addReplyButtonContainer = postElement.querySelector('.add-reply-button-container');
+            const replyButton = postElement.querySelector('.reply-button');
+            const replyCount = postElement.dataset.replyCount ? parseInt(postElement.dataset.replyCount) : 0;
+
+            if (postElement.classList.contains('ended')) {
+                return;
+            }
+
+            if (repliesListWrapper.classList.contains('active')) {
+                // 非表示にする
+                repliesListWrapper.classList.remove('active');
+                addReplyButtonContainer.style.display = 'none';
+            } else {
+                // 表示する
+                if (replyCount === 0) {
+                    // リプライが0件の場合は、直接リプライモーダルを開く
+                    openReplyModal(postTimestamp);
+                    return; // ここで処理を終了し、リスト表示はしない
+                } else {
+                    repliesListWrapper.classList.add('active');
+                    addReplyButtonContainer.style.display = 'block';
+                }
+            }
+        }
 
         // ページ読み込み時に投稿を表示
         document.addEventListener("DOMContentLoaded", displayPosts);
