@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ja">
 <head>
     <meta charset="UTF-8" />
@@ -31,1971 +31,790 @@
             gap: 10px;
         }
 
-        .type-button {
-            padding: 10px 20px;
-            border: 2px solid #5A8EA8;
+        .type-switcher button {
+            padding: 8px 15px;
+            border: none;
             border-radius: 20px;
-            background-color: white;
-            color: #5A8EA8;
-            font-weight: bold;
+            background-color: #e0e0e0;
+            color: #555;
+            font-size: 1em;
             cursor: pointer;
-            transition: background-color 0.3s, color 0.3s;
-            user-select: none;
+            transition: background-color 0.3s ease;
         }
 
-        .type-button.active {
+        .type-switcher button.active {
             background-color: #5A8EA8;
             color: white;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
         }
 
-        .type-button:hover:not(.active) {
-            background-color: #e0f2f7;
+        .type-switcher button:hover:not(.active) {
+            background-color: #d0d0d0;
         }
 
-        .form-container {
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
             background: #fff;
-            border: 1px solid #ccc;
-            border-radius: 8px;
             padding: 20px;
-            max-width: 500px; /* PCでの最大幅 */
-            margin: 0 auto 30px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
 
-        .form-section {
-            display: none; /* デフォルトで非表示 */
+        .post-form, .search-form {
+            background: #f0f7f9;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
         }
 
-        .form-section.active {
-            display: block; /* アクティブなフォームだけ表示 */
-        }
-
-        .form-container label {
-            display: block;
-            margin-top: 15px;
-            margin-bottom: 5px;
-            font-weight: bold;
-            font-size: 0.95em;
-        }
-
-        /* 質問と質問の間の幅を調整するためのクラス */
-        .form-label-margin-bottom {
-            margin-bottom: 25px;
-        }
-
-        /* ラジオボタン用のスタイル */
-        .radio-group {
-            margin-top: 5px;
-            margin-bottom: 15px;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px; /* PCでの選択肢間の余白 */
-        }
-
-        .radio-group label {
-            display: inline-flex;
-            align-items: center;
-            margin-bottom: 0;
-            font-weight: normal;
-            font-size: 0.9em;
-            cursor: pointer;
-            padding: 5px 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            background-color: #f0f0f0;
-            transition: background-color 0.2s, border-color 0.2s;
-        }
-
-        .radio-group input[type="radio"] {
-            margin-right: 5px;
-            transform: scale(1.1);
-            cursor: pointer;
-        }
-
-        .radio-group input[type="radio"]:checked + span {
-            font-weight: bold;
+        .post-form h2, .search-form h2 {
+            font-size: 1.3em;
             color: #5A8EA8;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #a8d0e6;
+            padding-bottom: 8px;
         }
 
-        .radio-group label:hover {
-            background-color: #e6e6e6;
-            border-color: #999;
+        .form-group {
+            margin-bottom: 15px;
         }
 
-        .radio-group input[type="radio"]:checked ~ label {
-            background-color: #e0f2f7;
-            border-color: #5A8EA8;
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #444;
         }
 
-
-        .form-container input[type="text"],
-        .form-container textarea,
-        .form-container select { /* selectタグにもスタイルを適用 */
-            width: calc(100% - 16px);
-            padding: 8px;
+        .form-group input[type="text"],
+        .form-group input[type="number"],
+        .form-group textarea,
+        .form-group select {
+            width: calc(100% - 20px);
+            padding: 10px;
             border: 1px solid #ccc;
-            border-radius: 4px;
-            font-family: inherit;
+            border-radius: 5px;
             font-size: 1em;
             box-sizing: border-box;
-            -webkit-appearance: none; /* デフォルトの矢印を非表示 (WebKit) */
-            -moz-appearance: none;    /* デフォルトの矢印を非表示 (Mozilla) */
-            appearance: none;         /* デフォルトの矢印を非表示 */
-            background-image: url('data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2020%2020%22%20fill%3D%22%23333%22%3E%3Cpath%20fill-rule%3D%22evenodd%22%20d%3D%22M5.293%207.293a1%201%200%20011.414%200L10%2010.586l3.293-3.293a1%201%200%20111.414%201.414l-4%204a1%201%200%2001-1.414%200l-4-4a1%201%200%20010-1.414z%22%20clip-rule%3D%22evenodd%22%2F%3E%3C%2Fsvg%3E'); /* カスタム矢印アイコン */
-            background-repeat: no-repeat;
-            background-position: right 8px center;
-            background-size: 1em;
-            padding-right: 30px; /* 矢印との重なりを防ぐためのパディング */
+            transition: border-color 0.3s ease;
         }
 
-        .form-container textarea {
+        .form-group input[type="text"]:focus,
+        .form-group input[type="number"]:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            border-color: #5A8EA8;
+            outline: none;
+        }
+
+        .form-group textarea {
             resize: vertical;
+            min-height: 80px;
         }
 
-        .form-container input::placeholder,
-        .form-container textarea::placeholder {
-            color: #aaa;
-        }
-
-        .form-container button {
-            margin-top: 25px;
-            padding: 12px 24px;
+        .post-button {
+            display: block;
+            width: 100%;
+            padding: 12px;
             background-color: #5A8EA8;
             color: white;
             border: none;
-            border-radius: 6px;
-            font-weight: bold;
+            border-radius: 5px;
             font-size: 1.1em;
             cursor: pointer;
-            width: 100%;
-            transition: background-color 0.3s;
+            transition: background-color 0.3s ease, transform 0.2s ease;
         }
 
-        .form-container button:hover {
-            background-color: #4a7390;
+        .post-button:hover {
+            background-color: #4A7A9A;
+            transform: translateY(-2px);
+        }
+
+        .post-button:active {
+            transform: translateY(0);
+        }
+
+
+        .search-form {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: flex-end;
+        }
+
+        .search-form .form-group {
+            flex: 1;
+            min-width: 150px;
+            margin-bottom: 0;
+        }
+
+        .search-button {
+            padding: 10px 20px;
+            background-color: #6c757d;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .search-button:hover {
+            background-color: #5a6268;
+        }
+
+
+        #posts-container {
+            margin-top: 30px;
+            border-top: 1px solid #eee;
+            padding-top: 20px;
         }
 
         .post {
-            border: 1px solid #ddd;
-            padding: 15px;
-            margin: 15px auto;
+            background: #ffffff;
+            border: 1px solid #e0e0e0;
             border-radius: 8px;
-            background-color: #fdfdfd;
-            max-width: 500px; /* PCでの最大幅 */
-            position: relative;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            position: relative; /* UIDコピーボタンのためにpositionを設定 */
         }
 
-        .post .header {
+        .post-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 0.85em;
-            color: #666;
             margin-bottom: 10px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
         }
 
-        .post .name {
-            font-weight: bold;
-            color: #555;
-            margin-left: 0;
-        }
-
-        .post .world-rank-display { /* 世界ランク表示用のスタイル */
-            font-weight: normal;
-            color: #888;
-            font-size: 0.9em;
-            margin-top: 5px;
-            margin-bottom: 10px;
-            text-align: left;
-            padding-left: 0;
-        }
-
-        .uid-toggle, .apply-button, .comment-button { /* .apply-button と .comment-button を追加 */
-            cursor: pointer;
-            font-size: 0.95em;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.3em;
-            user-select: none;
+        .post-title {
+            font-size: 1.3em;
             color: #5A8EA8;
-            background: none; /* ボタンのデフォルトスタイルをリセット */
-            border: none;
-            padding: 0;
+            margin: 0;
         }
 
-        .uid-toggle:hover, .apply-button:hover, .comment-button:hover {
-            opacity: 0.8;
-        }
-
-        .uid-label, .apply-label { /* .apply-label を追加 */
-            margin-left: 0.3em;
-        }
-
-        /* コメントボタンのスタイル */
-        .comment-button {
-            position: absolute;
-            bottom: 15px;
-            right: 15px;
-            background-color: #f0f0f0;
-            border: 1px solid #ccc;
-            border-radius: 20px;
-            padding: 5px 12px;
+        .post-meta {
             font-size: 0.85em;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            color: #555;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-            transition: background-color 0.2s, color 0.2s, border-color 0.2s;
-        }
-
-        .comment-button.no-comments {
-            opacity: 0.6;
             color: #888;
-        }
-
-        .comment-button:hover {
-            background-color: #e6e6e6;
-            border-color: #bbb;
-        }
-
-        .comment-button i {
-            font-size: 1.1em;
-        }
-
-        .comment-count {
-            font-weight: bold;
-        }
-
-
-        .content {
-            margin: 10px 0 15px;
-            line-height: 1.6;
-            font-size: 1.05em;
-            white-space: pre-wrap;
-            word-wrap: break-word;
-            font-family: 'Noto Sans JP', 'Hiragino Sans', 'Meiryo', sans-serif;
-            font-weight: 400;
-        }
-
-        .post-tags {
-            margin-top: 10px;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            font-size: 0.85em;
-            padding-bottom: 5px;
-            border-bottom: 1px dashed #eee;
-            margin-bottom: 10px;
-        }
-
-        .tag {
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-weight: bold;
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
             white-space: nowrap;
         }
 
-        .tag.vc-tag-VCあり {
-            background-color: #e0f2f7;
-            color: #2a6a8a;
-            border: 1px solid #c9e6f0;
+        .post-meta .timestamp {
+            margin-left: 10px;
         }
-        .tag.vc-tag-VCなし {
-            background-color: #f0f0f0;
+
+        .post-details {
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .post-details p {
+            margin: 5px 0;
+        }
+
+        .post-details strong {
             color: #555;
-            border: 1px solid #ddd;
         }
 
-        .tag.teiwat-tag-私のテイワット {
-            background-color: #e6ffe6;
-            color: #3d8c3d;
-            border: 1px solid #d2f0d2;
-        }
-        .tag.teiwat-tag-あなたのテイワット {
-            background-color: #fff3e0;
-            color: #e65100;
-            border: 1px solid #ffddb3;
-        }
-
-        .tag i {
-            font-size: 1em;
-        }
-
-        .uid {
-            margin-top: 10px;
-            font-size: 0.9em;
-            color: #444;
-            background-color: #eef;
-            padding: 6px 10px;
-            border-radius: 4px;
-            display: none;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .uid-value {
-            font-weight: bold;
-        }
-
-        .end-button {
+        .post-content {
+            white-space: pre-wrap; /* 改行を保持 */
+            background-color: #fcfcfc;
+            border-left: 3px solid #5A8EA8;
+            padding: 10px 15px;
             margin-top: 15px;
-            cursor: pointer;
-            background-color: #5A8EA8;
-            border: none;
+            border-radius: 0 5px 5px 0;
+            font-size: 0.95em;
+            color: #333;
+        }
+
+        .post-footer {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 15px;
+        }
+
+        .delete-button {
+            background-color: #dc3545;
             color: white;
-            padding: 8px 15px;
-            border-radius: 6px;
-            font-weight: bold;
-            transition: background-color 0.3s;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
             font-size: 0.9em;
-        }
-        .end-button:hover {
-            background-color: #4a7390;
+            transition: background-color 0.3s ease;
         }
 
-        .eye {
-            position: relative;
-            display: inline-block;
-            width: 22px;
-            height: 14px;
-            background: #fff;
-            border: 2px solid #555;
-            border-radius: 50% / 50%;
-            clip-path: polygon(
-                15% 0%, 85% 0%,
-                100% 50%, 85% 100%,
-                15% 100%, 0% 50%
-            );
-            box-sizing: border-box;
-            overflow: visible;
-        }
-
-        .pupil {
-            position: absolute;
-            top: 1px;
-            left: 5px;
-            width: 8px;
-            height: 8px;
-            background: #000;
-            border-radius: 50%;
-            box-shadow:
-                0 0 0 1px #000,
-                0 0 3px 0 #000;
-            filter: contrast(140%) saturate(150%);
-            image-rendering: pixelated;
+        .delete-button:hover {
+            background-color: #c82333;
         }
 
         .copy-button {
-            background: none;
+            background-color: #007bff;
+            color: white;
             border: none;
-            color: #5A8EA8;
+            padding: 5px 10px;
+            border-radius: 4px;
             cursor: pointer;
-            font-size: 1.2em;
-            padding: 0 5px;
+            font-size: 0.85em;
             margin-left: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            transition: color 0.2s;
-            outline: none;
-            text-decoration: none;
-            caret-color: transparent;
+            transition: background-color 0.3s ease;
+            position: absolute; /* 親要素 .post に対して絶対配置 */
+            top: 20px; /* 位置を調整 */
+            right: 20px; /* 位置を調整 */
         }
+
         .copy-button:hover {
-            color: #4a7390;
+            background-color: #0056b3;
         }
 
-        .copy-feedback {
-            position: absolute;
-            top: -20px;
-            left: 50%;
-            transform: translate(-50%, 0);
-            background-color: rgba(0, 0, 0, 0.7);
-            color: white;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 0.7em;
-            white-space: nowrap;
-            opacity: 0;
-            transition: opacity 0.3s ease-out;
-            pointer-events: none;
-            z-index: 10;
-        }
-        .copy-feedback.show {
-            opacity: 1;
+        .copy-button:active {
+            background-color: #004085;
         }
 
-        .ended {
-            opacity: 0.6;
-            position: relative;
-            pointer-events: none;
-            user-select: none;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
+        .copy-button .fa-copy {
+            margin-right: 5px;
         }
 
-        .ended::before {
-            content: "";
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background-color: rgba(128, 128, 128, 0.1);
-            border-radius: 8px;
-            z-index: 1;
-        }
 
-        .ended::after {
-            content: '募集は終了しました';
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50.5%, -50%);
-            color: #444;
-            font-weight: bold;
-            padding: 4px 10px;
-            border-radius: 6px;
-            z-index: 2;
-            font-size: 1.1em;
-            white-space: nowrap;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
-        }
-
-        .ended .header,
-        .ended .content,
-        .ended .uid,
-        .ended .end-button,
-        .ended .post-tags,
-        .ended .world-rank-display,
-        .ended .apply-button,
-        .ended .comment-button { /* 募集終了時に申請ボタンとコメントボタンもぼかす */
-            filter: blur(5px);
-        }
-
-        .uid-error-message {
-            color: red;
-            font-size: 0.8em;
-            margin-left: 5px;
-            display: none;
-        }
-        .world-rank-error-message { /* 世界ランクのエラーメッセージ */
-            color: red;
-            font-size: 0.8em;
-            margin-left: 5px;
-            display: none;
-        }
-
-        .modal-bg {
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background-color: rgba(0,0,0,0.5);
+        /* コメント機能のスタイル */
+        .post-actions {
             display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            display: none;
-        }
-
-        .modal {
-            background-color: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-            max-width: 350px;
-            width: 90%;
-            text-align: center;
-            font-weight: bold;
-            color: #333;
-            font-size: 1.1em;
-        }
-
-        /* 申請フォームモーダル用のスタイル */
-        .application-modal .modal {
-            background-color: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-            max-width: 350px; /* スマートフォン版のデフォルト幅 */
-            width: 90%;
-            max-height: 600px; /* スマートフォン版のデフォルト高さ */
-            overflow-y: auto; /* 縦方向のスクロールを許可 */
-            text-align: center;
-            font-weight: bold;
-            color: #333;
-            font-size: 1.1em;
-            /* スマートフォン版では、中央配置はflexboxに任せる */
-        }
-        /* 参加リクエストの文字色をサイトに合わせる */
-        .application-modal .modal h2 {
-            color: #5A8EA8; /* サイトのテーマカラーに合わせる */
-            font-size: 1.4em;
-            margin-bottom: 20px;
-        }
-
-
-        .application-modal .modal-content {
-            text-align: left; /* フォームの要素を左揃えに */
-        }
-        .application-modal .modal-content label {
-            display: block;
+            justify-content: flex-start; /* コメントボタンを左に配置 */
             margin-top: 15px;
-            margin-bottom: 5px;
-            font-weight: bold;
-            font-size: 0.95em;
-            color: #333;
-        }
-        .application-modal .modal-content input[type="text"],
-        .application-modal .modal-content textarea,
-        .application-modal .modal-content select {
-            width: calc(100% - 16px);
-            padding: 8px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            font-family: inherit;
-            font-size: 1em;
-            box-sizing: border-box;
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            appearance: none;
-            background-image: url('data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2020%2020%22%20fill%3D%22%23333%22%3E%3Cpath%20fill-rule%3D%22evenodd%22%20d%3D%22M5.293%207.293a1%201%200%20011.414%200L10%2010.586l3.293-3.293a1%201%200%20111.414%201.414l-4%204a1%201%200%2001-1.414%200l-4-4a1%201%200%20010-1.414z%22%20clip-rule%3D%22evenodd%22%2F%3E%3C%2Fsvg%3E');
-            background-repeat: no-repeat;
-            background-position: right 8px center;
-            background-size: 1em;
-            padding-right: 30px;
-        }
-
-        .application-modal .modal-content textarea {
-            resize: vertical;
-        }
-        .application-modal .radio-group {
-            justify-content: flex-start; /* 左揃えに */
-        }
-        .application-modal .modal-content button {
-            margin-top: 25px;
-            padding: 12px 24px;
-            background-color: #5A8EA8;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            font-weight: bold;
-            font-size: 1.1em;
-            cursor: pointer;
-            width: 100%;
-            transition: background-color 0.3s;
-        }
-        .application-modal .modal-content button:hover {
-            background-color: #4a7390;
-        }
-
-
-        .modal-buttons {
-            margin-top: 30px;
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-        }
-
-        .modal-button {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 6px;
-            font-weight: bold;
-            cursor: pointer;
-            user-select: none;
-            transition: background-color 0.3s;
-            min-width: 90px;
-            font-size: 1em;
-        }
-
-        .modal-button.yes {
-            background-color: #5A8EA8;
-            color: white;
-        }
-        .modal-button.yes:hover {
-            background-color: #4a7390;
-        }
-
-        .modal-button.no {
-            background-color: #ddd;
-            color: #555;
-        }
-        .modal-button.no:hover {
-            background-color: #bbb;
-        }
-        /* 閉じるボタンのスタイル - 固定位置に変更 */
-        .modal-close-button {
-            position: fixed; /* ここをfixedに変更 */
-            top: 10px;
-            right: 10px;
-            background: none;
-            border: none;
-            font-size: 1.5em;
-            color: #aaa;
-            cursor: pointer;
-            transition: color 0.2s;
-            z-index: 1001; /* モーダルよりも手前に表示 */
-        }
-        .modal-close-button:hover {
-            color: #666;
-        }
-
-        .posts-container {
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        /* Information icon and tooltip for Auto-cancel */
-        .info-icon {
-            color: #5A8EA8;
-            font-size: 0.9em;
-            margin-left: 5px;
-            cursor: pointer;
-            position: relative;
-            display: inline-block;
-            vertical-align: middle;
-            transition: color 0.2s;
-        }
-
-        .info-icon:hover {
-            color: #4a7390;
-        }
-
-        .info-tooltip {
-            visibility: hidden;
-            width: 180px; /* PCでの幅を固定 */
-            background-color: #6a7f8e; /* 落ち着いた青グレーに変更 */
-            color: #fff;
-            text-align: center;
-            border-radius: 6px;
-            padding: 8px 10px;
-            position: absolute;
-            z-index: 1;
-            bottom: 125%; /* アイコンの上に表示 */
-            left: 50%;
-            transform: translateX(-50%);
-            opacity: 0;
-            transition: opacity 0.3s;
-            font-size: 0.8em;
-            white-space: pre-line; /* HTMLの改行を有効にする */
-            line-height: 1.4;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-            word-break: keep-all; /* 単語の途中で改行しないようにする */
-            overflow-wrap: normal; /* 長い単語は強制的に改行 */
-            writing-mode: horizontal-tb; /* ★追加: 明示的に横書きを指定 */
-        }
-
-        .info-tooltip::after {
-            content: "";
-            position: absolute;
-            top: 100%;
-            left: 50%;
-            margin-left: -5px;
-            border-width: 5px;
-            border-style: solid;
-            border-color: #6a7f8e transparent transparent transparent; /* 色を合わせる */
-        }
-
-        .info-icon.active .info-tooltip {
-            visibility: visible;
-            opacity: 1;
-        }
-
-        /* コメントセクションのスタイル */
-        .comments-section {
+            padding-top: 10px;
             border-top: 1px dashed #eee;
-            margin-top: 15px;
-            padding-top: 15px;
-            display: none; /* デフォルトで非表示 */
         }
 
-        .comments-section.active {
-            display: block;
+        .comment-button {
+            background-color: #6c757d;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: background-color 0.3s ease;
+            display: flex;
+            align-items: center;
         }
 
-        .comments-section h3 {
-            font-size: 1em;
-            color: #555;
-            margin-bottom: 15px;
-            text-align: center;
+        .comment-button:hover {
+            background-color: #5a6268;
         }
 
-        .comment-list {
-            margin-bottom: 20px;
-            max-height: 200px; /* コメントリストの最大高さ */
-            overflow-y: auto; /* コメントが溢れたらスクロール */
-            padding-right: 10px; /* スクロールバーのためのパディング */
+        .comment-button .fa-comment {
+            margin-right: 5px;
         }
 
-        .comment-item {
+        .comment-button .comment-count {
+            margin-left: 5px;
+            font-weight: bold;
+        }
+
+        .comment-button.no-comments {
+            opacity: 0.7; /* コメントがない場合は少し薄く */
+        }
+
+
+        .comment-input-area {
             background-color: #f8f8f8;
-            border: 1px solid #eee;
-            border-radius: 6px;
+            border: 1px solid #e9e9e9;
+            border-radius: 5px;
+            padding: 15px;
+            margin-top: 15px;
+        }
+
+        .comment-input-area input[type="text"],
+        .comment-input-area textarea {
+            width: calc(100% - 20px);
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        .comment-input-area textarea {
+            resize: vertical;
+            min-height: 60px;
+        }
+
+        .submit-comment-button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: background-color 0.3s ease;
+        }
+
+        .submit-comment-button:hover {
+            background-color: #218838;
+        }
+
+        .comments-list {
+            margin-top: 15px;
+            padding-top: 10px;
+            border-top: 1px dashed #eee;
+        }
+
+        .comment {
+            background-color: #f3f3f3;
+            border: 1px solid #e5e5e5;
+            border-radius: 5px;
             padding: 10px;
             margin-bottom: 10px;
             font-size: 0.9em;
-            line-height: 1.5;
         }
 
-        .comment-item .comment-header {
+        .comment-header {
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            font-size: 0.9em;
-            color: #777;
             margin-bottom: 5px;
         }
 
-        .comment-item .comment-name {
+        .comment-name {
             font-weight: bold;
-            color: #444;
+            color: #555;
         }
 
-        .comment-item .comment-time {
+        .comment-timestamp {
+            color: #999;
             font-size: 0.8em;
         }
 
-        .comment-item .comment-content {
-            white-space: pre-wrap;
-            word-wrap: break-word;
+        .comment-content {
             color: #333;
-        }
-
-        .comment-form label {
-            display: block;
-            margin-top: 10px;
-            margin-bottom: 5px;
-            font-weight: bold;
-            font-size: 0.9em;
-        }
-
-        .comment-form input[type="text"],
-        .comment-form textarea {
-            width: calc(100% - 16px);
-            padding: 8px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            font-family: inherit;
-            font-size: 0.9em;
-            box-sizing: border-box;
-            resize: vertical;
-        }
-
-        .comment-form button {
-            margin-top: 15px;
-            padding: 8px 15px;
-            background-color: #5A8EA8;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            font-weight: bold;
-            font-size: 0.95em;
-            cursor: pointer;
-            width: 100%;
-            transition: background-color 0.3s;
-        }
-
-        .comment-form button:hover {
-            background-color: #4a7390;
-        }
-        /* スマートフォン向けスタイル */
-        @media (max-width: 768px) { /* 768px以下をスマートフォンと見なす */
-            body {
-                padding: 10px; /* 全体のパディングを減らす */
-            }
-
-            h1 {
-                font-size: 1.4em; /* タイトルを少し小さく */
-            }
-
-            .type-switcher {
-                flex-wrap: wrap; /* ボタンが複数行になる可能性も考慮 */
-                gap: 5px; /* ボタン間の間隔を狭める */
-                margin-bottom: 15px;
-            }
-            .type-button {
-                padding: 8px 15px; /* ボタンのパディングを減らす */
-                font-size: 0.9em;
-            }
-
-            .form-container, .post {
-                padding: 15px; /* フォームと投稿のパディングを減らす */
-                max-width: 100%; /* 最大幅を画面幅に合わせる */
-                margin: 0 auto 20px; /* 左右の余白をなくす（autoで中央寄せ） */
-                border-radius: 0; /* 角丸をなくす（任意） */
-            }
-
-            .form-container label {
-                font-size: 0.9em; /* ラベルのフォントサイズを調整 */
-                margin-top: 12px;
-                margin-bottom: 3px;
-            }
-
-            .radio-group {
-                gap: 5px; /* ラジオボタン間の間隔を狭める */
-                margin-bottom: 10px;
-            }
-
-            .radio-group label {
-                padding: 4px 8px; /* ラジオボタンのパディングを減らす */
-                font-size: 0.85em;
-            }
-
-            /* VCは？のラベルのスタイル */
-            .form-label-margin-bottom {
-                margin-bottom: 20px; /* 少し狭める */
-            }
-
-            /* どちらのテイワットで遊ぶ？のラベルのスタイル */
-            .form-container label[style*="margin-top: 20px;"] {
-                margin-top: 15px !important; /* スマホでは少し狭める */
-            }
-
-            .form-container input[type="text"],
-            .form-container textarea,
-            .form-container select {
-                padding: 6px; /* 入力欄のパディングを減らす */
-                font-size: 0.9em;
-                padding-right: 25px; /* 矢印との重なりを防ぐためのパディング */
-            }
-
-            .form-container button {
-                padding: 10px 20px; /* ボタンのパディングを減らす */
-                font-size: 1em;
-                margin-top: 20px;
-            }
-
-            .post .header {
-                font-size: 0.8em;
-            }
-
-            .post .name {
-                font-size: 1em;
-            }
-
-            .uid-toggle, .apply-button { /* .apply-button も含める */
-                font-size: 0.8em;
-            }
-
-            .content {
-                font-size: 0.95em;
-                font-family: 'Noto Sans JP', 'Hiragino Sans', 'Meiryo', sans-serif;
-            }
-
-            .post-tags {
-                gap: 5px;
-                font-size: 0.8em;
-            }
-
-            .tag {
-                padding: 3px 6px;
-            }
-
-            .uid {
-                font-size: 0.8em;
-                padding: 5px 8px;
-            }
-
-            .end-button {
-                padding: 6px 12px;
-                font-size: 0.8em;
-            }
-
-            .comment-button {
-                padding: 4px 10px;
-                font-size: 0.8em;
-                bottom: 10px;
-                right: 10px;
-            }
-
-            .comment-item {
-                font-size: 0.85em;
-                padding: 8px;
-            }
-
-            .comment-form input[type="text"],
-            .comment-form textarea {
-                padding: 6px;
-                font-size: 0.85em;
-            }
-
-            .comment-form button {
-                padding: 8px 12px;
-                font-size: 0.9em;
-            }
-
-
-            .modal {
-                padding: 20px;
-                max-width: 90%;
-                font-size: 1em;
-            }
-            .modal-buttons {
-                gap: 10px;
-            }
-            .modal-button {
-                padding: 8px 15px;
-                font-size: 0.9em;
-            }
-            /* Information icon and tooltip for Auto-cancel on mobile */
-            .info-tooltip {
-                width: 150px; /* スマホでの幅を固定 */
-                left: 50%;
-                transform: translateX(-50%);
-                bottom: 120%; /* アイコンの上に表示 */
-                white-space: pre-line; /* HTMLの改行を有効にする */
-                word-break: keep-all; /* 単語の途中で改行しないようにする */
-                overflow-wrap: normal; /* 長い単語は強制的に改行 */
-                writing-mode: horizontal-tb; /* ★追加: 明示的に横書きを指定 */
-            }
-
-            /* スマホ版申請フォームの閉じるボタン位置調整 */
-            .application-modal .modal-close-button {
-                top: 5px; /* 上からの位置 */
-                right: 5px; /* 右からの位置 */
-                position: absolute; /* モーダル内での絶対位置 */
-                font-size: 1.8em; /* スマホで押しやすいように大きく */
-            }
-        }
-
-        /* PC版（769px以上）の申請フォームモーダル調整 */
-        @media (min-width: 769px) {
-            .application-modal .modal {
-                max-width: 400px; /* PCでの横幅を少し広げる */
-                max-height: 80vh; /* PCでの縦の長さを調整 */
-                padding: 30px; /* 上下のパディングを確保 */
-                /* 中央配置 */
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-            }
-
-            /* PC版の閉じるボタンの位置調整 - モーダル内の絶対位置に変更 */
-            .application-modal .modal-close-button {
-                position: absolute; /* モーダル内の絶対位置 */
-                top: 15px; /* モーダルの上端からの距離 */
-                right: 15px; /* モーダルの右端からの距離 */
-                font-size: 1.5em;
-            }
-            /* PC版のツールチップは変更しないため、特に追記や上書きは不要 */
-            /* 汎用 .info-tooltip の writing-mode: horizontal-tb; が適用される */
+            white-space: pre-wrap; /* コメントの改行を保持 */
         }
     </style>
 </head>
 <body>
-    <h1>マルチ募集掲示板</h1>
+    <div class="container">
+        <h1>マルチ募集掲示板</h1>
 
-    <div class="type-switcher">
-        <button class="type-button active" id="typeButtonAnyone" data-form-type="anyone">誰でも</button>
-        <button class="type-button" id="typeButtonApplication" data-form-type="application">申請型</button>
-    </div>
-
-    <div class="form-container">
-        <div id="formAnyone" class="form-section active">
-            <label for="nameAnyone">名前（任意）</label>
-            <input type="text" id="nameAnyone" placeholder="名無し" maxlength="18">
-
-            <label>
-                あなたのUID
-                <span id="uidAnyoneValidationMsg" class="uid-error-message"></span>
-            </label>
-            <input type="text" id="uidAnyone" placeholder="123456789" maxlength="15">
-
-            <label for="worldRankAnyone" style="margin-top: 15px; margin-bottom: 5px;">
-                世界ランク
-                <span id="worldRankAnyoneValidationMsg" class="world-rank-error-message"></span>
-            </label>
-            <select id="worldRankAnyone">
-                <option value="">選択してください</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-            </select>
-
-
-            <label class="form-label-margin-bottom" style="margin-bottom: -5px;">VCは？</label>
-            <div class="radio-group">
-                <label>
-                    <input type="radio" name="vcAnyone" value="VCなし" checked>
-                    <span>VCなし</span>
-                </label>
-                <label>
-                    <input type="radio" name="vcAnyone" value="VCあり">
-                    <span>VCあり</span>
-                </label>
-                <label>
-                    <input type="radio" name="vcAnyone" value="どちらでも">
-                    <span>どちらでも</span>
-                </label>
-            </div>
-
-            <label style="margin-top: 20px; margin-bottom: -5px;">どちらのテイワットで遊ぶ？</label>
-            <div class="radio-group">
-                <label>
-                    <input type="radio" name="teiwatAnyone" value="私のテイワット" checked>
-                    <span>私のテイワット（募集主）</span>
-                </label>
-                <label>
-                    <input type="radio" name="teiwatAnyone" value="あなたのテイワット">
-                    <span>あなたのテイワット（参加者）</span>
-                </label>
-                <label>
-                    <input type="radio" name="teiwatAnyone" value="どちらでも">
-                    <span>どちらでも</span>
-                </label>
-            </div>
-
-            <label for="contentAnyone">募集内容</label>
-            <textarea id="contentAnyone" rows="4" placeholder="募集内容の詳細を入力してください。例：秘境の周回、週ボス、アチーブメントなど"></textarea>
-
-            <button onclick="submitPost('anyone')">投稿する</button>
+        <div class="type-switcher">
+            <button id="allPostsBtn" class="active">全ての募集</button>
+            <button id="myPostsBtn">自分の募集</button>
         </div>
 
-        <div id="formApplication" class="form-section">
-            <label for="nameApplication">名前（任意）</label>
-            <input type="text" id="nameApplication" placeholder="名無し" maxlength="18">
-
-            <label>
-                あなたのUID
-                <span id="uidApplicationValidationMsg" class="uid-error-message"></span>
-            </label>
-            <input type="text" id="uidApplication" placeholder="123456789" maxlength="15">
-            <span style="font-size: 0.8em; color: #666;">（申請を承認するまで、あなたのUIDは公開されません）</span>
-
-            <label for="worldRankApplication" style="margin-top: 15px; margin-bottom: 5px;">
-                世界ランク
-                <span id="worldRankApplicationValidationMsg" class="world-rank-error-message"></span>
-            </label>
-            <select id="worldRankApplication">
-                <option value="">選択してください</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-            </select>
-
-            <label class="form-label-margin-bottom" style="margin-bottom: -5px;">VCは？</label>
-            <div class="radio-group">
-                <label>
-                    <input type="radio" name="vcApplication" value="VCなし" checked>
-                    <span>VCなし</span>
-                </label>
-                <label>
-                    <input type="radio" name="vcApplication" value="VCあり">
-                    <span>VCあり</span>
-                </label>
-                <label>
-                    <input type="radio" name="vcApplication" value="どちらでも">
-                    <span>どちらでも</span>
-                </label>
+        <div class="post-form">
+            <h2>募集を投稿する</h2>
+            <div class="form-group">
+                <label for="uid">UID:</label>
+                <input type="text" id="uid" placeholder="あなたのUIDを入力してください" required />
             </div>
-
-            <label style="margin-top: 20px; margin-bottom: -5px;">どちらのテイワットで遊ぶ？</label>
-            <div class="radio-group">
-                <label>
-                    <input type="radio" name="teiwatApplication" value="私のテイワット" checked>
-                    <span>私のテイワット（募集主）</span>
-                </label>
-                <label>
-                    <input type="radio" name="teiwatApplication" value="あなたのテイワット">
-                    <span>あなたのテイワット（参加者）</span>
-                </label>
-                <label>
-                    <input type="radio" name="teiwatApplication" value="どちらでも">
-                    <span>どちらでも</span>
-                </label>
+            <div class="form-group">
+                <label for="title">タイトル:</label>
+                <input type="text" id="title" placeholder="募集のタイトルを入力してください" required />
             </div>
-
-            <label for="contentApplication">募集内容</label>
-            <textarea id="contentApplication" rows="4" placeholder="募集内容の詳細を入力してください。例：まったり探索、素材集め、お手伝いしますなど"></textarea>
-
-            <button onclick="submitPost('application')">投稿する</button>
-        </div>
-    </div>
-
-    <div class="posts-container" id="postsContainer">
-    </div>
-
-    <div class="modal-bg" id="modalBg">
-        <div class="modal">
-            募集を終了してよろしいですか？
-            <div class="modal-buttons">
-                <button class="modal-button yes" id="confirmYes">はい</button>
-                <button class="modal-button no" id="confirmNo">いいえ</button>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal-bg" id="applyMessageConfirmModalBg">
-        <div class="modal">
-            メッセージが入力されていません。<br>このまま申請を送りますか？
-            <div class="modal-buttons">
-                <button class="modal-button yes" id="applyMessageConfirmYes">はい</button>
-                <button class="modal-button no" id="applyMessageConfirmNo">いいえ</button>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal-bg application-modal" id="applicationModalBg">
-        <div class="modal">
-            <button class="modal-close-button" onclick="closeApplicationModal()">&times;</button>
-            <h2>参加リクエスト</h2>
-            <div class="modal-content">
-                <label for="applicantName">名前（任意）</label>
-                <input type="text" id="applicantName" placeholder="名無し" maxlength="18">
-
-                <label>
-                    あなたのUID
-                    <span id="applicantUidValidationMsg" class="uid-error-message"></span>
-                </label>
-                <input type="text" id="applicantUid" placeholder="123456789" maxlength="15">
-                <span style="font-size: 0.8em; color: #666;">（承認されるまで、あなたのUIDは投稿主に表示されません）</span>
-
-                <label style="margin-top: 15px; margin-bottom: 5px;">
-                    世界ランク
-                    <span id="applicantWorldRankValidationMsg" class="world-rank-error-message"></span>
-                </label>
-                <select id="applicantWorldRank">
+            <div class="form-group">
+                <label for="type">募集内容:</label>
+                <select id="type" required>
                     <option value="">選択してください</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                    <option value="9">9</option>
+                    <option value="探索">探索</option>
+                    <option value="素材周回">素材周回</option>
+                    <option value="ボス討伐">ボス討伐</option>
+                    <option value="秘境">秘境</option>
+                    <option value="イベント">イベント</option>
+                    <option value="その他">その他</option>
                 </select>
-
-                <label style="margin-top: 20px;">
-                    自動キャンセル
-                    <i class="fa-solid fa-circle-info info-icon" id="autoCancelInfoIcon">
-                        <span class="info-tooltip">投稿主から反応がない場合、<br>設定した時間で申請を<br>自動的にキャンセルします</span>
-                    </i>
-                </label>
-                <div class="radio-group">
-                    <label>
-                        <input type="radio" name="autoCancelTime" value="5">
-                        <span>5分</span>
-                    </label>
-                    <label>
-                        <input type="radio" name="autoCancelTime" value="10">
-                        <span>10分</span>
-                    </label>
-                    <label>
-                        <input type="radio" name="autoCancelTime" value="15">
-                        <span>15分</span>
-                    </label>
-                    <label>
-                        <input type="radio" name="autoCancelTime" value="20">
-                        <span>20分</span>
-                    </label>
-                    <label>
-                        <input type="radio" name="autoCancelTime" value="30">
-                        <span>30分</span>
-                    </label>
-                    <label>
-                        <input type="radio" name="autoCancelTime" value="none" checked>
-                        <span>設定しない</span>
-                    </label>
-                </div>
-
-                <label for="applicantMessage">メッセージ（任意）</label>
-                <textarea id="applicantMessage" rows="4" placeholder="任意でメッセージを入力してください（例：よろしくお願いします！）"></textarea>
-
-                <button id="submitApplicationButton">申請を送る</button>
             </div>
+            <div class="form-group">
+                <label for="ar-rank">冒険ランク (AR):</label>
+                <input type="number" id="ar-rank" min="1" max="60" placeholder="あなたの冒険ランク" required />
+            </div>
+            <div class="form-group">
+                <label for="description">詳細 (任意):</label>
+                <textarea id="description" placeholder="募集の詳細を記述してください"></textarea>
+            </div>
+            <button class="post-button" onclick="submitPost()">投稿する</button>
         </div>
-    </div>
 
+        <div class="search-form">
+            <h2>募集を検索する</h2>
+            <div class="form-group">
+                <label for="search-type">募集内容で絞り込み:</label>
+                <select id="search-type">
+                    <option value="">全て</option>
+                    <option value="探索">探索</option>
+                    <option value="素材周回">素材周回</option>
+                    <option value="ボス討伐">ボス討伐</option>
+                    <option value="秘境">秘境</option>
+                    <option value="イベント">イベント</option>
+                    <option value="その他">その他</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="search-ar-rank">ARで絞り込み:</label>
+                <input type="number" id="search-ar-rank" min="1" max="60" placeholder="AR" />
+            </div>
+            <div class="form-group">
+                <label for="search-keyword">キーワード検索:</label>
+                <input type="text" id="search-keyword" placeholder="タイトルまたは詳細で検索" />
+            </div>
+            <button class="search-button" onclick="displayPosts()">検索</button>
+        </div>
+
+
+        <div id="posts-container">
+            </div>
+    </div>
 
     <script>
-        // 投稿タイプを切り替える関数
-        function switchForm(type) {
-            document.getElementById('formAnyone').classList.remove('active');
-            document.getElementById('formApplication').classList.remove('active');
-            document.getElementById('typeButtonAnyone').classList.remove('active');
-            document.getElementById('typeButtonApplication').classList.remove('active');
+        // ローカルストレージに投稿を保存するキー
+        const STORAGE_KEY = 'multiRecruitmentPosts';
 
-            if (type === 'anyone') {
-                document.getElementById('formAnyone').classList.add('active');
-                document.getElementById('typeButtonAnyone').classList.add('active');
-                hideUidError('anyone');
-                // 世界ランクのエラーメッセージはアラートに変更されたため、hideは不要だが、念のため残しておく
-                hideWorldRankError('anyone');
-            } else if (type === 'application') {
-                document.getElementById('formApplication').classList.add('active');
-                document.getElementById('typeButtonApplication').classList.add('active');
-                hideUidError('application');
-                // 世界ランクのエラーメッセージはアラートに変更されたため、hideは不要だが、念のため残しておく
-                hideWorldRankError('application');
-            }
-        }
+        // UIDの正規表現 (7桁から9桁の数字)
+        const UID_REGEX = /^\d{7,9}$/;
 
-        document.getElementById('typeButtonAnyone').addEventListener('click', () => switchForm('anyone'));
-        document.getElementById('typeButtonApplication').addEventListener('click', () => switchForm('application'));
+        // ページ読み込み時に実行される初期化関数
+        document.addEventListener("DOMContentLoaded", () => {
+            displayPosts(); // 既存の投稿を表示
+            addCopyBlockers(); // UIDコピーの阻害イベントリスナーを追加
+            setupTypeSwitcher(); // タイプ切り替えボタンのセットアップ
+        });
 
-        // UID入力欄のchangeイベントリスナーを設定 (投稿フォーム用)
-        document.getElementById('uidAnyone').addEventListener('change', (event) => validateUidOnBlur('anyone', event.target.value));
-        document.getElementById('uidApplication').addEventListener('change', (event) => validateUidOnBlur('application', event.target.value));
+        // ============ 投稿機能関連のJavaScriptここから ============
 
-        // UID入力欄のchangeイベントリスナーを設定 (申請フォーム用)
-        document.getElementById('applicantUid').addEventListener('change', (event) => validateUidOnBlur('applicant', event.target.value));
-
-        // 世界ランク選択欄のchangeイベントリスナーを設定
-        // 世界ランクのエラーメッセージはアラートに変更されたため、changeイベントでのhideは不要だが、念のため残しておく
-        document.getElementById('worldRankAnyone').addEventListener('change', () => hideWorldRankError('anyone'));
-        document.getElementById('worldRankApplication').addEventListener('change', () => hideWorldRankError('application'));
-        document.getElementById('applicantWorldRank').addEventListener('change', () => hideWorldRankError('applicant'));
-
-
-        // UID入力時のバリデーションと半角変換（入力完了時のみ）
-        function validateUidOnBlur(type, uidValue) {
-            // タイプに基づいてUID入力欄とエラーメッセージ要素を特定
-            let uidInputId;
-            let errorMsgSpanId;
-
-            if (type === 'anyone') {
-                uidInputId = 'uidAnyone';
-                errorMsgSpanId = 'uidAnyoneValidationMsg';
-            } else if (type === 'application') {
-                uidInputId = 'uidApplication';
-                errorMsgSpanId = 'uidApplicationValidationMsg';
-            } else if (type === 'applicant') { // 申請フォーム用
-                uidInputId = 'applicantUid';
-                errorMsgSpanId = 'applicantUidValidationMsg';
-            } else {
-                console.error("Invalid type for validateUidOnBlur:", type);
-                return false;
-            }
-
-            const uidInput = document.getElementById(uidInputId);
-            const errorMsgSpan = document.getElementById(errorMsgSpanId);
-
-            const halfWidthUid = toHalfWidthNumbers(uidValue);
-            uidInput.value = halfWidthUid; // 全角を半角に変換
-
-            let errorMessage = '';
-
-            if (halfWidthUid.trim() === '') {
-                errorMessage = ''; // 空の場合はエラーメッセージなし（Submit時に別途チェック）
-            } else if (!/^[0-9]+$/.test(halfWidthUid)) {
-                errorMessage = '数字で入力してください'; // 数字以外は不可
-            } else if (halfWidthUid.length < 9) { // 9桁以上であること
-                errorMessage = '9桁以上の数字で入力してください';
-            } else if (halfWidthUid.length > 15) { // 15桁まで
-                errorMessage = '15桁以内で入力してください';
-            }
-
-            if (errorMessage) {
-                errorMsgSpan.textContent = errorMessage;
-                errorMsgSpan.style.display = 'inline';
-                return false;
-            } else {
-                errorMsgSpan.textContent = '';
-                errorMsgSpan.style.display = 'none';
-                return true;
-            }
-        }
-
-        // 世界ランクのバリデーション (alert版)
-        function validateWorldRank(type) {
-            let worldRankSelectId;
-
-            if (type === 'anyone') {
-                worldRankSelectId = 'worldRankAnyone';
-            } else if (type === 'application') {
-                worldRankSelectId = 'worldRankApplication';
-            } else if (type === 'applicant') {
-                worldRankSelectId = 'applicantWorldRank';
-            } else {
-                console.error("Invalid type for validateWorldRank:", type);
-                return false;
-            }
-
-            const worldRankSelect = document.getElementById(worldRankSelectId);
-
-            if (worldRankSelect.value === '') {
-                alert("世界ランクは必須です。"); // ここでアラート表示
-                return false;
-            } else {
-                return true;
-            }
-        }
-
-        // 全角数字を半角数字に変換する関数
-        function toHalfWidthNumbers(str) {
-            return str.replace(/[０-９]/g, function(s) {
-                return String.fromCharCode(s.charCodeAt(0) - 0xFEE0);
-            });
-        }
-
-        // UIDエラーメッセージを非表示にする関数
-        function hideUidError(type) {
-            let errorMsgSpanId;
-            if (type === 'anyone') {
-                errorMsgSpanId = 'uidAnyoneValidationMsg';
-            } else if (type === 'application') {
-                errorMsgSpanId = 'uidApplicationValidationMsg';
-            } else if (type === 'applicant') { // 申請フォーム用
-                errorMsgSpanId = 'applicantUidValidationMsg';
-            } else {
-                console.error("Invalid type for hideUidError:", type);
-                return;
-            }
-            const errorMsgSpan = document.getElementById(errorMsgSpanId);
-            errorMsgSpan.textContent = '';
-            errorMsgSpan.style.display = 'none';
-        }
-
-        // 世界ランクエラーメッセージを非表示にする関数 (今回はアラートのため、実際にはCSSで非表示にしている)
-        function hideWorldRankError(type) {
-            let errorMsgSpanId;
-            if (type === 'anyone') {
-                errorMsgSpanId = 'worldRankAnyoneValidationMsg';
-            } else if (type === 'application') {
-                errorMsgSpanId = 'worldRankApplicationValidationMsg';
-            } else if (type === 'applicant') {
-                errorMsgSpanId = 'applicantWorldRankValidationMsg';
-            } else {
-                console.error("Invalid type for hideWorldRankError:", type);
-                return;
-            }
-            const errorMsgSpan = document.getElementById(errorMsgSpanId);
-            errorMsgSpan.textContent = '';
-            errorMsgSpan.style.display = 'none'; // これで常に非表示
-        }
-
-
-        // HTMLエスケープ処理を行う関数
-        function escapeHtml(text) {
-            const map = {
-                '&': '&amp;',
-                '<': '&lt;',
-                '>': '&gt;',
-                '"': '&quot;',
-                "'": '&#039;'
-            };
-            return text.replace(/[&<>]/g, function(m) { return map[m]; });
-        }
-
-        // 投稿データをlocalStorageに保存
-        function savePosts(posts) {
-            localStorage.setItem("multiPosts", JSON.stringify(posts));
-        }
-
-        // 投稿データをlocalStorageから読み込み
+        // 投稿を読み込む
         function loadPosts() {
-            const data = localStorage.getItem("multiPosts");
-            if (!data) return [];
-            try {
-                const parsed = JSON.parse(data);
-                const now = Date.now();
-                // 24時間経った投稿は除外（自動削除）
-                const filteredPosts = parsed.filter(post => now - post.timestamp < 86400000);
+            const postsJson = localStorage.getItem(STORAGE_KEY);
+            return postsJson ? JSON.parse(postsJson) : [];
+        }
 
-                // 24時間を経過した投稿のisEndedフラグを立てる (表示は変わらないが状態を更新)
-                filteredPosts.forEach(post => {
-                    if (now - post.timestamp >= 86400000 && !post.isEnded) {
-                        post.isEnded = true;
+        // 投稿を保存する
+        function savePosts(posts) {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(posts));
+        }
+
+        // 新しい投稿を送信する
+        function submitPost() {
+            const uidInput = document.getElementById('uid');
+            const titleInput = document.getElementById('title');
+            const typeInput = document.getElementById('type');
+            const arRankInput = document.getElementById('ar-rank');
+            const descriptionInput = document.getElementById('description');
+
+            const uid = uidInput.value.trim();
+            const title = titleInput.value.trim();
+            const type = typeInput.value;
+            const arRank = parseInt(arRankInput.value);
+            const description = descriptionInput.value.trim();
+
+            if (!uid || !title || !type || isNaN(arRank) || arRank < 1 || arRank > 60) {
+                alert('UID、タイトル、募集内容、冒険ランクは必須項目です。冒険ランクは1から60の間で入力してください。');
+                return;
+            }
+
+            if (!UID_REGEX.test(uid)) {
+                alert('UIDは7桁から9桁の数字で入力してください。');
+                return;
+            }
+
+            const posts = loadPosts();
+            const newPost = {
+                uid: uid,
+                title: title,
+                type: type,
+                arRank: arRank,
+                description: description,
+                timestamp: Date.now(),
+                comments: [] // コメントを保存する配列を追加
+            };
+
+            posts.unshift(newPost); // 新しい投稿を配列の先頭に追加
+            savePosts(posts);
+            displayPosts(); // 投稿リストを更新
+            addCopyBlockers(); // 新しい投稿が追加された後にもコピー阻害を追加
+
+            // フォームをクリア
+            titleInput.value = '';
+            typeInput.value = '';
+            arRankInput.value = '';
+            descriptionInput.value = '';
+            // UIDは保持するかは要件次第だが、ここでは保持しない
+            // uidInput.value = '';
+        }
+
+        // 投稿を表示する
+        function displayPosts() {
+            const postsContainer = document.getElementById('posts-container');
+            postsContainer.innerHTML = ''; // 既存の投稿をクリア
+
+            const posts = loadPosts();
+            const searchType = document.getElementById('search-type').value;
+            const searchArRank = document.getElementById('search-ar-rank').value;
+            const searchKeyword = document.getElementById('search-keyword').value.toLowerCase();
+            const showMyPosts = document.getElementById('myPostsBtn').classList.contains('active');
+            const currentUID = document.getElementById('uid').value.trim(); // 現在のUID入力欄の値を取得
+
+            const filteredPosts = posts.filter(post => {
+                let matchesSearch = true;
+                let matchesMyPosts = true;
+
+                // 募集タイプでのフィルタリング
+                if (searchType && post.type !== searchType) {
+                    matchesSearch = false;
+                }
+
+                // ARランクでのフィルタリング
+                if (searchArRank && parseInt(post.arRank) !== parseInt(searchArRank)) {
+                    matchesSearch = false;
+                }
+
+                // キーワード検索
+                if (searchKeyword) {
+                    const titleMatches = post.title.toLowerCase().includes(searchKeyword);
+                    const descriptionMatches = post.description.toLowerCase().includes(searchKeyword);
+                    if (!titleMatches && !descriptionMatches) {
+                        matchesSearch = false;
                     }
-                    // 申請型の場合、各申請の自動取り消し判定もここで行う
-                    if (post.type === 'application' && post.applications) {
-                        post.applications.forEach(app => {
-                            if (app.autoCancelTime !== 'none' && app.status === 'pending') {
-                                const cancelThreshold = app.applyTimestamp + (parseInt(app.autoCancelTime) * 60 * 1000);
-                                if (now >= cancelThreshold) {
-                                    app.status = 'cancelled_by_auto';
-                                }
-                            }
-                        });
+                }
+
+                // 「自分の募集」モードの場合のフィルタリング
+                if (showMyPosts) {
+                    if (!currentUID || post.uid !== currentUID) {
+                        matchesMyPosts = false;
                     }
-                    // コメントのタイムスタンプもDateオブジェクトに変換
-                    if (post.comments) {
-                        post.comments.forEach(comment => {
-                            comment.timestamp = new Date(comment.timestamp);
-                        });
-                    }
+                }
+
+                return matchesSearch && matchesMyPosts;
+            });
+
+            if (filteredPosts.length === 0) {
+                postsContainer.innerHTML = '<p style="text-align: center; color: #888;">表示する募集がありません。</p>';
+                return;
+            }
+
+            filteredPosts.forEach(post => {
+                const postElement = document.createElement('div');
+                postElement.classList.add('post');
+                postElement.dataset.timestamp = post.timestamp; // コメント機能のためにタイムスタンプを保存
+
+                const postDate = new Date(post.timestamp);
+                const formattedDate = postDate.toLocaleString('ja-JP', {
+                    year: 'numeric',
+                    month: '2-digit',
+                    day: '2-digit',
+                    hour: '2-digit',
+                    minute: '2-digit'
                 });
-                return filteredPosts;
-            } catch {
-                return [];
-            }
-        }
 
-        // 日時を「(x分前) HH:mm 投稿」形式に変換
-        function formatTime(timestamp) {
-            const now = Date.now();
-            const diffMinutes = Math.floor((now - timestamp) / 60000); // 分
-            const date = new Date(timestamp);
-            const hh = date.getHours().toString().padStart(2, '0');
-            const mm = date.getMinutes().toString().padStart(2, '0');
-
-            if (diffMinutes < 1) {
-                return `(たった今) ${hh}:${mm} 投稿`;
-            } else if (diffMinutes < 60) {
-                return `(${diffMinutes}分前) ${hh}:${mm} 投稿`;
-            } else if (diffMinutes < 1440) { // 24時間以内
-                const diffHours = Math.floor(diffMinutes / 60);
-                return `(${diffHours}時間前) ${hh}:${mm} 投稿`;
-            } else {
-                return `${date.getMonth() + 1}/${date.getDate()} ${hh}:${mm} 投稿`;
-            }
-        }
-
-        // コメントのタイムスタンプ表示用
-        function formatCommentTime(timestamp) {
-            const date = new Date(timestamp);
-            const yyyy = date.getFullYear();
-            const mm = (date.getMonth() + 1).toString().padStart(2, '0');
-            const dd = date.getDate().toString().padStart(2, '0');
-            const hh = date.getHours().toString().padStart(2, '0');
-            const min = date.getMinutes().toString().padStart(2, '0');
-            return `${yyyy}/${mm}/${dd} ${hh}:${min}`;
-        }
-
-        // 投稿をHTMLとして生成
-        function createPostElement(post) {
-            const div = document.createElement('div');
-            div.className = `post ${post.isEnded ? 'ended' : ''}`;
-            div.dataset.type = post.type;
-            div.dataset.timestamp = post.timestamp; // 申請時に紐づけるためdata属性に追加
-
-            let actionButtonHtml = '';
-            let actionButtonPointerEvents = 'auto';
-
-            if (post.isEnded) {
-                actionButtonPointerEvents = 'none';
-            }
-
-            if (post.type === 'anyone') {
-                actionButtonHtml = `
-                    <button class="uid-toggle" onclick="toggleUID(this)" style="pointer-events: ${actionButtonPointerEvents};">
-                        <span class="eye">
-                            <span class="pupil"></span>
-                        </span>
-                        <span class="uid-label">UIDを表示</span>
-                    </button>
-                `;
-            } else if (post.type === 'application') {
-                actionButtonHtml = `
-                    <button class="apply-button" onclick="openApplicationModal('${post.timestamp}')" style="pointer-events: ${actionButtonPointerEvents};">
-                        <i class="fa-solid fa-paper-plane"></i> <span class="apply-label">申請する</span>
-                    </button>
-                `;
-            }
-
-            let uidDisplayHtml = '';
-            if (post.type === 'anyone') {
-                uidDisplayHtml = `
-                    <div class="uid" style="display: none;">
-                        <span>UID: <span class="uid-value">${post.uid}</span></span>
-                        <button class="copy-button" onclick="copyUid(this, '${post.uid}')" aria-label="UIDをコピー">
-                            <i class="fa-solid fa-clone"></i> <span class="copy-feedback">コピーしました！</span>
+                postElement.innerHTML = `
+                    <div class="post-header">
+                        <h3 class="post-title">${post.title}</h3>
+                        <div class="post-meta">
+                            <span class="uid-display">UID: ${post.uid}</span>
+                            <span class="timestamp">${formattedDate}</span>
+                        </div>
+                        <button class="copy-button" onclick="copyUID('${post.uid}', this)">
+                            <i class="fas fa-copy"></i>
                         </button>
                     </div>
-                `;
-            } else if (post.type === 'application') {
-                // 申請型の場合、UIDは初期状態では表示せず、募集終了時はさらに非表示に
-                uidDisplayHtml = `<div class="uid" style="display: none;">（承認後にUID開示）</div>`;
-            }
-
-            let tagsHtml = '';
-            if (post.vcOption || post.teiwatOption) {
-                tagsHtml += `<div class="post-tags">`;
-                if (post.vcOption) {
-                    if (post.vcOption === 'どちらでも') {
-                        tagsHtml += `<span class="tag vc-tag-VCあり"><i class="fa-solid fa-microphone-alt"></i> VCあり</span>`;
-                        tagsHtml += `<span class="tag vc-tag-VCなし"><i class="fa-solid fa-microphone-alt-slash"></i> VCなし</span>`;
-                    } else {
-                        let vcIcon = '';
-                        if (post.vcOption === 'VCあり') vcIcon = '<i class="fa-solid fa-microphone-alt"></i>';
-                        else if (post.vcOption === 'VCなし') vcIcon = '<i class="fa-solid fa-microphone-alt-slash"></i>';
-                        tagsHtml += `<span class="tag vc-tag-${post.vcOption.replace(/\s+/g, '')}">${vcIcon} ${post.vcOption}</span>`;
-                    }
-                }
-                if (post.teiwatOption) {
-                    if (post.teiwatOption === 'どちらでも') {
-                        tagsHtml += `<span class="tag teiwat-tag-私のテイワット"><i class="fa-solid fa-home"></i> 私のテイワット（募集主）</span>`;
-                        tagsHtml += `<span class="tag teiwat-tag-あなたのテイワット"><i class="fa-solid fa-users"></i> あなたのテイワット（参加者）</span>`;
-                    } else {
-                        let teiwatIcon = '';
-                        if (post.teiwatOption === '私のテイワット') teiwatIcon = '<i class="fa-solid fa-home"></i>';
-                        else if (post.teiwatOption === 'あなたのテイワット') teiwatIcon = '<i class="fa-solid fa-users"></i>';
-                        tagsHtml += `<span class="tag teiwat-tag-${post.teiwatOption.replace(/\s+/g, '')}">${teiwatIcon} ${post.teiwatOption}</span>`;
-                    }
-                }
-                tagsHtml += `</div>`;
-            }
-
-            const worldRankDisplayHtml = post.worldRank && post.worldRank !== '' ?
-                `<div class="world-rank-display">世界ランク${escapeHtml(post.worldRank)}</div>` : '';
-
-            // コメント数の表示を調整
-            const commentCount = post.comments ? post.comments.length : 0;
-            const commentCountDisplay = commentCount === 0 ? '...' : commentCount;
-            const commentButtonClass = commentCount === 0 ? 'comment-button no-comments' : 'comment-button';
-
-            div.innerHTML = `
-                <div class="header">
-                    <span class="name">${escapeHtml(post.name || '名無し')}</span>
-                    ${actionButtonHtml}
-                    <span class="time" data-timestamp="${post.timestamp}">${formatTime(post.timestamp)}</span>
-                </div>
-                ${worldRankDisplayHtml}
-                <div class="content">${escapeHtml(post.content)}</div>
-                ${tagsHtml}
-                ${uidDisplayHtml}
-                <button class="end-button" onclick="openConfirm(this)" style="display: ${post.isEnded ? 'none' : 'block'};">募集を終了する</button>
-                <button class="${commentButtonClass}" onclick="toggleComments(this)">
-                    <i class="fa-solid fa-comment"></i> <span class="comment-count">${commentCountDisplay}</span>
-                </button>
-                <div class="comments-section">
-                    <h3>コメント</h3>
-                    <div class="comment-list"></div>
-                    <div class="comment-form">
-                        <label for="commentName-${post.timestamp}">名前（任意）</label>
-                        <input type="text" id="commentName-${post.timestamp}" placeholder="名無し" maxlength="18">
-                        <label for="commentContent-${post.timestamp}">コメント</label>
-                        <textarea id="commentContent-${post.timestamp}" rows="3" placeholder="コメントを入力してください"></textarea>
-                        <button onclick="submitComment('${post.timestamp}')">コメントする</button>
+                    <div class="post-details">
+                        <p><strong>募集内容:</strong> ${post.type}</p>
+                        <p><strong>冒険ランク:</strong> AR ${post.arRank}</p>
                     </div>
-                </div>
-            `;
-            return div;
-        }
-
-        // 投稿を画面に表示
-        function displayPosts() {
-            const container = document.getElementById("postsContainer");
-            container.innerHTML = "";
-            const posts = loadPosts();
-            savePosts(posts); // ロード時に24時間経過した投稿を削除してから保存し直す
-            posts.reverse().forEach(post => {
-                const el = createPostElement(post);
-                container.appendChild(el);
+                    <div class="post-content">${post.description || '（詳細なし）'}</div>
+                    <div class="post-actions">
+                        <button class="comment-button" onclick="toggleCommentInput(this)">
+                            <i class="fas fa-comment"></i> <span class="comment-count">...</span>
+                        </button>
+                    </div>
+                    <div class="comment-section">
+                        <div class="comment-input-area" style="display: none;">
+                            <input type="text" class="comment-name-input" placeholder="名前 (任意)">
+                            <textarea class="comment-content-input" placeholder="コメントする..."></textarea>
+                            <button class="submit-comment-button" onclick="submitComment(this)">コメントする</button>
+                        </div>
+                        <div class="comments-list" style="display: none;">
+                            </div>
+                    </div>
+                    <div class="post-footer">
+                        <button class="delete-button" onclick="deletePost(this)">削除</button>
+                    </div>
+                `;
+                postsContainer.appendChild(postElement);
+                updateCommentCountDisplay(postElement); // コメント数を初期表示
             });
-            addCopyBlockers();
+            addCopyBlockers(); // 再度コピーボタンのイベントリスナーを設定
         }
 
-        // 投稿ボタン押下時
-        function submitPost(type) {
-            let name, uid, content, vcOption, teiwatOption, worldRank;
-            const uidInput = document.getElementById(`uid${type === 'anyone' ? 'Anyone' : 'Application'}`);
-            const contentInput = document.getElementById(`content${type === 'anyone' ? 'Anyone' : 'Application'}`);
-            const worldRankSelect = document.getElementById(`worldRank${type === 'anyone' ? 'Anyone' : 'Application'}`);
 
-            name = document.getElementById(`name${type === 'anyone' ? 'Anyone' : 'Application'}`).value.trim();
-            uid = uidInput.value.trim();
-            content = contentInput.value.trim();
-            worldRank = worldRankSelect.value;
-
-            vcOption = document.querySelector(`input[name="vc${type === 'anyone' ? 'Anyone' : 'Application'}"]:checked`).value;
-            teiwatOption = document.querySelector(`input[name="teiwat${type === 'anyone' ? 'Anyone' : 'Application'}"]:checked`).value;
-
-            let isValid = true;
-
-            // UIDのバリデーション
-            // ここでvalidateUidOnBlurを呼び出し、アラートではなくフィールド下のメッセージでエラーを表示
-            if (!validateUidOnBlur(type, uid)) {
-                isValid = false;
-            } else if (uid.trim() === '') {
-                // validateUidOnBlurが空欄ではエラーを出さないため、ここで必須チェック
-                alert("UIDは必須です。");
-                isValid = false;
-            }
-
-
-            // 世界ランクのバリデーション (ポップアップアラート)
-            if (!validateWorldRank(type)) { // trueなら選択済み、falseなら未選択でアラート表示
-                isValid = false;
-            }
-
-            // 募集内容のバリデーション
-            if (!content) {
-                alert("募集内容は必須です。");
-                isValid = false;
-            }
-
-            if (!isValid) {
+        // 投稿を削除する
+        function deletePost(button) {
+            if (!confirm('この投稿を削除してもよろしいですか？')) {
                 return;
             }
 
-            // 全てのチェックを通過した場合
-            finalizePost(name, uid, content, vcOption, teiwatOption, worldRank, type);
-        }
-
-        // 投稿を最終的に確定する関数
-        function finalizePost(name, uid, content, vcOption, teiwatOption, worldRank, type) {
-            const newPost = {
-                name: escapeHtml(name || '名無し'),
-                uid: uid,
-                content: escapeHtml(content),
-                timestamp: Date.now(),
-                type: type,
-                isEnded: false,
-                vcOption: vcOption,
-                teiwatOption: teiwatOption,
-                worldRank: worldRank,
-                applications: [],
-                comments: [] // コメントリストを初期化
-            };
-
-            const posts = loadPosts();
-            posts.push(newPost);
-            savePosts(posts);
-            displayPosts();
-            clearForm(type);
-        }
-
-        // フォームをクリア (投稿フォーム用)
-        function clearForm(type) {
-            if (type === 'anyone') {
-                document.getElementById("nameAnyone").value = "";
-                document.getElementById("uidAnyone").value = "";
-                document.getElementById("contentAnyone").value = "";
-                document.getElementById("worldRankAnyone").value = ""; // 世界ランクをリセット
-                document.querySelector('input[name="vcAnyone"][value="VCなし"]').checked = true; // VCなしをデフォルトに
-                document.querySelector('input[name="teiwatAnyone"][value="私のテイワット"]').checked = true;
-            } else if (type === 'application') {
-                document.getElementById("nameApplication").value = "";
-                document.getElementById("uidApplication").value = "";
-                document.getElementById("contentApplication").value = "";
-                document.getElementById("worldRankApplication").value = ""; // 世界ランクをリセット
-                document.querySelector('input[name="vcApplication"][value="VCなし"]').checked = true; // VCなしをデフォルトに
-                document.querySelector('input[name="teiwatApplication"][value="私のテイワット"]').checked = true;
-            }
-            hideUidError(type);
-            hideWorldRankError(type); // エラーメッセージも非表示に (CSSでdisplay:noneしているため実質的には影響なし)
-        }
-
-        // UID表示・非表示のトグル (誰でも型投稿用)
-        function toggleUID(button) {
             const postElement = button.closest('.post');
-            const uidDiv = postElement.querySelector('.uid');
-            const label = button.querySelector('.uid-label');
+            const timestampToDelete = parseInt(postElement.dataset.timestamp);
 
-            if (postElement.classList.contains('ended')) {
-                return;
-            }
-
-            if (uidDiv.style.display === 'none') {
-                uidDiv.style.display = 'flex';
-                label.textContent = 'UIDを非表示';
-            } else {
-                uidDiv.style.display = 'none';
-                label.textContent = 'UIDを表示';
-            }
+            let posts = loadPosts();
+            posts = posts.filter(post => post.timestamp !== timestampToDelete);
+            savePosts(posts);
+            displayPosts(); // 投稿リストを更新
         }
 
-        // UIDをクリップボードにコピーする関数
-        async function copyUid(buttonElement, uidValue) {
-            const feedbackSpan = buttonElement.querySelector('.copy-feedback');
-            try {
-                await navigator.clipboard.writeText(uidValue);
-                feedbackSpan.textContent = 'コピーしました！';
-                feedbackSpan.classList.add('show');
+        // UIDをコピーする
+        function copyUID(uid, button) {
+            navigator.clipboard.writeText(uid).then(() => {
+                const originalText = button.innerHTML;
+                button.innerHTML = '<i class="fas fa-check"></i> コピーしました！';
+                button.style.backgroundColor = '#28a745';
                 setTimeout(() => {
-                    feedbackSpan.classList.remove('show');
+                    button.innerHTML = originalText;
+                    button.style.backgroundColor = '#007bff';
                 }, 1500);
-            } catch (err) {
-                console.error('UIDのコピーに失敗しました: ', err);
-                feedbackSpan.textContent = 'コピー失敗...';
-                feedbackSpan.classList.add('show');
-                setTimeout(() => {
-                    feedbackSpan.classList.remove('show');
-                }, 2000);
+            }).catch(err => {
+                console.error('UIDのコピーに失敗しました:', err);
                 alert('UIDのコピーに失敗しました。手動でコピーしてください。');
-            }
+            });
         }
 
-        // 募集終了ボタン押下時の確認モーダル表示
-        let currentPostToToggle; // 現在操作対象の投稿要素を保持する変数 (募集終了用)
-
-        function openConfirm(buttonElement) {
-            currentPostToToggle = buttonElement.closest('.post');
-            document.getElementById('modalBg').style.display = 'flex';
-        }
-
-        // モーダル「はい」ボタン (募集終了用)
-        document.getElementById('confirmYes').addEventListener('click', () => {
-            if (currentPostToToggle) {
-                const posts = loadPosts();
-                const postTimestamp = parseInt(currentPostToToggle.querySelector('.time').dataset.timestamp);
-                const postIndex = posts.findIndex(p => p.timestamp === postTimestamp);
-
-                if (postIndex !== -1) {
-                    posts[postIndex].isEnded = true;
-                    savePosts(posts);
-                    displayPosts();
+        // UIDのコピーを阻害するイベントリスナーを追加する関数
+        function addCopyBlockers() {
+            document.querySelectorAll('.copy-button').forEach(button => {
+                // 既存のmousedownイベントリスナーを削除（重複防止）
+                const oldHandler = button.__mousedownHandler;
+                if (oldHandler) {
+                    button.removeEventListener('mousedown', oldHandler);
                 }
-            }
-            document.getElementById('modalBg').style.display = 'none';
-            currentPostToToggle = null;
-        });
 
-        // モーダル「いいえ」ボタン (募集終了用)
-        document.getElementById('confirmNo').addEventListener('click', () => {
-            document.getElementById('modalBg').style.display = 'none';
-            currentPostToToggle = null;
-        });
-
-        // ========== 申請フォーム関連のJavaScriptここから ==========
-
-        let targetPostTimestampForApplication = null; // どの投稿に対する申請か
-
-        // 申請フォームモーダルを開く
-        function openApplicationModal(postTimestamp) {
-            targetPostTimestampForApplication = parseInt(postTimestamp);
-            document.getElementById('applicationModalBg').style.display = 'flex';
-            // フォームの内容をクリア
-            document.getElementById('applicantName').value = '';
-            document.getElementById('applicantUid').value = '';
-            document.getElementById('applicantWorldRank').value = '';
-            document.querySelector('input[name="autoCancelTime"][value="none"]').checked = true;
-            document.getElementById('applicantMessage').value = '';
-            hideUidError('applicant'); // UIDエラーメッセージを非表示に
-            hideWorldRankError('applicant'); // 世界ランクエラーメッセージも非表示に (CSSでdisplay:none)
+                // 新しいmousedownイベントリスナーを追加
+                const newHandler = (e) => e.preventDefault();
+                button.addEventListener('mousedown', newHandler);
+                button.__mousedownHandler = newHandler; // ハンドラーを保存して後で削除できるようにする
+            });
         }
 
-        // 申請フォームモーダルを閉じる
-        function closeApplicationModal() {
-            document.getElementById('applicationModalBg').style.display = 'none';
-            targetPostTimestampForApplication = null; // リセット
-            // 関連する確認モーダルも閉じる
-            document.getElementById('applyMessageConfirmModalBg').style.display = 'none';
-            // pendingApplicationData は申請が完了したかどうかに関わらずリセット
-            pendingApplicationData = null;
-            // ツールチップを非表示にする
-            const infoIcon = document.getElementById('autoCancelInfoIcon');
-            if (infoIcon) {
-                infoIcon.classList.remove('active');
-            }
-        }
 
-        // ユニークな申請IDを生成 (例: req-XXXXXX)
-        function generateApplicationId() {
-            return 'req-' + Math.random().toString(36).substring(2, 8).toUpperCase();
-        }
+        // タイプ切り替えボタンのセットアップ
+        function setupTypeSwitcher() {
+            const allPostsBtn = document.getElementById('allPostsBtn');
+            const myPostsBtn = document.getElementById('myPostsBtn');
+            const uidInput = document.getElementById('uid');
 
-        let pendingApplicationData = null; // 申請時の確認モーダルを挟むための変数
+            allPostsBtn.addEventListener('click', () => {
+                allPostsBtn.classList.add('active');
+                myPostsBtn.classList.remove('active');
+                displayPosts();
+            });
 
-        // 申請を送るボタンのイベントリスナー
-        document.getElementById('submitApplicationButton').addEventListener('click', async () => {
-            const applicantName = document.getElementById('applicantName').value.trim();
-            const applicantUidInput = document.getElementById('applicantUid');
-            const applicantUid = applicantUidInput.value.trim();
-            const applicantWorldRank = document.getElementById('applicantWorldRank').value;
-            const autoCancelTime = document.querySelector('input[name="autoCancelTime"]:checked').value;
-            const applicantMessage = document.getElementById('applicantMessage').value.trim();
-
-            let isValid = true;
-
-            // UIDの必須チェックとバリデーション
-            // ここでvalidateUidOnBlurを呼び出し、アラートではなくフィールド下のメッセージでエラーを表示
-            if (!validateUidOnBlur('applicant', applicantUid)) {
-                isValid = false;
-            } else if (applicantUid.trim() === '') {
-                // validateUidOnBlurが空欄ではエラーを出さないため、ここで必須チェック
-                alert("UIDは必須です。");
-                isValid = false;
-            }
-
-            // 世界ランクのバリデーション (ポップアップアラート)
-            if (!validateWorldRank('applicant')) { // trueなら選択済み、falseなら未選択でアラート表示
-                isValid = false;
-            }
-
-            if (!isValid) {
-                return;
-            }
-
-            // メッセージの確認（空欄の場合は確認モーダルを表示）
-            if (applicantMessage === '') {
-                pendingApplicationData = {
-                    applicantName,
-                    applicantUid,
-                    applicantWorldRank,
-                    autoCancelTime,
-                    applicantMessage // 空のまま渡される
-                };
-                document.getElementById('applyMessageConfirmModalBg').style.display = 'flex';
-                return; // ここで処理を中断し、モーダル表示
-            }
-
-            // 全てのチェックを通過した場合
-            finalizeApplication(applicantName, applicantUid, applicantWorldRank, autoCancelTime, applicantMessage);
-        });
-
-        // 申請メッセージ空欄確認モーダル「はい」ボタン
-        document.getElementById('applyMessageConfirmYes').addEventListener('click', () => {
-            if (pendingApplicationData) {
-                finalizeApplication(
-                    pendingApplicationData.applicantName,
-                    pendingApplicationData.applicantUid,
-                    pendingApplicationData.applicantWorldRank,
-                    pendingApplicationData.autoCancelTime,
-                    pendingApplicationData.applicantMessage
-                );
-            }
-            document.getElementById('applyMessageConfirmModalBg').style.display = 'none';
-        });
-
-        // 申請メッセージ空欄確認モーダル「いいえ」ボタン
-        document.getElementById('applyMessageConfirmNo').addEventListener('click', () => {
-            document.getElementById('applyMessageConfirmModalBg').style.display = 'none';
-            // 申請フォームは開いたままにする
-            // pendingApplicationData はそのまま保持し、submitApplicationButton が再度押されたら再チェック
-        });
-
-
-        // 申請を最終的に確定する関数
-        function finalizeApplication(applicantName, applicantUid, applicantWorldRank, autoCancelTime, applicantMessage) {
-            const posts = loadPosts();
-            const postIndex = posts.findIndex(p => p.timestamp === targetPostTimestampForApplication);
-
-            if (postIndex !== -1) {
-                if (!posts[postIndex].applications) {
-                    posts[postIndex].applications = [];
+            myPostsBtn.addEventListener('click', () => {
+                if (!uidInput.value.trim()) {
+                    alert('「自分の募集」を表示するには、UIDを入力してください。');
+                    return;
                 }
-                const newApplication = {
-                    id: generateApplicationId(),
-                    applicantName: escapeHtml(applicantName || '名無し'),
-                    applicantUid: applicantUid,
-                    applicantWorldRank: applicantWorldRank,
-                    applicantMessage: escapeHtml(applicantMessage),
-                    applyTimestamp: Date.now(),
-                    autoCancelTime: autoCancelTime,
-                    status: 'pending' // 'pending', 'approved', 'rejected', 'cancelled_by_applicant', 'cancelled_by_auto'
-                };
-                posts[postIndex].applications.push(newApplication);
-                savePosts(posts);
-                alert("申請が送信されました！");
-                closeApplicationModal(); // 申請成功後にモーダルを閉じる
-            } else {
-                alert("エラー: 投稿が見つかりませんでした。");
-            }
-            pendingApplicationData = null; // 申請後にはリセット
+                if (!UID_REGEX.test(uidInput.value.trim())) {
+                    alert('有効なUID（7桁から9桁の数字）を入力してください。');
+                    return;
+                }
+                allPostsBtn.classList.remove('active');
+                myPostsBtn.classList.add('active');
+                displayPosts();
+            });
         }
 
-        // Information icon click event listener
-        document.addEventListener('DOMContentLoaded', () => {
-            const infoIcon = document.getElementById('autoCancelInfoIcon');
-            if (infoIcon) {
-                infoIcon.addEventListener('click', (event) => {
-                    event.stopPropagation(); // クリックイベントが親要素に伝播するのを防ぐ
-                    infoIcon.classList.toggle('active');
-                });
+        // ============ 投稿機能関連のJavaScriptここまで ============
 
-                // アイコン以外の場所をクリックしたらツールチップを閉じる
-                document.addEventListener('click', (event) => {
-                    if (infoIcon && !infoIcon.contains(event.target)) {
-                        infoIcon.classList.remove('active');
-                    }
-                });
-            }
-        });
-
-        // ========== 申請フォーム関連のJavaScriptここまで ==========
 
         // ========== コメント機能関連のJavaScriptここから ==========
 
-        // コメントセクションの表示/非表示を切り替える
-        function toggleComments(button) {
+        // コメント入力欄の表示/非表示を切り替える
+        function toggleCommentInput(button) {
             const postElement = button.closest('.post');
-            const commentsSection = postElement.querySelector('.comments-section');
-            const postTimestamp = parseInt(postElement.dataset.timestamp);
+            const commentInputArea = postElement.querySelector('.comment-input-area');
+            const commentsList = postElement.querySelector('.comments-list'); // コメントリストも取得
 
-            if (commentsSection.classList.contains('active')) {
-                commentsSection.classList.remove('active');
+            if (commentInputArea.style.display === 'none') {
+                commentInputArea.style.display = 'block';
+                commentsList.style.display = 'block'; // コメントリストも表示
+                displayComments(postElement); // コメントを表示
             } else {
-                commentsSection.classList.add('active');
-                renderComments(postTimestamp); // コメントセクションを開く際にコメントをロードして表示
+                commentInputArea.style.display = 'none';
+                commentsList.style.display = 'none'; // コメントリストも非表示
             }
-        }
-
-        // 特定の投稿のコメントを表示する
-        function renderComments(postTimestamp) {
-            const posts = loadPosts();
-            const post = posts.find(p => p.timestamp === postTimestamp);
-            const postElement = document.querySelector(`.post[data-timestamp="${postTimestamp}"]`);
-            if (!post || !postElement) return;
-
-            const commentListDiv = postElement.querySelector('.comment-list');
-            commentListDiv.innerHTML = ''; // 既存のコメントをクリア
-
-            if (!post.comments || post.comments.length === 0) {
-                commentListDiv.innerHTML = '<p style="text-align: center; color: #888; font-size: 0.9em;">コメントはありません</p>';
-                return;
-            }
-
-            // 最新のコメントが上に来るように逆順で表示
-            [...post.comments].sort((a, b) => b.timestamp - a.timestamp).forEach(comment => {
-                const commentItem = document.createElement('div');
-                commentItem.className = 'comment-item';
-                commentItem.innerHTML = `
-                    <div class="comment-header">
-                        <span class="comment-name">${escapeHtml(comment.name || '名無し')}</span>
-                        <span class="comment-time">${formatCommentTime(comment.timestamp)}</span>
-                    </div>
-                    <div class="comment-content">${escapeHtml(comment.content)}</div>
-                `;
-                commentListDiv.appendChild(commentItem);
-            });
         }
 
         // コメントを投稿する
-        function submitComment(postTimestamp) {
-            const postElement = document.querySelector(`.post[data-timestamp="${postTimestamp}"]`);
-            const commentNameInput = postElement.querySelector(`#commentName-${postTimestamp}`);
-            const commentContentInput = postElement.querySelector(`#commentContent-${postTimestamp}`);
+        function submitComment(button) {
+            const postElement = button.closest('.post');
+            const postTimestamp = parseInt(postElement.dataset.timestamp);
+            const commentNameInput = postElement.querySelector('.comment-name-input');
+            const commentContentInput = postElement.querySelector('.comment-content-input');
 
-            const name = commentNameInput.value.trim();
+            const name = commentNameInput.value.trim() || '名無し'; // 名前がなければ「名無し」
             const content = commentContentInput.value.trim();
 
             if (!content) {
-                alert("コメント内容は必須です。");
+                alert('コメント内容を入力してください。');
                 return;
             }
 
-            const newComment = {
-                name: escapeHtml(name || '名無し'),
-                content: escapeHtml(content),
-                timestamp: Date.now()
-            };
-
             const posts = loadPosts();
-            const postIndex = posts.findIndex(p => p.timestamp === parseInt(postTimestamp));
+            const postIndex = posts.findIndex(p => p.timestamp === postTimestamp);
 
             if (postIndex !== -1) {
-                if (!posts[postIndex].comments) {
-                    posts[postIndex].comments = [];
-                }
-                posts[postIndex].comments.push(newComment);
+                posts[postIndex].comments = posts[postIndex].comments || []; // コメント配列がなければ初期化
+                posts[postIndex].comments.push({
+                    name: name,
+                    content: content,
+                    timestamp: Date.now()
+                });
                 savePosts(posts);
-                renderComments(postTimestamp); // コメントを再表示
+                displayComments(postElement); // コメントを表示
                 updateCommentCountDisplay(postElement); // コメント数を更新
                 commentContentInput.value = ''; // コメント入力欄をクリア
                 // 名前は保持するかクリアするかは要件次第だが、ここではクリアしない
             }
+        }
+
+        // コメントを表示する
+        function displayComments(postElement) {
+            const postTimestamp = parseInt(postElement.dataset.timestamp);
+            const commentsList = postElement.querySelector('.comments-list');
+            commentsList.innerHTML = ''; // 既存のコメントをクリア
+
+            const posts = loadPosts();
+            const post = posts.find(p => p.timestamp === postTimestamp);
+
+            if (!post || !post.comments || post.comments.length === 0) {
+                commentsList.innerHTML = '<p style="text-align: center; color: #aaa; margin-top: 10px;">まだコメントはありません。</p>';
+                return;
+            }
+
+            post.comments.sort((a, b) => a.timestamp - b.timestamp); // 時系列でソート
+
+            post.comments.forEach(comment => {
+                const commentElement = document.createElement('div');
+                commentElement.classList.add('comment');
+
+                const commentDate = new Date(comment.timestamp);
+                const formattedDate = commentDate.toLocaleString('ja-JP', {
+                    year: 'numeric',
+                    month: '2-digit',
+                    day: '2-digit',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+
+                commentElement.innerHTML = `
+                    <div class="comment-header">
+                        <span class="comment-name">${comment.name}</span>
+                        <span class="comment-timestamp">${formattedDate}</span>
+                    </div>
+                    <div class="comment-content">${comment.content}</div>
+                `;
+                commentsList.appendChild(commentElement);
+            });
         }
 
         // コメント数を更新する
@@ -2018,17 +837,6 @@
         }
 
         // ========== コメント機能関連のJavaScriptここまで ==========
-
-
-        // ページ読み込み時に投稿を表示
-        document.addEventListener("DOMContentLoaded", displayPosts);
-
-        // UIDのコピーを阻害するイベントリスナーを追加する関数
-        function addCopyBlockers() {
-            document.querySelectorAll('.copy-button').forEach(button => {
-                button.addEventListener('mousedown', (e) => e.preventDefault());
-            });
-        }
     </script>
 </body>
 </html>
