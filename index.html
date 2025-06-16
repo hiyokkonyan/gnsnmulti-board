@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ja">
 <head>
     <meta charset="UTF-8" />
@@ -32,91 +32,71 @@
         }
 
         .type-switcher button {
-            padding: 8px 15px;
+            padding: 10px 15px;
             border: none;
-            border-radius: 20px;
-            background-color: #e0e0e0;
-            color: #555;
-            font-size: 1em;
+            border-radius: 5px;
+            background-color: #A8D1D1;
+            color: white;
+            font-weight: bold;
             cursor: pointer;
-            transition: background-color 0.3s ease;
+            transition: background-color 0.2s;
+            font-family: 'Rounded Mplus 1c', sans-serif;
+            font-size: 0.9em;
+        }
+
+        .type-switcher button:hover {
+            background-color: #8EB7B7;
         }
 
         .type-switcher button.active {
             background-color: #5A8EA8;
-            color: white;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
         }
 
-        .type-switcher button:hover:not(.active) {
-            background-color: #d0d0d0;
-        }
-
-
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            background: #fff;
+        .post-form-container {
+            background: white;
             padding: 20px;
             border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
-        .post-form, .search-form {
-            background: #f0f7f9;
-            padding: 20px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
-        }
-
-        .post-form h2, .search-form h2 {
+        .post-form-container h2 {
             font-size: 1.3em;
+            margin-bottom: 15px;
             color: #5A8EA8;
-            margin-bottom: 15px;
-            border-bottom: 2px solid #a8d0e6;
-            padding-bottom: 8px;
+            text-align: center;
         }
 
-        .form-group {
-            margin-bottom: 15px;
-        }
-
-        .form-group label {
+        .post-form label {
             display: block;
             margin-bottom: 8px;
             font-weight: bold;
-            color: #444;
+            color: #555;
+            font-size: 0.9em;
         }
 
-        .form-group input[type="text"],
-        .form-group input[type="number"],
-        .form-group textarea,
-        .form-group select {
+        .post-form input[type="text"],
+        .post-form textarea,
+        .post-form select {
             width: calc(100% - 20px);
             padding: 10px;
-            border: 1px solid #ccc;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
             border-radius: 5px;
-            font-size: 1em;
             box-sizing: border-box;
-            transition: border-color 0.3s ease;
+            font-family: 'Noto Sans JP', sans-serif;
+            font-size: 0.9em;
         }
 
-        .form-group input[type="text"]:focus,
-        .form-group input[type="number"]:focus,
-        .form-group textarea:focus,
-        .form-group select:focus {
-            border-color: #5A8EA8;
-            outline: none;
-        }
-
-        .form-group textarea {
+        .post-form textarea {
             resize: vertical;
             min-height: 80px;
         }
 
-        .post-button {
-            display: block;
+        .post-form button {
             width: 100%;
             padding: 12px;
             background-color: #5A8EA8;
@@ -124,479 +104,383 @@
             border: none;
             border-radius: 5px;
             font-size: 1.1em;
+            font-weight: bold;
             cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.2s ease;
+            transition: background-color 0.2s;
+            font-family: 'Rounded Mplus 1c', sans-serif;
         }
 
-        .post-button:hover {
-            background-color: #4A7A9A;
-            transform: translateY(-2px);
+        .post-form button:hover {
+            background-color: #4A7A8A;
         }
 
-        .post-button:active {
-            transform: translateY(0);
-        }
-
-
-        .search-form {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            align-items: flex-end;
-        }
-
-        .search-form .form-group {
-            flex: 1;
-            min-width: 150px;
-            margin-bottom: 0;
-        }
-
-        .search-button {
-            padding: 10px 20px;
-            background-color: #6c757d;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        .search-button:hover {
-            background-color: #5a6268;
-        }
-
-
-        #posts-container {
-            margin-top: 30px;
-            border-top: 1px solid #eee;
-            padding-top: 20px;
+        .posts-container {
+            max-width: 800px;
+            margin: 0 auto;
         }
 
         .post {
-            background: #ffffff;
-            border: 1px solid #e0e0e0;
-            border-radius: 8px;
+            background: white;
             padding: 20px;
             margin-bottom: 20px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-            position: relative; /* UIDコピーボタンのためにpositionを設定 */
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            position: relative;
+            word-wrap: break-word; /* 長い文字列の折り返し */
         }
 
-        .post-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        .post h3 {
+            font-size: 1.4em;
+            color: #333;
             margin-bottom: 10px;
             border-bottom: 1px solid #eee;
-            padding-bottom: 10px;
-        }
-
-        .post-title {
-            font-size: 1.3em;
-            color: #5A8EA8;
-            margin: 0;
-        }
-
-        .post-meta {
-            font-size: 0.85em;
-            color: #888;
-            white-space: nowrap;
-        }
-
-        .post-meta .timestamp {
-            margin-left: 10px;
-        }
-
-        .post-details {
-            margin-bottom: 15px;
-            line-height: 1.6;
-        }
-
-        .post-details p {
-            margin: 5px 0;
-        }
-
-        .post-details strong {
-            color: #555;
+            padding-bottom: 5px;
         }
 
         .post-content {
-            white-space: pre-wrap; /* 改行を保持 */
-            background-color: #fcfcfc;
-            border-left: 3px solid #5A8EA8;
-            padding: 10px 15px;
-            margin-top: 15px;
-            border-radius: 0 5px 5px 0;
+            margin-bottom: 10px;
+            color: #555;
+            line-height: 1.6;
             font-size: 0.95em;
-            color: #333;
+            white-space: pre-wrap; /* 改行を反映 */
         }
 
         .post-footer {
             display: flex;
-            justify-content: flex-end;
-            margin-top: 15px;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.85em;
+            color: #777;
+            border-top: 1px solid #eee;
+            padding-top: 10px;
+            margin-top: 10px;
         }
 
-        .delete-button {
-            background-color: #dc3545;
-            color: white;
-            border: none;
-            padding: 8px 12px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 0.9em;
-            transition: background-color 0.3s ease;
+        .post-footer .post-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
         }
 
-        .delete-button:hover {
-            background-color: #c82333;
+        .uid-display {
+            background-color: #eef;
+            padding: 5px 8px;
+            border-radius: 4px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
         }
 
         .copy-button {
-            background-color: #007bff;
-            color: white;
+            background: none;
             border: none;
-            padding: 5px 10px;
-            border-radius: 4px;
+            color: #5A8EA8;
             cursor: pointer;
-            font-size: 0.85em;
-            margin-left: 10px;
-            transition: background-color 0.3s ease;
-            position: absolute; /* 親要素 .post に対して絶対配置 */
-            top: 20px; /* 位置を調整 */
-            right: 20px; /* 位置を調整 */
+            font-size: 1em;
+            margin-left: 5px;
+            vertical-align: middle;
         }
 
         .copy-button:hover {
-            background-color: #0056b3;
+            color: #4A7A8A;
         }
 
-        .copy-button:active {
-            background-color: #004085;
-        }
-
-        .copy-button .fa-copy {
-            margin-right: 5px;
-        }
-
-
-        /* コメント機能のスタイル */
         .post-actions {
             display: flex;
-            justify-content: flex-start; /* コメントボタンを左に配置 */
-            margin-top: 15px;
-            padding-top: 10px;
-            border-top: 1px dashed #eee;
+            gap: 10px;
+        }
+
+        .post-actions button {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.85em;
+            font-family: 'Rounded Mplus 1c', sans-serif;
+            transition: background-color 0.2s;
+        }
+
+        .delete-button {
+            background-color: #ff6b6b;
+            color: white;
+        }
+
+        .delete-button:hover {
+            background-color: #e55a5a;
+        }
+
+        .edit-button {
+            background-color: #6a99ff;
+            color: white;
+        }
+
+        .edit-button:hover {
+            background-color: #5a88e5;
         }
 
         .comment-button {
-            background-color: #6c757d;
+            background-color: #6BBE6B;
             color: white;
-            border: none;
-            padding: 8px 12px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 0.9em;
-            transition: background-color 0.3s ease;
-            display: flex;
-            align-items: center;
+            position: relative; /* コメント数表示のためにrelativeに設定 */
+            padding-right: 35px; /* コメント数表示のためのスペース */
         }
 
         .comment-button:hover {
-            background-color: #5a6268;
+            background-color: #5AAA5A;
         }
 
-        .comment-button .fa-comment {
-            margin-right: 5px;
-        }
-
-        .comment-button .comment-count {
-            margin-left: 5px;
-            font-weight: bold;
-        }
-
-        .comment-button.no-comments {
-            opacity: 0.7; /* コメントがない場合は少し薄く */
-        }
-
-
-        .comment-input-area {
-            background-color: #f8f8f8;
-            border: 1px solid #e9e9e9;
-            border-radius: 5px;
-            padding: 15px;
-            margin-top: 15px;
-        }
-
-        .comment-input-area input[type="text"],
-        .comment-input-area textarea {
-            width: calc(100% - 20px);
-            padding: 8px;
-            margin-bottom: 10px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
-
-        .comment-input-area textarea {
-            resize: vertical;
-            min-height: 60px;
-        }
-
-        .submit-comment-button {
-            background-color: #28a745;
+        .comment-count {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(255, 255, 255, 0.3);
             color: white;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 0.9em;
-            transition: background-color 0.3s ease;
+            padding: 2px 6px;
+            border-radius: 10px;
+            font-size: 0.75em;
         }
 
-        .submit-comment-button:hover {
-            background-color: #218838;
+        .comment-button.no-comments .comment-count {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: #eee;
         }
 
-        .comments-list {
+        /* コメントセクションのスタイル */
+        .comments-section {
             margin-top: 15px;
-            padding-top: 10px;
-            border-top: 1px dashed #eee;
+            border-top: 1px solid #eee;
+            padding-top: 15px;
+            display: none; /* 初期状態では非表示 */
+        }
+
+        .comments-section.active {
+            display: block; /* activeクラスが付与されたら表示 */
+        }
+
+        .comment-list {
+            margin-top: 15px;
         }
 
         .comment {
-            background-color: #f3f3f3;
-            border: 1px solid #e5e5e5;
-            border-radius: 5px;
-            padding: 10px;
+            background-color: #f5f5f5;
+            padding: 10px 15px;
+            border-radius: 6px;
             margin-bottom: 10px;
             font-size: 0.9em;
+            color: #444;
+            position: relative; /* 削除ボタンの配置のため */
+            word-wrap: break-word; /* 長い文字列の折り返し */
+            white-space: pre-wrap; /* 改行を反映 */
         }
 
-        .comment-header {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 5px;
-        }
-
-        .comment-name {
+        .comment-author {
             font-weight: bold;
-            color: #555;
+            color: #5A8EA8;
+            margin-bottom: 5px;
+            display: block;
         }
 
         .comment-timestamp {
-            color: #999;
-            font-size: 0.8em;
+            font-size: 0.75em;
+            color: #888;
+            text-align: right;
+            margin-top: 5px;
         }
 
-        .comment-content {
-            color: #333;
-            white-space: pre-wrap; /* コメントの改行を保持 */
+        .comment-form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .comment-form input[type="text"],
+        .comment-form textarea {
+            width: calc(100% - 20px);
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 0.9em;
+            font-family: 'Noto Sans JP', sans-serif;
+        }
+
+        .comment-form textarea {
+            min-height: 60px;
+            resize: vertical;
+        }
+
+        .comment-form button {
+            padding: 10px 15px;
+            background-color: #5A8EA8;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            font-family: 'Rounded Mplus 1c', sans-serif;
+            transition: background-color 0.2s;
+        }
+
+        .comment-form button:hover {
+            background-color: #4A7A8A;
+        }
+
+        .close-comments-button-container {
+            display: flex;
+            justify-content: flex-end; /* 右寄せ */
+            margin-top: 10px; /* 「コメントする」ボタンとの間隔 */
+        }
+
+        .close-comments-button {
+            background-color: #A8D1D1;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-size: 0.85em;
+            font-family: 'Rounded Mplus 1c', sans-serif;
+            transition: background-color 0.2s;
+        }
+
+        .close-comments-button:hover {
+            background-color: #8EB7B7;
+        }
+
+        .comment-delete-button {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: none;
+            border: none;
+            color: #ff6b6b;
+            cursor: pointer;
+            font-size: 0.8em;
+            padding: 5px;
+            opacity: 0.7;
+        }
+
+        .comment-delete-button:hover {
+            opacity: 1;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>マルチ募集掲示板</h1>
+    <h1>マルチ募集掲示板</h1>
 
-        <div class="type-switcher">
-            <button id="allPostsBtn" class="active">全ての募集</button>
-            <button id="myPostsBtn">自分の募集</button>
-        </div>
-
-        <div class="post-form">
-            <h2>募集を投稿する</h2>
-            <div class="form-group">
-                <label for="uid">UID:</label>
-                <input type="text" id="uid" placeholder="あなたのUIDを入力してください" required />
-            </div>
-            <div class="form-group">
-                <label for="title">タイトル:</label>
-                <input type="text" id="title" placeholder="募集のタイトルを入力してください" required />
-            </div>
-            <div class="form-group">
-                <label for="type">募集内容:</label>
-                <select id="type" required>
-                    <option value="">選択してください</option>
-                    <option value="探索">探索</option>
-                    <option value="素材周回">素材周回</option>
-                    <option value="ボス討伐">ボス討伐</option>
-                    <option value="秘境">秘境</option>
-                    <option value="イベント">イベント</option>
-                    <option value="その他">その他</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="ar-rank">冒険ランク (AR):</label>
-                <input type="number" id="ar-rank" min="1" max="60" placeholder="あなたの冒険ランク" required />
-            </div>
-            <div class="form-group">
-                <label for="description">詳細 (任意):</label>
-                <textarea id="description" placeholder="募集の詳細を記述してください"></textarea>
-            </div>
-            <button class="post-button" onclick="submitPost()">投稿する</button>
-        </div>
-
-        <div class="search-form">
-            <h2>募集を検索する</h2>
-            <div class="form-group">
-                <label for="search-type">募集内容で絞り込み:</label>
-                <select id="search-type">
-                    <option value="">全て</option>
-                    <option value="探索">探索</option>
-                    <option value="素材周回">素材周回</option>
-                    <option value="ボス討伐">ボス討伐</option>
-                    <option value="秘境">秘境</option>
-                    <option value="イベント">イベント</option>
-                    <option value="その他">その他</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="search-ar-rank">ARで絞り込み:</label>
-                <input type="number" id="search-ar-rank" min="1" max="60" placeholder="AR" />
-            </div>
-            <div class="form-group">
-                <label for="search-keyword">キーワード検索:</label>
-                <input type="text" id="search-keyword" placeholder="タイトルまたは詳細で検索" />
-            </div>
-            <button class="search-button" onclick="displayPosts()">検索</button>
-        </div>
-
-
-        <div id="posts-container">
-            </div>
+    <div class="type-switcher">
+        <button id="allPostsButton" class="active">全ての募集</button>
+        <button id="myPostsButton">自分の募集</button>
     </div>
 
+    <div class="post-form-container">
+        <h2>新規募集投稿</h2>
+        <form id="postForm" class="post-form">
+            <label for="postName">名前 (任意):</label>
+            <input type="text" id="postName" name="postName" placeholder="匿名">
+
+            <label for="postType">募集種別:</label>
+            <select id="postType" name="postType" required>
+                <option value="全般">全般</option>
+                <option value="攻略">攻略</option>
+                <option value="周回">周回</option>
+                <option value="イベント">イベント</option>
+                <option value="その他">その他</option>
+            </select>
+
+            <label for="postTitle">タイトル:</label>
+            <input type="text" id="postTitle" name="postTitle" required placeholder="例: ○○募集！">
+
+            <label for="postContent">内容:</label>
+            <textarea id="postContent" name="postContent" required placeholder="例: 一緒に○○をプレイしましょう！"></textarea>
+
+            <label for="postUid">UID (任意):</label>
+            <input type="text" id="postUid" name="postUid" placeholder="例: 123456789 (コピペ可能)">
+
+            <button type="submit">投稿する</button>
+        </form>
+    </div>
+
+    <div class="posts-container" id="postsContainer">
+        </div>
+
     <script>
-        // ローカルストレージに投稿を保存するキー
-        const STORAGE_KEY = 'multiRecruitmentPosts';
+        // ========== 投稿機能関連のJavaScriptここから ==========
 
-        // UIDの正規表現 (7桁から9桁の数字)
-        const UID_REGEX = /^\d{7,9}$/;
-
-        // ページ読み込み時に実行される初期化関数
-        document.addEventListener("DOMContentLoaded", () => {
-            displayPosts(); // 既存の投稿を表示
-            addCopyBlockers(); // UIDコピーの阻害イベントリスナーを追加
-            setupTypeSwitcher(); // タイプ切り替えボタンのセットアップ
-        });
-
-        // ============ 投稿機能関連のJavaScriptここから ============
-
-        // 投稿を読み込む
+        // ローカルストレージから投稿をロード
         function loadPosts() {
-            const postsJson = localStorage.getItem(STORAGE_KEY);
+            const postsJson = localStorage.getItem('posts');
             return postsJson ? JSON.parse(postsJson) : [];
         }
 
-        // 投稿を保存する
+        // 投稿をローカルストレージに保存
         function savePosts(posts) {
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(posts));
+            localStorage.setItem('posts', JSON.stringify(posts));
         }
 
-        // 新しい投稿を送信する
-        function submitPost() {
-            const uidInput = document.getElementById('uid');
-            const titleInput = document.getElementById('title');
-            const typeInput = document.getElementById('type');
-            const arRankInput = document.getElementById('ar-rank');
-            const descriptionInput = document.getElementById('description');
+        // UIDを生成
+        function generateUID() {
+            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+                const r = Math.random() * 16 | 0,
+                    v = c === 'x' ? r : (r & 0x3 | 0x8);
+                return v.toString(16);
+            });
+        }
 
-            const uid = uidInput.value.trim();
-            const title = titleInput.value.trim();
-            const type = typeInput.value;
-            const arRank = parseInt(arRankInput.value);
-            const description = descriptionInput.value.trim();
+        // 新しい投稿を追加
+        document.getElementById('postForm').addEventListener('submit', function(e) {
+            e.preventDefault();
 
-            if (!uid || !title || !type || isNaN(arRank) || arRank < 1 || arRank > 60) {
-                alert('UID、タイトル、募集内容、冒険ランクは必須項目です。冒険ランクは1から60の間で入力してください。');
-                return;
-            }
+            const postName = document.getElementById('postName').value || '匿名';
+            const postType = document.getElementById('postType').value;
+            const postTitle = document.getElementById('postTitle').value;
+            const postContent = document.getElementById('postContent').value;
+            const postUid = document.getElementById('postUid').value;
+            const timestamp = Date.now();
+            const postId = generateUID(); // 投稿ごとにユニークなIDを付与
 
-            if (!UID_REGEX.test(uid)) {
-                alert('UIDは7桁から9桁の数字で入力してください。');
-                return;
-            }
-
-            const posts = loadPosts();
             const newPost = {
-                uid: uid,
-                title: title,
-                type: type,
-                arRank: arRank,
-                description: description,
-                timestamp: Date.now(),
-                comments: [] // コメントを保存する配列を追加
+                id: postId, // 投稿IDを追加
+                name: postName,
+                type: postType,
+                title: postTitle,
+                content: postContent,
+                uid: postUid,
+                timestamp: timestamp,
+                comments: [] // コメント配列を初期化
             };
 
-            posts.unshift(newPost); // 新しい投稿を配列の先頭に追加
-            savePosts(posts);
-            displayPosts(); // 投稿リストを更新
-            addCopyBlockers(); // 新しい投稿が追加された後にもコピー阻害を追加
-
-            // フォームをクリア
-            titleInput.value = '';
-            typeInput.value = '';
-            arRankInput.value = '';
-            descriptionInput.value = '';
-            // UIDは保持するかは要件次第だが、ここでは保持しない
-            // uidInput.value = '';
-        }
-
-        // 投稿を表示する
-        function displayPosts() {
-            const postsContainer = document.getElementById('posts-container');
-            postsContainer.innerHTML = ''; // 既存の投稿をクリア
-
             const posts = loadPosts();
-            const searchType = document.getElementById('search-type').value;
-            const searchArRank = document.getElementById('search-ar-rank').value;
-            const searchKeyword = document.getElementById('search-keyword').value.toLowerCase();
-            const showMyPosts = document.getElementById('myPostsBtn').classList.contains('active');
-            const currentUID = document.getElementById('uid').value.trim(); // 現在のUID入力欄の値を取得
+            posts.unshift(newPost); // 最新の投稿を配列の先頭に追加
+            savePosts(posts);
+            displayPosts();
+            this.reset(); // フォームをリセット
+        });
 
-            const filteredPosts = posts.filter(post => {
-                let matchesSearch = true;
-                let matchesMyPosts = true;
+        // 投稿を表示
+        function displayPosts() {
+            const postsContainer = document.getElementById('postsContainer');
+            postsContainer.innerHTML = '';
+            const posts = loadPosts();
 
-                // 募集タイプでのフィルタリング
-                if (searchType && post.type !== searchType) {
-                    matchesSearch = false;
-                }
-
-                // ARランクでのフィルタリング
-                if (searchArRank && parseInt(post.arRank) !== parseInt(searchArRank)) {
-                    matchesSearch = false;
-                }
-
-                // キーワード検索
-                if (searchKeyword) {
-                    const titleMatches = post.title.toLowerCase().includes(searchKeyword);
-                    const descriptionMatches = post.description.toLowerCase().includes(searchKeyword);
-                    if (!titleMatches && !descriptionMatches) {
-                        matchesSearch = false;
-                    }
-                }
-
-                // 「自分の募集」モードの場合のフィルタリング
-                if (showMyPosts) {
-                    if (!currentUID || post.uid !== currentUID) {
-                        matchesMyPosts = false;
-                    }
-                }
-
-                return matchesSearch && matchesMyPosts;
-            });
-
-            if (filteredPosts.length === 0) {
-                postsContainer.innerHTML = '<p style="text-align: center; color: #888;">表示する募集がありません。</p>';
-                return;
+            const isMyPostsMode = document.getElementById('myPostsButton').classList.contains('active');
+            let myUid = localStorage.getItem('myUid');
+            if (isMyPostsMode && !myUid) {
+                myUid = generateUID();
+                localStorage.setItem('myUid', myUid);
             }
 
-            filteredPosts.forEach(post => {
+            posts.forEach(post => {
+                // 「自分の募集」モードの場合、myUid と post.uid が一致しない投稿はスキップ
+                if (isMyPostsMode && post.uid !== myUid) {
+                    return;
+                }
+
                 const postElement = document.createElement('div');
                 postElement.classList.add('post');
-                postElement.dataset.timestamp = post.timestamp; // コメント機能のためにタイムスタンプを保存
+                postElement.dataset.timestamp = post.timestamp; // コメント機能で使うため追加
+                postElement.dataset.postId = post.id; // コメント機能で使うため追加
 
                 const postDate = new Date(post.timestamp);
                 const formattedDate = postDate.toLocaleString('ja-JP', {
@@ -607,214 +491,208 @@
                     minute: '2-digit'
                 });
 
+                let uidDisplay = '';
+                if (post.uid) {
+                    uidDisplay = `
+                        <div class="uid-display">
+                            UID: ${post.uid}
+                            <button class="copy-button" data-uid="${post.uid}" aria-label="UIDをコピー">
+                                <i class="far fa-copy"></i>
+                            </button>
+                        </div>
+                    `;
+                }
+
                 postElement.innerHTML = `
-                    <div class="post-header">
-                        <h3 class="post-title">${post.title}</h3>
-                        <div class="post-meta">
-                            <span class="uid-display">UID: ${post.uid}</span>
-                            <span class="timestamp">${formattedDate}</span>
-                        </div>
-                        <button class="copy-button" onclick="copyUID('${post.uid}', this)">
-                            <i class="fas fa-copy"></i>
-                        </button>
-                    </div>
-                    <div class="post-details">
-                        <p><strong>募集内容:</strong> ${post.type}</p>
-                        <p><strong>冒険ランク:</strong> AR ${post.arRank}</p>
-                    </div>
-                    <div class="post-content">${post.description || '（詳細なし）'}</div>
-                    <div class="post-actions">
-                        <button class="comment-button" onclick="toggleCommentInput(this)">
-                            <i class="fas fa-comment"></i> <span class="comment-count">...</span>
-                        </button>
-                    </div>
-                    <div class="comment-section">
-                        <div class="comment-input-area" style="display: none;">
-                            <input type="text" class="comment-name-input" placeholder="名前 (任意)">
-                            <textarea class="comment-content-input" placeholder="コメントする..."></textarea>
-                            <button class="submit-comment-button" onclick="submitComment(this)">コメントする</button>
-                        </div>
-                        <div class="comments-list" style="display: none;">
-                            </div>
-                    </div>
+                    <h3>${post.title} (${post.type})</h3>
+                    <div class="post-content">${post.content.replace(/\n/g, '<br>')}</div>
                     <div class="post-footer">
-                        <button class="delete-button" onclick="deletePost(this)">削除</button>
+                        <div class="post-meta">
+                            <span>投稿者: ${post.name}</span>
+                            <span>投稿日時: ${formattedDate}</span>
+                            ${uidDisplay}
+                        </div>
+                        <div class="post-actions">
+                            <button class="comment-button" aria-label="コメントを見る/閉じる">
+                                <i class="fas fa-comment"></i> <span class="comment-count">...</span>
+                            </button>
+                            <button class="edit-button" data-timestamp="${post.timestamp}" aria-label="編集">編集</button>
+                            <button class="delete-button" data-timestamp="${post.timestamp}" aria-label="削除">削除</button>
+                        </div>
+                    </div>
+                    <div class="comments-section">
+                        <div class="comment-list">
+                            </div>
+                        <form class="comment-form">
+                            <input type="text" placeholder="名前 (任意)" class="comment-name-input">
+                            <textarea placeholder="コメントを入力" class="comment-content-input" required></textarea>
+                            <button type="submit">コメントする</button>
+                        </form>
+                        <div class="close-comments-button-container">
+                            <button class="close-comments-button" aria-label="コメントを閉じる">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
                     </div>
                 `;
                 postsContainer.appendChild(postElement);
-                updateCommentCountDisplay(postElement); // コメント数を初期表示
+
+                // コメント表示を更新
+                updateCommentCountDisplay(postElement);
+                displayComments(postElement);
             });
-            addCopyBlockers(); // 再度コピーボタンのイベントリスナーを設定
+
+            addCopyBlockers(); // UIDコピー阻害イベントリスナーを再追加
+            addCopyButtonListeners(); // コピーボタンのリスナーを再追加
+            addDeleteEditListeners(); // 削除・編集ボタンのリスナーを再追加
+            addCommentToggleListeners(); // コメント開閉ボタンのリスナーを再追加
+            addCommentFormListeners(); // コメントフォームのリスナーを再追加
         }
 
-
-        // 投稿を削除する
-        function deletePost(button) {
-            if (!confirm('この投稿を削除してもよろしいですか？')) {
-                return;
-            }
-
-            const postElement = button.closest('.post');
-            const timestampToDelete = parseInt(postElement.dataset.timestamp);
-
-            let posts = loadPosts();
-            posts = posts.filter(post => post.timestamp !== timestampToDelete);
-            savePosts(posts);
-            displayPosts(); // 投稿リストを更新
-        }
-
-        // UIDをコピーする
-        function copyUID(uid, button) {
-            navigator.clipboard.writeText(uid).then(() => {
-                const originalText = button.innerHTML;
-                button.innerHTML = '<i class="fas fa-check"></i> コピーしました！';
-                button.style.backgroundColor = '#28a745';
-                setTimeout(() => {
-                    button.innerHTML = originalText;
-                    button.style.backgroundColor = '#007bff';
-                }, 1500);
-            }).catch(err => {
-                console.error('UIDのコピーに失敗しました:', err);
-                alert('UIDのコピーに失敗しました。手動でコピーしてください。');
-            });
-        }
-
-        // UIDのコピーを阻害するイベントリスナーを追加する関数
-        function addCopyBlockers() {
+        // UIDコピーボタンのイベントリスナー
+        function addCopyButtonListeners() {
             document.querySelectorAll('.copy-button').forEach(button => {
-                // 既存のmousedownイベントリスナーを削除（重複防止）
-                const oldHandler = button.__mousedownHandler;
-                if (oldHandler) {
-                    button.removeEventListener('mousedown', oldHandler);
-                }
-
-                // 新しいmousedownイベントリスナーを追加
-                const newHandler = (e) => e.preventDefault();
-                button.addEventListener('mousedown', newHandler);
-                button.__mousedownHandler = newHandler; // ハンドラーを保存して後で削除できるようにする
+                button.addEventListener('click', function(e) {
+                    e.stopPropagation(); // イベントのバブリングを防ぐ
+                    const uidToCopy = this.dataset.uid;
+                    navigator.clipboard.writeText(uidToCopy).then(() => {
+                        const originalIcon = this.innerHTML;
+                        this.innerHTML = '<i class="fas fa-check"></i>'; // コピー成功アイコン
+                        setTimeout(() => {
+                            this.innerHTML = originalIcon; // 元に戻す
+                        }, 1000);
+                    }).catch(err => {
+                        console.error('UIDのコピーに失敗しました:', err);
+                    });
+                });
             });
         }
 
-
-        // タイプ切り替えボタンのセットアップ
-        function setupTypeSwitcher() {
-            const allPostsBtn = document.getElementById('allPostsBtn');
-            const myPostsBtn = document.getElementById('myPostsBtn');
-            const uidInput = document.getElementById('uid');
-
-            allPostsBtn.addEventListener('click', () => {
-                allPostsBtn.classList.add('active');
-                myPostsBtn.classList.remove('active');
-                displayPosts();
+        // 削除・編集ボタンのイベントリスナー
+        function addDeleteEditListeners() {
+            document.querySelectorAll('.delete-button').forEach(button => {
+                button.addEventListener('click', function() {
+                    const timestamp = parseInt(this.dataset.timestamp);
+                    if (confirm('この投稿を削除しますか？')) {
+                        let posts = loadPosts();
+                        posts = posts.filter(post => post.timestamp !== timestamp);
+                        savePosts(posts);
+                        displayPosts();
+                    }
+                });
             });
 
-            myPostsBtn.addEventListener('click', () => {
-                if (!uidInput.value.trim()) {
-                    alert('「自分の募集」を表示するには、UIDを入力してください。');
-                    return;
-                }
-                if (!UID_REGEX.test(uidInput.value.trim())) {
-                    alert('有効なUID（7桁から9桁の数字）を入力してください。');
-                    return;
-                }
-                allPostsBtn.classList.remove('active');
-                myPostsBtn.classList.add('active');
-                displayPosts();
+            document.querySelectorAll('.edit-button').forEach(button => {
+                button.addEventListener('click', function() {
+                    const timestamp = parseInt(this.dataset.timestamp);
+                    const posts = loadPosts();
+                    const postToEdit = posts.find(post => post.timestamp === timestamp);
+
+                    if (postToEdit) {
+                        const newTitle = prompt('新しいタイトルを入力してください:', postToEdit.title);
+                        if (newTitle === null) return; // キャンセルされた場合
+                        const newContent = prompt('新しい内容を入力してください:', postToEdit.content);
+                        if (newContent === null) return; // キャンセルされた場合
+
+                        postToEdit.title = newTitle;
+                        postToEdit.content = newContent;
+                        savePosts(posts);
+                        displayPosts();
+                    }
+                });
             });
         }
 
-        // ============ 投稿機能関連のJavaScriptここまで ============
+        // 「自分の募集」ボタンと「全ての募集」ボタンの切り替え
+        document.getElementById('myPostsButton').addEventListener('click', function() {
+            this.classList.add('active');
+            document.getElementById('allPostsButton').classList.remove('active');
+            displayPosts();
+        });
+
+        document.getElementById('allPostsButton').addEventListener('click', function() {
+            this.classList.add('active');
+            document.getElementById('myPostsButton').classList.remove('active');
+            localStorage.removeItem('myUid'); // 全ての募集表示時はmyUidをクリア
+            displayPosts();
+        });
+
+        // ========== 投稿機能関連のJavaScriptここまで ==========
 
 
         // ========== コメント機能関連のJavaScriptここから ==========
 
-        // コメント入力欄の表示/非表示を切り替える
-        function toggleCommentInput(button) {
-            const postElement = button.closest('.post');
-            const commentInputArea = postElement.querySelector('.comment-input-area');
-            const commentsList = postElement.querySelector('.comments-list'); // コメントリストも取得
-
-            if (commentInputArea.style.display === 'none') {
-                commentInputArea.style.display = 'block';
-                commentsList.style.display = 'block'; // コメントリストも表示
-                displayComments(postElement); // コメントを表示
-            } else {
-                commentInputArea.style.display = 'none';
-                commentsList.style.display = 'none'; // コメントリストも非表示
-            }
-        }
-
-        // コメントを投稿する
-        function submitComment(button) {
-            const postElement = button.closest('.post');
-            const postTimestamp = parseInt(postElement.dataset.timestamp);
-            const commentNameInput = postElement.querySelector('.comment-name-input');
-            const commentContentInput = postElement.querySelector('.comment-content-input');
-
-            const name = commentNameInput.value.trim() || '名無し'; // 名前がなければ「名無し」
-            const content = commentContentInput.value.trim();
-
-            if (!content) {
-                alert('コメント内容を入力してください。');
-                return;
-            }
-
-            const posts = loadPosts();
-            const postIndex = posts.findIndex(p => p.timestamp === postTimestamp);
-
-            if (postIndex !== -1) {
-                posts[postIndex].comments = posts[postIndex].comments || []; // コメント配列がなければ初期化
-                posts[postIndex].comments.push({
-                    name: name,
-                    content: content,
-                    timestamp: Date.now()
-                });
-                savePosts(posts);
-                displayComments(postElement); // コメントを表示
-                updateCommentCountDisplay(postElement); // コメント数を更新
-                commentContentInput.value = ''; // コメント入力欄をクリア
-                // 名前は保持するかクリアするかは要件次第だが、ここではクリアしない
-            }
-        }
-
-        // コメントを表示する
-        function displayComments(postElement) {
-            const postTimestamp = parseInt(postElement.dataset.timestamp);
-            const commentsList = postElement.querySelector('.comments-list');
-            commentsList.innerHTML = ''; // 既存のコメントをクリア
-
-            const posts = loadPosts();
-            const post = posts.find(p => p.timestamp === postTimestamp);
-
-            if (!post || !post.comments || post.comments.length === 0) {
-                commentsList.innerHTML = '<p style="text-align: center; color: #aaa; margin-top: 10px;">まだコメントはありません。</p>';
-                return;
-            }
-
-            post.comments.sort((a, b) => a.timestamp - b.timestamp); // 時系列でソート
-
-            post.comments.forEach(comment => {
-                const commentElement = document.createElement('div');
-                commentElement.classList.add('comment');
-
-                const commentDate = new Date(comment.timestamp);
-                const formattedDate = commentDate.toLocaleString('ja-JP', {
-                    year: 'numeric',
-                    month: '2-digit',
-                    day: '2-digit',
-                    hour: '2-digit',
-                    minute: '2-digit'
-                });
-
-                commentElement.innerHTML = `
-                    <div class="comment-header">
-                        <span class="comment-name">${comment.name}</span>
-                        <span class="comment-timestamp">${formattedDate}</span>
-                    </div>
-                    <div class="comment-content">${comment.content}</div>
-                `;
-                commentsList.appendChild(commentElement);
+        // コメント開閉ボタンのイベントリスナー
+        function addCommentToggleListeners() {
+            document.querySelectorAll('.comment-button').forEach(button => {
+                button.removeEventListener('click', toggleComments); // 既存のリスナーを削除
+                button.addEventListener('click', toggleComments); // 新しいリスナーを追加
             });
+            document.querySelectorAll('.close-comments-button').forEach(button => {
+                button.removeEventListener('click', closeComments); // 既存のリスナーを削除
+                button.addEventListener('click', closeComments); // 新しいリスナーを追加
+            });
+        }
+
+        function toggleComments(e) {
+            // コメントカウント部分がクリックされても開閉するようにイベントターゲットを調整
+            const targetButton = e.currentTarget.closest('.comment-button');
+            if (!targetButton) return; // ボタンが見つからない場合は処理を中断
+
+            const postElement = targetButton.closest('.post');
+            if (!postElement) return; // 投稿要素が見つからない場合は処理を中断
+
+            const commentsSection = postElement.querySelector('.comments-section');
+            commentsSection.classList.toggle('active');
+        }
+
+        function closeComments(e) {
+            const targetButton = e.currentTarget;
+            const postElement = targetButton.closest('.post');
+            if (!postElement) return;
+
+            const commentsSection = postElement.querySelector('.comments-section');
+            commentsSection.classList.remove('active');
+        }
+
+        // コメントフォームのイベントリスナー
+        function addCommentFormListeners() {
+            document.querySelectorAll('.comment-form').forEach(form => {
+                form.removeEventListener('submit', handleCommentSubmit); // 既存のリスナーを削除
+                form.addEventListener('submit', handleCommentSubmit); // 新しいリスナーを追加
+            });
+        }
+
+        function handleCommentSubmit(e) {
+            e.preventDefault();
+            const postElement = e.target.closest('.post');
+            const postTimestamp = parseInt(postElement.dataset.timestamp);
+            const commentNameInput = e.target.querySelector('.comment-name-input');
+            const commentContentInput = e.target.querySelector('.comment-content-input');
+
+            const commentName = commentNameInput.value || '匿名';
+            const commentContent = commentContentInput.value;
+            const commentTimestamp = Date.now();
+
+            if (commentContent.trim() !== '') {
+                const posts = loadPosts();
+                const post = posts.find(p => p.timestamp === postTimestamp);
+                if (post) {
+                    if (!post.comments) {
+                        post.comments = [];
+                    }
+                    post.comments.push({
+                        name: commentName,
+                        content: commentContent,
+                        timestamp: commentTimestamp
+                    });
+                    savePosts(posts);
+                    displayComments(postElement); // コメントを再表示
+                    updateCommentCountDisplay(postElement); // コメント数を更新
+                    commentContentInput.value = ''; // コメント入力欄をクリア
+                    // 名前は保持するかクリアするかは要件次第だが、ここではクリアしない
+                }
+            }
         }
 
         // コメント数を更新する
@@ -836,7 +714,84 @@
             }
         }
 
+        // コメントを表示
+        function displayComments(postElement) {
+            const postTimestamp = parseInt(postElement.dataset.timestamp);
+            const posts = loadPosts();
+            const post = posts.find(p => p.timestamp === postTimestamp);
+            if (!post) return;
+
+            const commentList = postElement.querySelector('.comment-list');
+            commentList.innerHTML = ''; // 既存のコメントをクリア
+
+            if (post.comments && post.comments.length > 0) {
+                post.comments.forEach((comment, index) => {
+                    const commentElement = document.createElement('div');
+                    commentElement.classList.add('comment');
+
+                    const commentDate = new Date(comment.timestamp);
+                    const formattedCommentDate = commentDate.toLocaleString('ja-JP', {
+                        year: 'numeric',
+                        month: '2-digit',
+                        day: '2-digit',
+                        hour: '2-digit',
+                        minute: '2-digit'
+                    });
+
+                    commentElement.innerHTML = `
+                        <span class="comment-author">${comment.name}</span>
+                        <div class="comment-content">${comment.content.replace(/\n/g, '<br>')}</div>
+                        <div class="comment-timestamp">${formattedCommentDate}</div>
+                        <button class="comment-delete-button" data-comment-index="${index}" data-post-timestamp="${postTimestamp}" aria-label="コメントを削除">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                    `;
+                    commentList.appendChild(commentElement);
+                });
+                addCommentDeleteListeners(); // コメント削除ボタンのリスナーを追加
+            } else {
+                commentList.innerHTML = '<p style="text-align: center; color: #888; font-size: 0.9em;">まだコメントはありません。</p>';
+            }
+        }
+
+        // コメント削除ボタンのイベントリスナー
+        function addCommentDeleteListeners() {
+            document.querySelectorAll('.comment-delete-button').forEach(button => {
+                button.removeEventListener('click', handleCommentDelete); // 既存のリスナーを削除
+                button.addEventListener('click', handleCommentDelete); // 新しいリスナーを追加
+            });
+        }
+
+        function handleCommentDelete(e) {
+            const commentIndex = parseInt(e.currentTarget.dataset.commentIndex);
+            const postTimestamp = parseInt(e.currentTarget.dataset.postTimestamp);
+
+            if (confirm('このコメントを削除しますか？')) {
+                const posts = loadPosts();
+                const post = posts.find(p => p.timestamp === postTimestamp);
+
+                if (post && post.comments) {
+                    post.comments.splice(commentIndex, 1); // 指定したインデックスのコメントを削除
+                    savePosts(posts);
+                    const postElement = e.currentTarget.closest('.post');
+                    displayComments(postElement); // コメントを再表示
+                    updateCommentCountDisplay(postElement); // コメント数を更新
+                }
+            }
+        }
+
         // ========== コメント機能関連のJavaScriptここまで ==========
+
+
+        // ページ読み込み時に投稿を表示
+        document.addEventListener("DOMContentLoaded", displayPosts);
+
+        // UIDのコピーを阻害するイベントリスナーを追加する関数
+        function addCopyBlockers() {
+            document.querySelectorAll('.copy-button').forEach(button => {
+                button.addEventListener('mousedown', (e) => e.preventDefault());
+            });
+        }
     </script>
 </body>
 </html>
