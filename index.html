@@ -446,6 +446,12 @@
             margin-left: 5px;
             display: none;
         }
+        .world-rank-error-message { /* 世界ランクのエラーメッセージ */
+            color: red;
+            font-size: 0.8em;
+            margin-left: 5px;
+            display: none;
+        }
 
         .modal-bg {
             position: fixed;
@@ -844,9 +850,10 @@
 
             <label for="worldRankAnyone" style="margin-top: 15px; margin-bottom: 5px;">
                 世界ランク
+                <span id="worldRankAnyoneValidationMsg" class="world-rank-error-message"></span>
             </label>
             <select id="worldRankAnyone">
-                <option value="">ー</option>
+                <option value="">選択してください</option>
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
@@ -910,9 +917,10 @@
 
             <label for="worldRankApplication" style="margin-top: 15px; margin-bottom: 5px;">
                 世界ランク
+                <span id="worldRankApplicationValidationMsg" class="world-rank-error-message"></span>
             </label>
             <select id="worldRankApplication">
-                <option value="">ー</option>
+                <option value="">選択してください</option>
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
@@ -976,26 +984,6 @@
         </div>
     </div>
 
-    <div class="modal-bg" id="worldRankConfirmModalBg">
-        <div class="modal">
-            世界ランクを選択していません。<br>このまま投稿しますか？
-            <div class="modal-buttons">
-                <button class="modal-button yes" id="worldRankConfirmYes">はい</button>
-                <button class="modal-button no" id="worldRankConfirmNo">いいえ</button>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal-bg" id="applyWorldRankConfirmModalBg">
-        <div class="modal">
-            世界ランクを選択していません。<br>このまま申請を送りますか？
-            <div class="modal-buttons">
-                <button class="modal-button yes" id="applyWorldRankConfirmYes">はい</button>
-                <button class="modal-button no" id="applyWorldRankConfirmNo">いいえ</button>
-            </div>
-        </div>
-    </div>
-
     <div class="modal-bg" id="applyMessageConfirmModalBg">
         <div class="modal">
             メッセージが入力されていません。<br>このまま申請を送りますか？
@@ -1023,9 +1011,10 @@
 
                 <label style="margin-top: 15px; margin-bottom: 5px;">
                     世界ランク
+                    <span id="applicantWorldRankValidationMsg" class="world-rank-error-message"></span>
                 </label>
                 <select id="applicantWorldRank">
-                    <option value="">ー</option>
+                    <option value="">選択してください</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
@@ -1091,10 +1080,12 @@
                 document.getElementById('formAnyone').classList.add('active');
                 document.getElementById('typeButtonAnyone').classList.add('active');
                 hideUidError('anyone');
+                hideWorldRankError('anyone');
             } else if (type === 'application') {
                 document.getElementById('formApplication').classList.add('active');
                 document.getElementById('typeButtonApplication').classList.add('active');
                 hideUidError('application');
+                hideWorldRankError('application');
             }
         }
 
@@ -1107,6 +1098,11 @@
 
         // UID入力欄のchangeイベントリスナーを設定 (申請フォーム用)
         document.getElementById('applicantUid').addEventListener('change', (event) => validateUidOnBlur('applicant', event.target.value));
+
+        // 世界ランク選択欄のchangeイベントリスナーを設定
+        document.getElementById('worldRankAnyone').addEventListener('change', () => hideWorldRankError('anyone'));
+        document.getElementById('worldRankApplication').addEventListener('change', () => hideWorldRankError('application'));
+        document.getElementById('applicantWorldRank').addEventListener('change', () => hideWorldRankError('applicant'));
 
 
         // UID入力時のバリデーションと半角変換（入力完了時のみ）
@@ -1138,7 +1134,7 @@
             let errorMessage = '';
 
             if (halfWidthUid.trim() === '') {
-                errorMessage = ''; // 空の場合はエラーメッセージなし
+                errorMessage = ''; // 空の場合はエラーメッセージなし（Submit時に別途チェック）
             } else if (!/^[0-9]+$/.test(halfWidthUid)) {
                 errorMessage = '数字で入力してください';
             } else if (halfWidthUid.length < 9) {
@@ -1147,6 +1143,39 @@
 
             if (errorMessage) {
                 errorMsgSpan.textContent = errorMessage;
+                errorMsgSpan.style.display = 'inline';
+                return false;
+            } else {
+                errorMsgSpan.textContent = '';
+                errorMsgSpan.style.display = 'none';
+                return true;
+            }
+        }
+
+        // 世界ランクのバリデーション
+        function validateWorldRank(type) {
+            let worldRankSelectId;
+            let errorMsgSpanId;
+
+            if (type === 'anyone') {
+                worldRankSelectId = 'worldRankAnyone';
+                errorMsgSpanId = 'worldRankAnyoneValidationMsg';
+            } else if (type === 'application') {
+                worldRankSelectId = 'worldRankApplication';
+                errorMsgSpanId = 'worldRankApplicationValidationMsg';
+            } else if (type === 'applicant') {
+                worldRankSelectId = 'applicantWorldRank';
+                errorMsgSpanId = 'applicantWorldRankValidationMsg';
+            } else {
+                console.error("Invalid type for validateWorldRank:", type);
+                return false;
+            }
+
+            const worldRankSelect = document.getElementById(worldRankSelectId);
+            const errorMsgSpan = document.getElementById(errorMsgSpanId);
+
+            if (worldRankSelect.value === '') {
+                errorMsgSpan.textContent = '世界ランクを選択してください';
                 errorMsgSpan.style.display = 'inline';
                 return false;
             } else {
@@ -1180,6 +1209,25 @@
             errorMsgSpan.textContent = '';
             errorMsgSpan.style.display = 'none';
         }
+
+        // 世界ランクエラーメッセージを非表示にする関数
+        function hideWorldRankError(type) {
+            let errorMsgSpanId;
+            if (type === 'anyone') {
+                errorMsgSpanId = 'worldRankAnyoneValidationMsg';
+            } else if (type === 'application') {
+                errorMsgSpanId = 'worldRankApplicationValidationMsg';
+            } else if (type === 'applicant') {
+                errorMsgSpanId = 'applicantWorldRankValidationMsg';
+            } else {
+                console.error("Invalid type for hideWorldRankError:", type);
+                return;
+            }
+            const errorMsgSpan = document.getElementById(errorMsgSpanId);
+            errorMsgSpan.textContent = '';
+            errorMsgSpan.style.display = 'none';
+        }
+
 
         // HTMLエスケープ処理を行う関数
         function escapeHtml(text) {
@@ -1357,9 +1405,7 @@
         }
 
         // 投稿ボタン押下時
-        let pendingPostData = null; // 世界ランクの確認用モーダルを挟むための変数 (投稿用)
-
-        async function submitPost(type) {
+        function submitPost(type) {
             let name, uid, content, vcOption, teiwatOption, worldRank;
             const uidInput = document.getElementById(`uid${type === 'anyone' ? 'Anyone' : 'Application'}`);
             const contentInput = document.getElementById(`content${type === 'anyone' ? 'Anyone' : 'Application'}`);
@@ -1375,6 +1421,7 @@
 
             let isValid = true;
 
+            // UIDのバリデーション
             if (uid.trim() === '') {
                 alert("UIDは必須です。");
                 isValid = false;
@@ -1382,6 +1429,12 @@
                 isValid = false;
             }
 
+            // 世界ランクのバリデーション
+            if (!validateWorldRank(type)) {
+                isValid = false;
+            }
+
+            // 募集内容のバリデーション
             if (!content) {
                 alert("募集内容は必須です。");
                 isValid = false;
@@ -1391,12 +1444,7 @@
                 return;
             }
 
-            if (worldRank === '') {
-                pendingPostData = { name, uid, content, vcOption, teiwatOption, worldRank, type };
-                document.getElementById('worldRankConfirmModalBg').style.display = 'flex';
-                return;
-            }
-
+            // 全てのチェックを通過した場合
             finalizePost(name, uid, content, vcOption, teiwatOption, worldRank, type);
         }
 
@@ -1420,31 +1468,7 @@
             savePosts(posts);
             displayPosts();
             clearForm(type);
-            pendingPostData = null;
         }
-
-        // 世界ランク確認モーダル「はい」ボタン (投稿用)
-        document.getElementById('worldRankConfirmYes').addEventListener('click', () => {
-            if (pendingPostData) {
-                finalizePost(
-                    pendingPostData.name,
-                    pendingPostData.uid,
-                    pendingPostData.content,
-                    pendingPostData.vcOption,
-                    pendingPostData.teiwatOption,
-                    pendingPostData.worldRank,
-                    pendingPostData.type
-                );
-            }
-            document.getElementById('worldRankConfirmModalBg').style.display = 'none';
-        });
-
-        // 世界ランク確認モーダル「いいえ」ボタン (投稿用)
-        document.getElementById('worldRankConfirmNo').addEventListener('click', () => {
-            document.getElementById('worldRankConfirmModalBg').style.display = 'none';
-            pendingPostData = null;
-        });
-
 
         // フォームをクリア (投稿フォーム用)
         function clearForm(type) {
@@ -1452,18 +1476,19 @@
                 document.getElementById("nameAnyone").value = "";
                 document.getElementById("uidAnyone").value = "";
                 document.getElementById("contentAnyone").value = "";
-                document.getElementById("worldRankAnyone").value = "";
+                document.getElementById("worldRankAnyone").value = ""; // 世界ランクをリセット
                 document.querySelector('input[name="vcAnyone"][value="VCなし"]').checked = true; // VCなしをデフォルトに
                 document.querySelector('input[name="teiwatAnyone"][value="私のテイワット"]').checked = true;
             } else if (type === 'application') {
                 document.getElementById("nameApplication").value = "";
                 document.getElementById("uidApplication").value = "";
                 document.getElementById("contentApplication").value = "";
-                document.getElementById("worldRankApplication").value = "";
+                document.getElementById("worldRankApplication").value = ""; // 世界ランクをリセット
                 document.querySelector('input[name="vcApplication"][value="VCなし"]').checked = true; // VCなしをデフォルトに
                 document.querySelector('input[name="teiwatApplication"][value="私のテイワット"]').checked = true;
             }
             hideUidError(type);
+            hideWorldRankError(type); // エラーメッセージも非表示に
         }
 
         // UID表示・非表示のトグル (誰でも型投稿用)
@@ -1552,6 +1577,7 @@
             document.querySelector('input[name="autoCancelTime"][value="none"]').checked = true;
             document.getElementById('applicantMessage').value = '';
             hideUidError('applicant'); // UIDエラーメッセージを非表示に
+            hideWorldRankError('applicant'); // 世界ランクエラーメッセージを非表示に
         }
 
         // 申請フォームモーダルを閉じる
@@ -1559,9 +1585,9 @@
             document.getElementById('applicationModalBg').style.display = 'none';
             targetPostTimestampForApplication = null; // リセット
             // 関連する確認モーダルも閉じる
-            document.getElementById('applyWorldRankConfirmModalBg').style.display = 'none'; // ID修正
             document.getElementById('applyMessageConfirmModalBg').style.display = 'none';
-            pendingApplicationData = null; // 申請用データもリセット
+            // pendingApplicationData は申請が完了したかどうかに関わらずリセット
+            pendingApplicationData = null;
             // ツールチップを非表示にする
             const infoIcon = document.getElementById('autoCancelInfoIcon');
             if (infoIcon) {
@@ -1589,32 +1615,22 @@
 
             // UIDの必須チェックとバリデーション
             if (applicantUid.trim() === '') {
-                // UIDが空の場合は、validateUidOnBlur内でエラーメッセージを表示しないように修正されているため、
-                // ここでalertを出す
                 alert("UIDは必須です。");
                 isValid = false;
             } else if (!validateUidOnBlur('applicant', applicantUid)) {
-                isValid = false; // validateUidOnBlurがエラーメッセージを表示済み
+                isValid = false;
+            }
+
+            // 世界ランクのバリデーション
+            if (!validateWorldRank('applicant')) {
+                isValid = false;
             }
 
             if (!isValid) {
                 return;
             }
 
-            // 世界ランクの確認
-            if (applicantWorldRank === '') {
-                pendingApplicationData = {
-                    applicantName,
-                    applicantUid,
-                    applicantWorldRank, // 空のまま渡される
-                    autoCancelTime,
-                    applicantMessage
-                };
-                document.getElementById('applyWorldRankConfirmModalBg').style.display = 'flex';
-                return; // ここで処理を中断し、モーダル表示
-            }
-
-            // メッセージの確認
+            // メッセージの確認（空欄の場合は確認モーダルを表示）
             if (applicantMessage === '') {
                 pendingApplicationData = {
                     applicantName,
@@ -1629,27 +1645,6 @@
 
             // 全てのチェックを通過した場合
             finalizeApplication(applicantName, applicantUid, applicantWorldRank, autoCancelTime, applicantMessage);
-        });
-
-        // 申請世界ランク確認モーダル「はい」ボタン
-        document.getElementById('applyWorldRankConfirmYes').addEventListener('click', () => {
-            if (pendingApplicationData) {
-                finalizeApplication(
-                    pendingApplicationData.applicantName,
-                    pendingApplicationData.applicantUid,
-                    pendingApplicationData.applicantWorldRank,
-                    pendingApplicationData.autoCancelTime,
-                    pendingApplicationData.applicantMessage
-                );
-            }
-            document.getElementById('applyWorldRankConfirmModalBg').style.display = 'none';
-        });
-
-        // 申請世界ランク確認モーダル「いいえ」ボタン
-        document.getElementById('applyWorldRankConfirmNo').addEventListener('click', () => {
-            document.getElementById('applyWorldRankConfirmModalBg').style.display = 'none';
-            // 申請フォームは開いたままにする
-            // pendingApplicationData はそのまま保持し、submitApplicationButton が再度押されたら再チェック
         });
 
         // 申請メッセージ空欄確認モーダル「はい」ボタン
@@ -1672,6 +1667,36 @@
             // 申請フォームは開いたままにする
             // pendingApplicationData はそのまま保持し、submitApplicationButton が再度押されたら再チェック
         });
+
+
+        // 申請を最終的に確定する関数
+        function finalizeApplication(applicantName, applicantUid, applicantWorldRank, autoCancelTime, applicantMessage) {
+            const posts = loadPosts();
+            const postIndex = posts.findIndex(p => p.timestamp === targetPostTimestampForApplication);
+
+            if (postIndex !== -1) {
+                if (!posts[postIndex].applications) {
+                    posts[postIndex].applications = [];
+                }
+                const newApplication = {
+                    id: generateApplicationId(),
+                    applicantName: escapeHtml(applicantName || '名無し'),
+                    applicantUid: applicantUid,
+                    applicantWorldRank: applicantWorldRank,
+                    applicantMessage: escapeHtml(applicantMessage),
+                    applyTimestamp: Date.now(),
+                    autoCancelTime: autoCancelTime,
+                    status: 'pending' // 'pending', 'approved', 'rejected', 'cancelled_by_applicant', 'cancelled_by_auto'
+                };
+                posts[postIndex].applications.push(newApplication);
+                savePosts(posts);
+                alert("申請が送信されました！");
+                closeApplicationModal(); // 申請成功後にモーダルを閉じる
+            } else {
+                alert("エラー: 投稿が見つかりませんでした。");
+            }
+            pendingApplicationData = null; // 申請後にはリセット
+        }
 
         // Information icon click event listener
         document.addEventListener('DOMContentLoaded', () => {
