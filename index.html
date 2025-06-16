@@ -184,6 +184,7 @@
             max-width: 500px; /* PCでの最大幅 */
             position: relative;
             box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+            padding-bottom: 50px; /* リプライボタンと募集終了ボタンのスペース */
         }
 
         .post .header {
@@ -307,7 +308,9 @@
         }
 
         .end-button {
-            margin-top: 15px;
+            position: absolute;
+            bottom: 15px;
+            left: 15px;
             cursor: pointer;
             background-color: #5A8EA8;
             border: none;
@@ -317,6 +320,7 @@
             font-weight: bold;
             transition: background-color 0.3s;
             font-size: 0.9em;
+            z-index: 5; /* 募集終了ボタンをリプライボタンより手前に */
         }
         .end-button:hover {
             background-color: #4a7390;
@@ -395,6 +399,22 @@
             opacity: 1;
         }
 
+        .reply-button {
+            position: absolute;
+            bottom: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 1.8em; /* アイコンを少し大きく */
+            color: #5A8EA8;
+            cursor: pointer;
+            transition: color 0.2s;
+            z-index: 5;
+        }
+        .reply-button:hover {
+            color: #4a7390;
+        }
+
         .ended {
             opacity: 0.6;
             position: relative;
@@ -436,7 +456,8 @@
         .ended .end-button,
         .ended .post-tags,
         .ended .world-rank-display,
-        .ended .apply-button { /* 募集終了時に申請ボタンもぼかす */
+        .ended .apply-button,
+        .ended .reply-button { /* 募集終了時に申請ボタンとリプライボタンもぼかす */
             filter: blur(5px);
         }
 
@@ -478,7 +499,7 @@
         }
 
         /* 申請フォームモーダル用のスタイル */
-        .application-modal .modal {
+        .application-modal .modal, .reply-modal .modal { /* reply-modal にも適用 */
             background-color: white;
             padding: 30px;
             border-radius: 10px;
@@ -494,17 +515,17 @@
             /* スマートフォン版では、中央配置はflexboxに任せる */
         }
         /* 参加リクエストの文字色をサイトに合わせる */
-        .application-modal .modal h2 {
+        .application-modal .modal h2, .reply-modal .modal h2 { /* reply-modal にも適用 */
             color: #5A8EA8; /* サイトのテーマカラーに合わせる */
             font-size: 1.4em;
             margin-bottom: 20px;
         }
 
 
-        .application-modal .modal-content {
+        .application-modal .modal-content, .reply-modal .modal-content { /* reply-modal にも適用 */
             text-align: left; /* フォームの要素を左揃えに */
         }
-        .application-modal .modal-content label {
+        .application-modal .modal-content label, .reply-modal .modal-content label { /* reply-modal にも適用 */
             display: block;
             margin-top: 15px;
             margin-bottom: 5px;
@@ -514,7 +535,10 @@
         }
         .application-modal .modal-content input[type="text"],
         .application-modal .modal-content textarea,
-        .application-modal .modal-content select {
+        .application-modal .modal-content select,
+        .reply-modal .modal-content input[type="text"],
+        .reply-modal .modal-content textarea,
+        .reply-modal .modal-content select { /* reply-modal にも適用 */
             width: calc(100% - 16px);
             padding: 8px;
             border: 1px solid #ccc;
@@ -532,13 +556,13 @@
             padding-right: 30px;
         }
 
-        .application-modal .modal-content textarea {
+        .application-modal .modal-content textarea, .reply-modal .modal-content textarea { /* reply-modal にも適用 */
             resize: vertical;
         }
-        .application-modal .radio-group {
+        .application-modal .radio-group, .reply-modal .radio-group { /* reply-modal にも適用 */
             justify-content: flex-start; /* 左揃えに */
         }
-        .application-modal .modal-content button {
+        .application-modal .modal-content button, .reply-modal .modal-content button { /* reply-modal にも適用 */
             margin-top: 25px;
             padding: 12px 24px;
             background-color: #5A8EA8;
@@ -551,7 +575,7 @@
             width: 100%;
             transition: background-color 0.3s;
         }
-        .application-modal .modal-content button:hover {
+        .application-modal .modal-content button:hover, .reply-modal .modal-content button:hover { /* reply-modal にも適用 */
             background-color: #4a7390;
         }
 
@@ -666,6 +690,60 @@
         .info-icon.active .info-tooltip {
             visibility: visible;
             opacity: 1;
+        }
+
+        /* リプライ表示エリア */
+        .replies-container {
+            margin-top: 20px;
+            padding-top: 10px;
+            border-top: 1px dashed #eee;
+        }
+
+        .reply {
+            background-color: #f8f8f8;
+            border: 1px solid #eee;
+            border-radius: 6px;
+            padding: 10px;
+            margin-top: 10px;
+            font-size: 0.9em;
+            line-height: 1.5;
+            position: relative;
+        }
+
+        .reply-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9em;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .reply-name {
+            font-weight: bold;
+            color: #555;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .reply-uid-display {
+            font-weight: normal;
+            color: #888;
+            font-size: 0.9em;
+            margin-left: 5px;
+        }
+        .reply-world-rank-display {
+            font-weight: normal;
+            color: #888;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+        .reply-content {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            font-family: 'Noto Sans JP', 'Hiragino Sans', 'Meiryo', sans-serif;
+            font-weight: 400;
         }
 
         /* スマートフォン向けスタイル */
@@ -796,17 +874,20 @@
             }
 
             /* スマホ版申請フォームの閉じるボタン位置調整 */
-            .application-modal .modal-close-button {
+            .application-modal .modal-close-button, .reply-modal .modal-close-button { /* reply-modal にも適用 */
                 top: 5px; /* 上からの位置 */
                 right: 5px; /* 右からの位置 */
                 position: absolute; /* モーダル内での絶対位置 */
                 font-size: 1.8em; /* スマホで押しやすいように大きく */
             }
+            .reply-button {
+                font-size: 1.6em; /* スマホでは少し小さく */
+            }
         }
 
         /* PC版（769px以上）の申請フォームモーダル調整 */
         @media (min-width: 769px) {
-            .application-modal .modal {
+            .application-modal .modal, .reply-modal .modal { /* reply-modal にも適用 */
                 max-width: 400px; /* PCでの横幅を少し広げる */
                 max-height: 80vh; /* PCでの縦の長さを調整 */
                 padding: 30px; /* 上下のパディングを確保 */
@@ -818,7 +899,7 @@
             }
 
             /* PC版の閉じるボタンの位置調整 - モーダル内の絶対位置に変更 */
-            .application-modal .modal-close-button {
+            .application-modal .modal-close-button, .reply-modal .modal-close-button { /* reply-modal にも適用 */
                 position: absolute; /* モーダル内の絶対位置 */
                 top: 15px; /* モーダルの上端からの距離 */
                 right: 15px; /* モーダルの右端からの距離 */
@@ -1067,6 +1148,45 @@
         </div>
     </div>
 
+    <div class="modal-bg reply-modal" id="replyModalBg">
+        <div class="modal">
+            <button class="modal-close-button" onclick="closeReplyModal()">&times;</button>
+            <h2>リプライ</h2>
+            <div class="modal-content">
+                <label for="replyName">名前（任意）</label>
+                <input type="text" id="replyName" placeholder="名無し" maxlength="18">
+
+                <label>
+                    あなたのUID（任意）
+                    <span id="replyUidValidationMsg" class="uid-error-message"></span>
+                </label>
+                <input type="text" id="replyUid" placeholder="123456789" maxlength="15">
+
+                <label style="margin-top: 15px; margin-bottom: 5px;">
+                    世界ランク（任意）
+                    <span id="replyWorldRankValidationMsg" class="world-rank-error-message"></span>
+                </label>
+                <select id="replyWorldRank">
+                    <option value="">選択してください</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                </select>
+
+                <label for="replyContent">リプライ内容</label>
+                <textarea id="replyContent" rows="4" placeholder="リプライを入力してください" required></textarea>
+
+                <button id="submitReplyButton">リプライを送信</button>
+            </div>
+        </div>
+    </div>
+
 
     <script>
         // 投稿タイプを切り替える関数
@@ -1101,11 +1221,15 @@
         // UID入力欄のchangeイベントリスナーを設定 (申請フォーム用)
         document.getElementById('applicantUid').addEventListener('change', (event) => validateUidOnBlur('applicant', event.target.value));
 
+        // UID入力欄のchangeイベントリスナーを設定 (リプライフォーム用)
+        document.getElementById('replyUid').addEventListener('change', (event) => validateUidOnBlur('reply', event.target.value));
+
         // 世界ランク選択欄のchangeイベントリスナーを設定
         // 世界ランクのエラーメッセージはアラートに変更されたため、changeイベントでのhideは不要だが、念のため残しておく
         document.getElementById('worldRankAnyone').addEventListener('change', () => hideWorldRankError('anyone'));
         document.getElementById('worldRankApplication').addEventListener('change', () => hideWorldRankError('application'));
         document.getElementById('applicantWorldRank').addEventListener('change', () => hideWorldRankError('applicant'));
+        document.getElementById('replyWorldRank').addEventListener('change', () => hideWorldRankError('reply'));
 
 
         // UID入力時のバリデーションと半角変換（入力完了時のみ）
@@ -1123,7 +1247,11 @@
             } else if (type === 'applicant') { // 申請フォーム用
                 uidInputId = 'applicantUid';
                 errorMsgSpanId = 'applicantUidValidationMsg';
-            } else {
+            } else if (type === 'reply') { // リプライフォーム用
+                uidInputId = 'replyUid';
+                errorMsgSpanId = 'replyUidValidationMsg';
+            }
+            else {
                 console.error("Invalid type for validateUidOnBlur:", type);
                 return false;
             }
@@ -1165,14 +1293,22 @@
                 worldRankSelectId = 'worldRankApplication';
             } else if (type === 'applicant') {
                 worldRankSelectId = 'applicantWorldRank';
-            } else {
+            } else if (type === 'reply') { // リプライフォーム用
+                worldRankSelectId = 'replyWorldRank';
+                // リプライフォームの世界ランクは任意なので、選択していなくてもOK
+                if (document.getElementById(worldRankSelectId).value === '') {
+                    return true;
+                }
+            }
+            else {
                 console.error("Invalid type for validateWorldRank:", type);
                 return false;
             }
 
             const worldRankSelect = document.getElementById(worldRankSelectId);
 
-            if (worldRankSelect.value === '') {
+            // リプライフォーム以外では世界ランクが必須
+            if (type !== 'reply' && worldRankSelect.value === '') {
                 alert("世界ランクは必須です。"); // ここでアラート表示
                 return false;
             } else {
@@ -1196,7 +1332,10 @@
                 errorMsgSpanId = 'uidApplicationValidationMsg';
             } else if (type === 'applicant') { // 申請フォーム用
                 errorMsgSpanId = 'applicantUidValidationMsg';
-            } else {
+            } else if (type === 'reply') { // リプライフォーム用
+                errorMsgSpanId = 'replyUidValidationMsg';
+            }
+            else {
                 console.error("Invalid type for hideUidError:", type);
                 return;
             }
@@ -1214,7 +1353,10 @@
                 errorMsgSpanId = 'worldRankApplicationValidationMsg';
             } else if (type === 'applicant') {
                 errorMsgSpanId = 'applicantWorldRankValidationMsg';
-            } else {
+            } else if (type === 'reply') { // リプライフォーム用
+                errorMsgSpanId = 'replyWorldRankValidationMsg';
+            }
+            else {
                 console.error("Invalid type for hideWorldRankError:", type);
                 return;
             }
@@ -1233,7 +1375,7 @@
                 '"': '&quot;',
                 "'": '&#039;'
             };
-            return text.replace(/[&<>]/g, function(m) { return map[m]; });
+            return text.replace(/[&<>"]/g, function(m) { return map[m]; });
         }
 
         // 投稿データをlocalStorageに保存
@@ -1382,9 +1524,41 @@
                 ${tagsHtml}
                 ${uidDisplayHtml}
                 <button class="end-button" onclick="openConfirm(this)" style="display: ${post.isEnded ? 'none' : 'block'};">募集を終了する</button>
+                <button class="reply-button" onclick="openReplyModal('${post.timestamp}')" style="pointer-events: ${post.isEnded ? 'none' : 'auto'};">
+                    <i class="fa-solid fa-comment-dots"></i>
+                </button>
+                <div class="replies-container" id="replies-${post.timestamp}"></div>
+            `;
+            // リプライがあれば表示
+            if (post.replies && post.replies.length > 0) {
+                const repliesContainer = div.querySelector(`#replies-${post.timestamp}`);
+                post.replies.forEach(reply => {
+                    repliesContainer.appendChild(createReplyElement(reply));
+                });
+            }
+            return div;
+        }
+
+        // リプライ要素をHTMLとして生成
+        function createReplyElement(reply) {
+            const div = document.createElement('div');
+            div.className = 'reply';
+            const replyWorldRankDisplayHtml = reply.worldRank && reply.worldRank !== '' ?
+                `<span class="reply-world-rank-display">WR${escapeHtml(reply.worldRank)}</span>` : '';
+
+            const replyUidDisplayHtml = reply.uid && reply.uid !== '' ?
+                `<span class="reply-uid-display">UID:${escapeHtml(reply.uid)}</span>` : '';
+
+            div.innerHTML = `
+                <div class="reply-header">
+                    <span class="reply-name">${escapeHtml(reply.name || '名無し')}${replyUidDisplayHtml}${replyWorldRankDisplayHtml}</span>
+                    <span class="reply-time">${formatTime(reply.timestamp)}</span>
+                </div>
+                <div class="reply-content">${escapeHtml(reply.content)}</div>
             `;
             return div;
         }
+
 
         // 投稿を画面に表示
         function displayPosts() {
@@ -1455,7 +1629,8 @@
                 vcOption: vcOption,
                 teiwatOption: teiwatOption,
                 worldRank: worldRank,
-                applications: [] // 申請型投稿に申請リストを追加
+                applications: [], // 申請型投稿に申請リストを追加
+                replies: [] // リプライを格納する配列を追加
             };
 
             const posts = loadPosts();
@@ -1712,6 +1887,92 @@
         });
 
         // ========== 申請フォーム関連のJavaScriptここまで ==========
+
+        // ========== リプライ機能関連のJavaScriptここから ==========
+        let targetPostTimestampForReply = null; // どの投稿に対するリプライか
+
+        // リプライモーダルを開く
+        function openReplyModal(postTimestamp) {
+            targetPostTimestampForReply = parseInt(postTimestamp);
+            document.getElementById('replyModalBg').style.display = 'flex';
+            // フォームの内容をクリア
+            document.getElementById('replyName').value = '';
+            document.getElementById('replyUid').value = '';
+            document.getElementById('replyWorldRank').value = '';
+            document.getElementById('replyContent').value = '';
+            hideUidError('reply');
+            hideWorldRankError('reply');
+        }
+
+        // リプライモーダルを閉じる
+        function closeReplyModal() {
+            document.getElementById('replyModalBg').style.display = 'none';
+            targetPostTimestampForReply = null;
+        }
+
+        // リプライ送信ボタンのイベントリスナー
+        document.getElementById('submitReplyButton').addEventListener('click', () => {
+            const replyName = document.getElementById('replyName').value.trim();
+            const replyUidInput = document.getElementById('replyUid');
+            const replyUid = replyUidInput.value.trim();
+            const replyWorldRank = document.getElementById('replyWorldRank').value;
+            const replyContent = document.getElementById('replyContent').value.trim();
+
+            let isValid = true;
+
+            // リプライ内容の必須チェック
+            if (replyContent === '') {
+                alert("リプライ内容は必須です。");
+                isValid = false;
+            }
+
+            // UIDのバリデーション（任意だが入力があれば形式チェック）
+            if (replyUid !== '' && !validateUidOnBlur('reply', replyUid)) {
+                isValid = false;
+            }
+
+            // 世界ランクのバリデーション（任意なので常にtrueだが関数呼び出し）
+            if (!validateWorldRank('reply')) {
+                // これはリプライフォームの世界ランクが必須ではないため、基本的にはここには来ない
+                // 来たとしても、validateWorldRank関数内でアラートが表示されるはず
+                isValid = false;
+            }
+
+
+            if (!isValid) {
+                return;
+            }
+
+            // 全てのチェックを通過した場合
+            finalizeReply(replyName, replyUid, replyWorldRank, replyContent);
+        });
+
+        // リプライを最終的に確定する関数
+        function finalizeReply(replyName, replyUid, replyWorldRank, replyContent) {
+            const posts = loadPosts();
+            const postIndex = posts.findIndex(p => p.timestamp === targetPostTimestampForReply);
+
+            if (postIndex !== -1) {
+                if (!posts[postIndex].replies) {
+                    posts[postIndex].replies = [];
+                }
+                const newReply = {
+                    name: escapeHtml(replyName || '名無し'),
+                    uid: replyUid,
+                    worldRank: replyWorldRank,
+                    content: escapeHtml(replyContent),
+                    timestamp: Date.now()
+                };
+                posts[postIndex].replies.push(newReply);
+                savePosts(posts);
+                alert("リプライが送信されました！");
+                closeReplyModal();
+                displayPosts(); // リプライ表示のために再描画
+            } else {
+                alert("エラー: 投稿が見つかりませんでした。");
+            }
+        }
+        // ========== リプライ機能関連のJavaScriptここまで ==========
 
 
         // ページ読み込み時に投稿を表示
