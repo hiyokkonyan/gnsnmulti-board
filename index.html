@@ -986,15 +986,7 @@
             /* PC版のツールチップは変更しないため、特に追記や上書きは不要 */
             /* 汎用 .info-tooltip の writing-mode: horizontal-tb; が適用される */
         }
-    
-/* コメント欄が開いたときに吹き出しボタンを下に表示 */
-.post .comment-button.moved {
-    position: static;
-    margin-top: 10px;
-    align-self: flex-end;
-}
-
-</style>
+    </style>
 </head>
 <body>
     <h1>マルチ募集掲示板</h1>
@@ -1928,19 +1920,13 @@
 
         // コメントセクションの表示/非表示を切り替える
         function toggleComments(button) {
-    const post = button.closest('.post');
-    const section = post.querySelector('.comments-section');
-    const isActive = section.classList.contains('active');
+            const postElement = button.closest('.post');
+            const commentsSection = postElement.querySelector('.comments-section');
+            const postTimestamp = parseInt(postElement.dataset.timestamp);
 
-    section.classList.toggle('active');
-
-    // コメント欄を開いたら.movedを追加、閉じたら外す
-    if (!isActive) {
-        button.classList.add('moved');
-    } else {
-        button.classList.remove('moved');
-    }
-} else {
+            if (commentsSection.classList.contains('active')) {
+                commentsSection.classList.remove('active');
+            } else {
                 commentsSection.classList.add('active');
                 renderComments(postTimestamp); // コメントセクションを開く際にコメントをロードして表示
             }
