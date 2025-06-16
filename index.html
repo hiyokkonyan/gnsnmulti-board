@@ -1080,11 +1080,13 @@
                 document.getElementById('formAnyone').classList.add('active');
                 document.getElementById('typeButtonAnyone').classList.add('active');
                 hideUidError('anyone');
+                // 世界ランクのエラーメッセージはアラートに変更されたため、hideは不要だが、念のため残しておく
                 hideWorldRankError('anyone');
             } else if (type === 'application') {
                 document.getElementById('formApplication').classList.add('active');
                 document.getElementById('typeButtonApplication').classList.add('active');
                 hideUidError('application');
+                // 世界ランクのエラーメッセージはアラートに変更されたため、hideは不要だが、念のため残しておく
                 hideWorldRankError('application');
             }
         }
@@ -1100,6 +1102,7 @@
         document.getElementById('applicantUid').addEventListener('change', (event) => validateUidOnBlur('applicant', event.target.value));
 
         // 世界ランク選択欄のchangeイベントリスナーを設定
+        // 世界ランクのエラーメッセージはアラートに変更されたため、changeイベントでのhideは不要だが、念のため残しておく
         document.getElementById('worldRankAnyone').addEventListener('change', () => hideWorldRankError('anyone'));
         document.getElementById('worldRankApplication').addEventListener('change', () => hideWorldRankError('application'));
         document.getElementById('applicantWorldRank').addEventListener('change', () => hideWorldRankError('applicant'));
@@ -1152,35 +1155,27 @@
             }
         }
 
-        // 世界ランクのバリデーション
+        // 世界ランクのバリデーション (alert版)
         function validateWorldRank(type) {
             let worldRankSelectId;
-            let errorMsgSpanId;
 
             if (type === 'anyone') {
                 worldRankSelectId = 'worldRankAnyone';
-                errorMsgSpanId = 'worldRankAnyoneValidationMsg';
             } else if (type === 'application') {
                 worldRankSelectId = 'worldRankApplication';
-                errorMsgSpanId = 'worldRankApplicationValidationMsg';
             } else if (type === 'applicant') {
                 worldRankSelectId = 'applicantWorldRank';
-                errorMsgSpanId = 'applicantWorldRankValidationMsg';
             } else {
                 console.error("Invalid type for validateWorldRank:", type);
                 return false;
             }
 
             const worldRankSelect = document.getElementById(worldRankSelectId);
-            const errorMsgSpan = document.getElementById(errorMsgSpanId);
 
             if (worldRankSelect.value === '') {
-                errorMsgSpan.textContent = '世界ランクを選択してください';
-                errorMsgSpan.style.display = 'inline';
+                alert("世界ランクは必須です。"); // ここでアラート表示
                 return false;
             } else {
-                errorMsgSpan.textContent = '';
-                errorMsgSpan.style.display = 'none';
                 return true;
             }
         }
@@ -1210,7 +1205,7 @@
             errorMsgSpan.style.display = 'none';
         }
 
-        // 世界ランクエラーメッセージを非表示にする関数
+        // 世界ランクエラーメッセージを非表示にする関数 (今回はアラートのため、実際にはCSSで非表示にしている)
         function hideWorldRankError(type) {
             let errorMsgSpanId;
             if (type === 'anyone') {
@@ -1225,7 +1220,7 @@
             }
             const errorMsgSpan = document.getElementById(errorMsgSpanId);
             errorMsgSpan.textContent = '';
-            errorMsgSpan.style.display = 'none';
+            errorMsgSpan.style.display = 'none'; // これで常に非表示
         }
 
 
@@ -1425,12 +1420,12 @@
             if (uid.trim() === '') {
                 alert("UIDは必須です。");
                 isValid = false;
-            } else if (!validateUidOnBlur(type, uid)) {
+            } else if (!validateUidOnBlur(type, uid)) { // ここはフィールド下のエラー表示のため残す
                 isValid = false;
             }
 
-            // 世界ランクのバリデーション
-            if (!validateWorldRank(type)) {
+            // 世界ランクのバリデーション (ポップアップアラート)
+            if (!validateWorldRank(type)) { // trueなら選択済み、falseなら未選択でアラート表示
                 isValid = false;
             }
 
@@ -1488,7 +1483,7 @@
                 document.querySelector('input[name="teiwatApplication"][value="私のテイワット"]').checked = true;
             }
             hideUidError(type);
-            hideWorldRankError(type); // エラーメッセージも非表示に
+            hideWorldRankError(type); // エラーメッセージも非表示に (CSSでdisplay:noneしているため実質的には影響なし)
         }
 
         // UID表示・非表示のトグル (誰でも型投稿用)
@@ -1577,7 +1572,7 @@
             document.querySelector('input[name="autoCancelTime"][value="none"]').checked = true;
             document.getElementById('applicantMessage').value = '';
             hideUidError('applicant'); // UIDエラーメッセージを非表示に
-            hideWorldRankError('applicant'); // 世界ランクエラーメッセージを非表示に
+            hideWorldRankError('applicant'); // 世界ランクエラーメッセージも非表示に (CSSでdisplay:none)
         }
 
         // 申請フォームモーダルを閉じる
@@ -1621,8 +1616,8 @@
                 isValid = false;
             }
 
-            // 世界ランクのバリデーション
-            if (!validateWorldRank('applicant')) {
+            // 世界ランクのバリデーション (ポップアップアラート)
+            if (!validateWorldRank('applicant')) { // trueなら選択済み、falseなら未選択でアラート表示
                 isValid = false;
             }
 
