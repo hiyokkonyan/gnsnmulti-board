@@ -617,8 +617,7 @@
 
         .info-tooltip {
             visibility: hidden;
-            width: auto; /* スマホ版の横書き表示のためautoに変更 */
-            max-width: 200px; /* 広がりすぎないように最大幅を設定 */
+            width: 180px; /* PCでの幅を固定 */
             background-color: #6a7f8e; /* 落ち着いた青グレーに変更 */
             color: #fff;
             text-align: center;
@@ -632,11 +631,11 @@
             opacity: 0;
             transition: opacity 0.3s;
             font-size: 0.8em;
-            white-space: normal; /* テキストの折り返しを許可 */
+            white-space: pre-line; /* HTMLの改行を有効にする */
             line-height: 1.4;
             box-shadow: 0 2px 5px rgba(0,0,0,0.2);
             word-break: keep-all; /* 単語の途中で改行しないようにする */
-            overflow-wrap: break-word; /* 長い単語は強制的に改行 */
+            overflow-wrap: normal; /* 長い単語は強制的に改行 */
             writing-mode: horizontal-tb; /* ★追加: 明示的に横書きを指定 */
         }
 
@@ -773,15 +772,13 @@
             }
             /* Information icon and tooltip for Auto-cancel on mobile */
             .info-tooltip {
-                width: auto; /* スマホでは画面幅に合わせるのではなく、内容に合わせる */
-                max-width: 90%; /* 広がりすぎないように最大幅を設定 */
-                min-width: 120px; /* ★追加: 最低幅を設定して潰れすぎを防ぐ */
+                width: 150px; /* スマホでの幅を固定 */
                 left: 50%;
                 transform: translateX(-50%);
                 bottom: 120%; /* アイコンの上に表示 */
-                white-space: normal; /* テキストの折り返しを許可 */
-                word-break: break-all; /* ★変更: 日本語の単語も強制的に改行 */
-                overflow-wrap: break-word; /* 長い単語は強制的に改行 */
+                white-space: pre-line; /* HTMLの改行を有効にする */
+                word-break: keep-all; /* 単語の途中で改行しないようにする */
+                overflow-wrap: normal; /* 長い単語は強制的に改行 */
                 writing-mode: horizontal-tb; /* ★追加: 明示的に横書きを指定 */
             }
 
