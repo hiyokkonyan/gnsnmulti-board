@@ -487,10 +487,10 @@
             font-size: 1.1em;
             /* スマートフォン版では、中央配置はflexboxに任せる */
         }
-        /* 参加リクエストタイトルの色 */
+        /* 参加リクエストの文字色をサイトに合わせる */
         .application-modal .modal h2 {
-            color: #5A8EA8; /* サイトの主要色に合わせる */
-            font-size: 1.3em; /* 少し大きめに */
+            color: #5A8EA8; /* サイトのテーマカラーに合わせる */
+            font-size: 1.4em;
             margin-bottom: 20px;
         }
 
@@ -907,7 +907,7 @@
                 <span id="uidApplicationValidationMsg" class="uid-error-message"></span>
             </label>
             <input type="text" id="uidApplication" placeholder="123456789" maxlength="15">
-            <span style="font-size: 0.8em; color: #666;">（承認されるまで、あなたのUIDは公開されません）</span>
+            <span style="font-size: 0.8em; color: #666;">（申請を承認するまで、あなたのUIDは公開されません）</span>
 
             <label for="worldRankApplication" style="margin-top: 15px; margin-bottom: 5px;">
                 世界ランク
@@ -1010,7 +1010,8 @@
     <div class="modal-bg application-modal" id="applicationModalBg">
         <div class="modal">
             <button class="modal-close-button" onclick="closeApplicationModal()">&times;</button>
-            <h2>参加リクエスト</h2> <div class="modal-content">
+            <h2>参加リクエスト</h2>
+            <div class="modal-content">
                 <label for="applicantName">名前（任意）</label>
                 <input type="text" id="applicantName" placeholder="名無し" maxlength="18">
 
@@ -1019,7 +1020,9 @@
                     <span id="applicantUidValidationMsg" class="uid-error-message"></span>
                 </label>
                 <input type="text" id="applicantUid" placeholder="123456789" maxlength="15">
-                <span style="font-size: 0.8em; color: #666;">（承認されるまで、あなたのUIDは投稿主に表示されません）</span> <label style="margin-top: 15px; margin-bottom: 5px;">
+                <span style="font-size: 0.8em; color: #666;">（承認されるまで、あなたのUIDは投稿主に表示されません）</span>
+
+                <label style="margin-top: 15px; margin-bottom: 5px;">
                     世界ランク
                 </label>
                 <select id="applicantWorldRank">
