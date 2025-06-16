@@ -1291,16 +1291,18 @@
             const errorMsgSpan = document.getElementById(errorMsgSpanId);
 
             const halfWidthUid = toHalfWidthNumbers(uidValue);
-            uidInput.value = halfWidthUid;
+            uidInput.value = halfWidthUid; // 全角を半角に変換
 
             let errorMessage = '';
 
             if (halfWidthUid.trim() === '') {
                 errorMessage = ''; // 空の場合はエラーメッセージなし（Submit時に別途チェック）
             } else if (!/^[0-9]+$/.test(halfWidthUid)) {
-                errorMessage = '数字で入力してください';
-            } else if (halfWidthUid.length !== 9) { // 9桁必須に変更
-                errorMessage = '9桁で入力してください';
+                errorMessage = '数字で入力してください'; // 数字以外は不可
+            } else if (halfWidthUid.length < 9) { // 9桁以上であること
+                errorMessage = '9桁以上の数字で入力してください';
+            } else if (halfWidthUid.length > 15) { // 15桁まで
+                errorMessage = '15桁以内で入力してください';
             }
 
             if (errorMessage) {
@@ -1612,15 +1614,15 @@
             let isValid = true;
 
             // UIDのバリデーション
-            if (uid.trim() === '') {
+            // ここでvalidateUidOnBlurを呼び出し、アラートではなくフィールド下のメッセージでエラーを表示
+            if (!validateUidOnBlur(type, uid)) {
+                isValid = false;
+            } else if (uid.trim() === '') {
+                // validateUidOnBlurが空欄ではエラーを出さないため、ここで必須チェック
                 alert("UIDは必須です。");
                 isValid = false;
-            } else if (!validateUidOnBlur(type, uid)) { // ここはフィールド下のエラー表示のため残す
-                isValid = false;
-            } else if (uid.length !== 9) { // 9桁必須
-                alert("UIDは9桁で入力してください。");
-                isValid = false;
             }
+
 
             // 世界ランクのバリデーション (ポップアップアラート)
             if (!validateWorldRank(type)) { // trueなら選択済み、falseなら未選択でアラート表示
@@ -1808,13 +1810,12 @@
             let isValid = true;
 
             // UIDの必須チェックとバリデーション
-            if (applicantUid.trim() === '') {
+            // ここでvalidateUidOnBlurを呼び出し、アラートではなくフィールド下のメッセージでエラーを表示
+            if (!validateUidOnBlur('applicant', applicantUid)) {
+                isValid = false;
+            } else if (applicantUid.trim() === '') {
+                // validateUidOnBlurが空欄ではエラーを出さないため、ここで必須チェック
                 alert("UIDは必須です。");
-                isValid = false;
-            } else if (!validateUidOnBlur('applicant', applicantUid)) {
-                isValid = false;
-            } else if (applicantUid.length !== 9) { // 9桁必須
-                alert("UIDは9桁で入力してください。");
                 isValid = false;
             }
 
