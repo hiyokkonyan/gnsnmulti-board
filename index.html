@@ -182,9 +182,9 @@
             border-radius: 8px;
             background-color: #fdfdfd;
             max-width: 500px; /* PCでの最大幅 */
-            position: relative; /* ★追加: .comment-buttonのposition:absoluteの基準となる */
+            position: relative; /* .comment-buttonのposition:absoluteの基準となる */
             box-shadow: 0 1px 3px rgba(0,0,0,0.08);
-            padding-bottom: 55px; /* ★変更: コメントボタンと重ならないようにパディングを増やす */
+            padding-bottom: 55px; /* コメントボタンと重ならないようにパディングを増やす */
         }
 
         .post .header {
@@ -235,8 +235,8 @@
 
         /* コメントボタンのスタイル */
         .comment-button {
-            position: absolute; /* ★変更: 絶対位置指定 */
-            bottom: 15px; /* ★変更: 親要素のpadding-bottomに合わせて調整 */
+            position: absolute; /* 絶対位置指定 */
+            bottom: 15px; /* 親要素のpadding-bottomに合わせて調整 */
             right: 15px;
             background-color: #f0f0f0;
             border: 1px solid #ccc;
@@ -249,7 +249,7 @@
             color: #555;
             box-shadow: 0 1px 3px rgba(0,0,0,0.1);
             transition: background-color 0.2s, color 0.2s, border-color 0.2s;
-            z-index: 5; /* ★追加: 他の要素と重なる場合に手前に表示 */
+            z-index: 5; /* 他の要素と重なる場合に手前に表示 */
         }
 
         .comment-button.no-comments {
@@ -830,7 +830,7 @@
                 max-width: 100%; /* 最大幅を画面幅に合わせる */
                 margin: 0 auto 20px; /* 左右の余白をなくす（autoで中央寄せ） */
                 border-radius: 0; /* 角丸をなくす（任意） */
-                padding-bottom: 50px; /* ★変更: スマホでのパディング調整 */
+                padding-bottom: 50px; /* スマホでのパディング調整 */
             }
 
             .form-container label {
@@ -912,7 +912,7 @@
             .comment-button {
                 padding: 4px 10px;
                 font-size: 0.8em;
-                bottom: 10px; /* ★変更: スマホでの位置調整 */
+                bottom: 10px; /* スマホでの位置調整 */
                 right: 10px;
             }
 
@@ -2025,10 +2025,7 @@
             }
         }
 
-        // ========== コメント機能関連のJavaScriptここまで ==========
-
-
-        // ページ読み込み時に投稿を表示
+        // ========== コメント機能関連のJavaScriptここまで ==========\r\n\r\n\r\n        // ページ読み込み時に投稿を表示
         document.addEventListener("DOMContentLoaded", displayPosts);
 
         // UIDのコピーを阻害するイベントリスナーを追加する関数
