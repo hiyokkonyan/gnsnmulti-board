@@ -6,7 +6,7 @@
     <title>マルチ募集掲示板</title>
 
     <link href="https://fonts.googleapis.com/css2?family=Rounded+Mplus+1c&display=swap" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
     <style>
@@ -841,7 +841,6 @@
                 <span id="uidAnyoneValidationMsg" class="uid-error-message"></span>
             </label>
             <input type="text" id="uidAnyone" placeholder="123456789" maxlength="15">
-            <span style="font-size: 0.8em; color: #666;">（募集投稿に直接表示されます）</span>
 
             <label for="worldRankAnyone" style="margin-top: 15px; margin-bottom: 5px;">
                 世界ランク
@@ -863,12 +862,12 @@
             <label class="form-label-margin-bottom" style="margin-bottom: -5px;">VCは？</label>
             <div class="radio-group">
                 <label>
-                    <input type="radio" name="vcAnyone" value="VCあり" checked>
-                    <span>VCあり</span>
+                    <input type="radio" name="vcAnyone" value="VCなし" checked>
+                    <span>VCなし</span>
                 </label>
                 <label>
-                    <input type="radio" name="vcAnyone" value="VCなし">
-                    <span>VCなし</span>
+                    <input type="radio" name="vcAnyone" value="VCあり">
+                    <span>VCあり</span>
                 </label>
                 <label>
                     <input type="radio" name="vcAnyone" value="どちらでも">
@@ -928,12 +927,12 @@
             <label class="form-label-margin-bottom" style="margin-bottom: -5px;">VCは？</label>
             <div class="radio-group">
                 <label>
-                    <input type="radio" name="vcApplication" value="VCあり" checked>
-                    <span>VCあり</span>
+                    <input type="radio" name="vcApplication" value="VCなし" checked>
+                    <span>VCなし</span>
                 </label>
                 <label>
-                    <input type="radio" name="vcApplication" value="VCなし">
-                    <span>VCなし</span>
+                    <input type="radio" name="vcApplication" value="VCあり">
+                    <span>VCあり</span>
                 </label>
                 <label>
                     <input type="radio" name="vcApplication" value="どちらでも">
@@ -1454,14 +1453,14 @@
                 document.getElementById("uidAnyone").value = "";
                 document.getElementById("contentAnyone").value = "";
                 document.getElementById("worldRankAnyone").value = "";
-                document.querySelector('input[name="vcAnyone"][value="VCあり"]').checked = true;
+                document.querySelector('input[name="vcAnyone"][value="VCなし"]').checked = true; // VCなしをデフォルトに
                 document.querySelector('input[name="teiwatAnyone"][value="私のテイワット"]').checked = true;
             } else if (type === 'application') {
                 document.getElementById("nameApplication").value = "";
                 document.getElementById("uidApplication").value = "";
                 document.getElementById("contentApplication").value = "";
                 document.getElementById("worldRankApplication").value = "";
-                document.querySelector('input[name="vcApplication"][value="VCあり"]').checked = true;
+                document.querySelector('input[name="vcApplication"][value="VCなし"]').checked = true; // VCなしをデフォルトに
                 document.querySelector('input[name="teiwatApplication"][value="私のテイワット"]').checked = true;
             }
             hideUidError(type);
